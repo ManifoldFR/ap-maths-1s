@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{polyglossia}
+\usepackage[hmargin=4.4cm,vmargin=4cm]{geometry}
+\usepackage{mathtools, amssymb, amsfonts}
+\usepackage{amsthm}
+\usepackage{titling}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{comment}
+
+\theoremstyle{definition}
+\newtheorem{mydef}{Définition}[section]
+\newtheorem{exo}{Exercice}
+\newtheorem{exe}[mydef]{Exemple}
+
+\theoremstyle{remark}
+\newtheorem{rem}[mydef]{Remarque}
+
+\theoremstyle{theorem}
+\newtheorem{thm}[mydef]{Théorème}
+
+\renewcommand\epsilon\varepsilon
+\renewcommand\phi\varphi
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\RR}{\mathbb R}
+
+\setdefaultlanguage{french}
+
+\pretitle{\begin{center}\LARGE}
+\title{\textsc{Composition de fonctions} }
+\posttitle{\par\end{center}\vspace{-3.2em}}
+
+\preauthor{\begin{center}\large}
+\author{}
+\postauthor{\par\end{center}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Généralités}
+
+\begin{mydef}
+Soient $f:D_f\longrightarrow\RR$ et $g:D_g\longrightarrow\RR$ deux fonctions réelles. On suppose qu'on ait que pour tout $x\in D_f$, $f(x)\in D_g$. 
+
+Alors, pour tout $x\in D_f$, $g(f(x))$ existe. On peut donc définir la \textit{composée de $f$ par $g$}, notée $g\circ f$, par
+\[
+g\circ f:\begin{cases}
+D_f &\longrightarrow \RR \\
+x &\longmapsto g(f(x)) 
+\end{cases}
+\]
+\end{mydef}
+
+Ainsi, calculer $g\circ f(x)$ consiste en calculer $f(x)$ \textit{puis} appliquer $g$ au résultat.
+
+\begin{exe}
+Soient 
+\[
+f:\begin{cases}
+\RR &\longrightarrow\RR \\
+x &\longmapsto 1+x^2
+\end{cases}
+\quad\textrm{et} \quad
+g:\begin{cases}
+\RR^* &\longrightarrow \RR \\
+x &\longmapsto \frac 1 x
+\end{cases}.
+\]
+Alors la composée de $f$ par $g$ est
+\[
+g\circ f:\begin{cases}
+\RR&\longrightarrow\RR \\
+x &\longmapsto \dfrac{1}{1+x^2}
+\end{cases}
+\]
+\end{exe}
+
+\begin{rem}
+Calculez la composée de $g$ par $f$, $f\circ g$: que remarquez-vous ?
+\end{rem}
+
+\begin{exo}
+Dans chaque cas, dire si on peut définir, et le cas échéant calculer la composée de $f$ par $g$:
+\begin{enumerate}
+\item $f:\RR\longrightarrow\RR,\ x\longmapsto 1+x^2$ et $g$ la fonction racine carrée.
+\item $f:\RR\longrightarrow\RR,\ x\longmapsto -x$ et $g$ la fonction racine carrée.
+\item $f:{]0,+\infty[}\longrightarrow\RR,\ x\longmapsto \sqrt{x+1}$ et $g:\RR/\{-1;1\}\longrightarrow\RR,\ x\longmapsto \dfrac{x}{x^2-1}$
+\item $f:D\longrightarrow\RR,\ x\longmapsto \dfrac{\sqrt{x-5}}{x^2-x-6}$, $g:{]0,+\infty[}\longrightarrow\RR,\ x\longmapsto \dfrac{1}{x^2}$, où il faut déterminer le domaine $D$ de $f$ (éventuellement le restreindre pour pouvoir composer...)
+\end{enumerate}
+\end{exo}
+
+\section{Variations}
+
+\begin{thm}[Sens de variation d'une composée]
+Soient $f$ et $g$ deux fonctions telles que pour tout $x\in D_f$, $f(x)\in D_g$. Alors:\begin{itemize}
+\item Si $f$ et $g$ ont même sens de variation alors $g\circ f$ est \textbf{croissante}.
+\item Si $f$ et $g$ ont des sens de variation contraires alors $g\circ f$ est \textbf{décroissante}.
+\end{itemize}
+\end{thm}
+
+\begin{exo}
+En écrivant les fonctions suivantes comme des composées de fonctions simples dont vous connaissez les sens de variation, établir les variations de\begin{itemize}
+\item $x\longmapsto \dfrac{1}{1+x^2}$ sur $\RR$.
+\item $x\longmapsto |x|$ sur $\RR$.
+\item $x\longmapsto \dfrac{1}{1-\sqrt{x-3}}$ sur son ensemble de définition, à préciser.
+\end{itemize}
+\end{exo}
+
+\begin{exo}
+Démontrer le théorème 2.1.
+\end{exo}
+
+\end{document}
