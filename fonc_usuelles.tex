@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{polyglossia}
+\usepackage[a4paper]{geometry}
+\usepackage{mathtools, amssymb, amsfonts}
+\usepackage{fontspec}
+\usepackage{amsthm}
+\usepackage{titling}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{comment}
+
+\setdefaultlanguage{french}
+
+%% Theorem environments
+\theoremstyle{definition}
+\newtheorem{mydef}{Définition}[section]
+\newtheorem{exo}{Exercice}
+\newtheorem{exe}[mydef]{Exemple}
+
+\theoremstyle{remark}
+\newtheorem{rem}[mydef]{Remarque}
+
+\theoremstyle{plain}
+\newtheorem{thm}[mydef]{Théorème}
+\newtheorem{prop}[mydef]{Proposition}
+
+%% Math commands
+\renewcommand\epsilon\varepsilon
+\renewcommand\phi\varphi
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+
+%% Titling configuration
+\pretitle{\begin{center}\LARGE}
+\title{\textsc{Autour des fonctions usuelles}}
+\posttitle{\par\end{center}\vspace{-3.2em}}
+
+\preauthor{\begin{center}\large}
+\author{}
+\postauthor{\par\end{center}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Valeur absolue}
+
+\begin{mydef}
+Soit $x$ un nombre réel. On appelle valeur absolue de $x$ le réel \textit{positif}
+\[
+\abs{x} = \begin{cases}
+x &\textrm{si }x\geq 0 \\
+-x &\textrm{si }x<0
+\end{cases}.
+\]
+Ainsi, $\abs x=0$ si et seulement si $x=0$... 
+\end{mydef}
+
+La valeur absolue de $x$ représente en fait \textit{la distance de $x$ à 0} sur la droite numérique. On peut donc représenter la distance entre deux nombres $x$ et $y$ sur la droite numérique par la quantité $\abs{x-y}$.
+
+Ceci, et les propriétés sur cette fonction, la rend fondamentale pour décrire certaines propriétés des nombres réels, et étudier des fonctions réelles.
+
+\begin{prop}\label{prop:absmax}
+Pour tout $x\in\R$,
+\begin{equation}
+\abs{x} = \max(-x,x).
+\end{equation}
+En effet, la définition précédente fait que la valeur absolue de $x$ est toujours plus le plus grand nombre entre parmi $x$ et $-x$.
+\end{prop}
+
+\begin{exe}
+Par exemple, on a $\abs{-2} = 2$ et $\max(-2,2) = 2$...
+\end{exe}
+
+\begin{prop}\label{prop:absroot}
+Pour tout réel $x$, on a
+\begin{equation}\abs x = \sqrt{x^2}.\end{equation}
+\end{prop}
+
+Cette deuxième représentation de la valeur absolue nous amène le résultat suivant :
+
+\begin{prop}\label{prop:absmult}
+Pour tous $x$ et $y$ réels,
+\begin{equation}\abs{xy} = \abs x \abs y.\end{equation}
+\end{prop}
+
+On peut en donner deux démonstrations: une qui utilise \ref{prop:absroot} et une autre qui revient à la définition.
+
+\begin{exe}
+on a $\abs{-6} = 6$ d'une part, et d'autre part $-6 = -2\times 3$ puis $\abs{-2} \times \abs 3 = 2 \times 3 = 6$...
+\end{exe}
+
+La propriété suivante est probablement l'une des inégalités les plus importantes de toutes les mathématiques.
+
+\begin{prop}[Inégalité triangulaire]
+Pour tous $x,y\in\R$,
+\begin{equation}
+\abs{x+y} \leq \abs x + \abs y.
+\end{equation}
+\end{prop}
+
+Elle se généralise de la manière suivante : elle reste toujours valable si on remplace les nombres $x$ et $y$ par des vecteurs $\vec u$ et $\vec v$, et la valeur absolue par la norme : $\|\vec u+\vec v\|\leq \|\vec u\| + \|\vec v\|$.
+
+Encore, on peut en donner deux démonstrations, qui utilisent les deux représentations de la valeur absolue données dans les propositions \ref{prop:absmax} et \ref{prop:absroot}.
+
+\end{document}
