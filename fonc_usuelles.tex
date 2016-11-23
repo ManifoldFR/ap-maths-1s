@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{polyglossia}
-\usepackage[a4paper]{geometry}
+\usepackage[a4paper,hmargin=4cm]{geometry}
 \usepackage{mathtools, amssymb, amsfonts}
 \usepackage{fontspec}
 \usepackage{amsthm}
@@ -26,6 +26,7 @@
 \theoremstyle{plain}
 \newtheorem{thm}[mydef]{Théorème}
 \newtheorem{prop}[mydef]{Proposition}
+\newtheorem{cor}[mydef]{Corollaire}
 
 %% Math commands
 \renewcommand\epsilon\varepsilon
@@ -109,5 +110,96 @@ Pour tous $x,y\in\R$,
 Elle se généralise de la manière suivante : elle reste toujours valable si on remplace les nombres $x$ et $y$ par des vecteurs $\vec u$ et $\vec v$, et la valeur absolue par la norme : $\|\vec u+\vec v\|\leq \|\vec u\| + \|\vec v\|$.
 
 Encore, on peut en donner deux démonstrations, qui utilisent les deux représentations de la valeur absolue données dans les propositions \ref{prop:absmax} et \ref{prop:absroot}.
+
+\section{Fonction partie entière}
+
+\begin{mydef}
+	Soit $x\in\R$. On appelle \textit{partie entière de $x$} et on note $\lfloor x\rfloor$ l'unique entier tel que
+	\[ \lfloor x\rfloor \leq x < \lfloor x\rfloor + 1. \]
+\end{mydef}
+
+\begin{exe}\leavevmode
+	\begin{itemize}
+		\item $\lfloor 2\rfloor = 2$
+		\item $\lfloor 3,14\rfloor = 3$
+		\item $\lfloor -2,5\rfloor = -3$
+	\end{itemize}
+\end{exe}
+
+\begin{exo}Tracer la courbe représentative de la fonction $x\longmapsto \lfloor x\rfloor$.\end{exo}
+
+\begin{exo}
+	Montrer que pour tous $x\in\R$ et $n\in\Z$,
+	\[ \lfloor x+n\rfloor = \lfloor x\rfloor + n. \]
+\end{exo}
+
+\begin{exo}
+	En déduire que pour tous $x,y\in\R$, on a l'inégalité suivante :
+	\[ \lfloor x\rfloor + \lfloor y\rfloor \leq \lfloor x+y\rfloor. \]
+\end{exo}
+
+\begin{cor}
+	Alors, pour tous $x\in\R$ et $n\in\N$,
+	\[ n\lfloor x\rfloor \leq \lfloor nx\rfloor. \]
+\end{cor}
+
+\begin{mydef}
+	Soit $x$ un réel. On appelle \textit{partie fractionnaire de $x$} et on note $\{x\}$ le réel de $[0,1[$ défini par:
+	\[ \{x\} \coloneqq x - \lfloor x\rfloor. \]
+\end{mydef}
+
+\begin{exe}\leavevmode
+	\begin{itemize}
+		\item $\{2\} = 0$
+		\item $\{3,14\} = 0,14$
+		\item $\{-2,5\} = 0,5$
+	\end{itemize}
+\end{exe}
+
+\begin{exo}
+	Soit $f:\R\longrightarrow\R$ une fonction 1-périodique, c'est-à-dire que pour tout réel $x$, $f(x+1)=f(x)$.
+	
+	Montrer que pour tout réel $x$, $f(x)= f(\{x\})$.
+\end{exo}
+
+\section{Quelques inégalités}
+
+\begin{exo}[Moyennes usuelles]
+	Soient $x$ et $y$ deux réels avec $0<x\leq y$. On pose les réels suivants:
+	\begin{align*}
+		m &= \frac{x+y}{2}\text{ moyenne arithmétique} \\
+		g &= \sqrt{xy}\text{ moyenne géométrique} \\
+		h &= \frac{2}{\frac{1}{x}+\frac{1}{y}}\text{ moyenne harmonique}
+	\end{align*}
+	
+	Montrer que $x\leq h\leq g \leq m\leq y$.
+\end{exo}
+
+L'inégalité suivante est encore plus fondamentale que l'inégalité triangulaire présentée précédemment (elle sert même à démontrer sa version générale). Si je m'en rappelle bien, on peut utiliser cette inégalité pour montrer une partie des lois de la physique (plus précisément, les équations d'\textsc{Euler-Lagrange}).
+
+\begin{exo}[Inégalité de \textsc{Cauchy-Schwarz}]
+	Soient $x_1,\ldots,x_n$ et $y_1,\ldots,y_n$ des nombres réels. Montrer que
+	\[ x_1y_1 + \cdots + x_ny_n \leq \sqrt{x_1^2+\cdots x_n^2}\sqrt{y_1^2\ldots y_n^2}. \]
+	
+	\textit{Indication:} Poser $f$ le trinôme du second degré $f(t) = (x_1 +ty_1)^2 + \cdots + (x_n +ty_n)^2$ et calculer son discriminant.
+\end{exo}
+
+\begin{rem}
+	L'inégalité se reformule ainsi: si $\vec u$ et $\vec v$ sont deux vecteurs, on a 
+	\[ |\vec u \cdot \vec v| \leq \|\vec u\|\cdot\|\vec v\|. \]
+\end{rem}
+
+\begin{exo}
+	En déduire que si $x_1,\ldots,x_n>0$ on a
+	\[ (x_1+\cdots+x_n)\left(\frac{1}{x_1}+\cdots\frac{1}{x_n}\right)
+	\geq n^2. \]
+\end{exo}
+
+\begin{exo}[Application: inégalité triangulaire généralisée]\leavevmode
+	Soient $\vec u$ et $\vec v$ deux vecteurs. Montrer l'inégalité triangulaire généralisée
+	\[
+	\|\vec u + \vec v\| \leq \|\vec u \| + \|\vec v\|.
+	\]
+\end{exo}
 
 \end{document}
