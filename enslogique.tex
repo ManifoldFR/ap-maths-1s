@@ -45,6 +45,9 @@
 <<La mathématique est une science dangereuse : elle dévoile les supercheries et les erreurs de calculs.>> — Galilée
 \end{flushright}
 
+
+\tableofcontents
+
 \section{Logique}
 
 \subsection{Propositions, formules}
@@ -101,6 +104,8 @@ La table de vérité d'une formule est un tableau dans lequel sont listées les 
 
 \subsection{Opérateurs logiques}
 
+\subsubsection{Négation}
+
 \begin{defn}[Négation]
 Soir $P$ une proposition. On appelle \textit{négation de $P$} et on note $\neg P$ la proposition de valeur de vérité opposée à $P$: quand $P$ est vraie, $\neg P$ est fausse, et vice-versa. Sa table de vérité est donnée par
 \begin{center}
@@ -121,15 +126,18 @@ Soit $P$ une proposition. Alors
 \begin{exe}\leavevmode\begin{enumerate}
 \item $\neg$<< Aristote est mortel >> $\equiv$ << Aristote est immortel >>
 \item $\neg$<< Aristote est un chat >> $\equiv$ << Aristote n'est pas un chat >>
-\item $\neg$<< Tous les hommes sont mortels $\equiv$ << \hspace{7cm} >>
+\item $\neg$<< J'aime les frites >> $\equiv$ << \hspace{7cm} >>
 \end{enumerate}
 
 \end{exe}
 
+\newpage
+\subsubsection{Conjonction}
 
 \begin{defn}[Conjonction]
 On appelle \textit{conjonction} et on note $\land$ l'opérateur dont la table est donnée par
-\begin{table}[h]
+
+\begin{table}[!ht]
 \centering
 \begin{tabular}{|c|c|c|}\hline
 $P$ & $Q$ & $P\land Q$ \\ \hline
@@ -145,8 +153,8 @@ $P\land Q$ se lit << $P$ et $Q$ >>.
 
 \begin{exe}
 << Aristote est mortel >> $\land$ << Aristote est un chat >> est ...\\
-<< Tous les hommes sont mortels >> $\land$ << Tous les hommes sont mortels >> est ...\\
-<< Ce mammifère est un chat >>$\land $ << Ce mammifère n'est pas un chat >> est... \\
+<< Tous les hommes sont mortels >> $\land$ << Tous les hommes sont mortels >> $\equiv$ ...\\
+<< Ce mammifère est un chat >>$\land $ << Ce mammifère n'est pas un chat >> est...
 \end{exe}
 
 \begin{rem} Observez que dans le dernier cas, on peut conclure sans rien vraiment savoir sur le mammifère en question !
@@ -158,13 +166,18 @@ Soient $P,Q,R$ des propositions.
 \item $(P\land Q)\land R \equiv P\land (Q\land R)$
 \item $P\land Q \equiv Q\land P$
 \item $P\land P\equiv P$
+\item $P\land \neg P \equiv F$ (principe du tiers exclu)
 \end{enumerate}
 
 \end{prop}
 
+
+
+\subsubsection{Disjonction}
+
 \begin{defn}[Disjonction]
 On appelle \textit{disjonction} et on note $\lor$ l'opérateur dont la table est donnée par
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{tabular}{|c|c|c|}\hline
 $P$ & $Q$ & $P\lor Q$ \\ \hline
@@ -184,21 +197,18 @@ Soient $P,Q,R$ des propositions.
 \item $(P\lor Q)\lor R \equiv P\lor (Q\lor R)$
 \item $P\lor Q \equiv Q\lor P$
 \item $P\lor P\equiv P$
+\item $p\lor \neg P\equiv V$ (principe du tiers exclu, encore)
 \end{enumerate}
 \end{prop}
 
-\begin{prop}[Distributivités]\leavevmode
-\begin{enumerate}
-\item $P\land (Q\lor R) \equiv(P\land Q)\lor (P\land R)$
-\item $P\lor(Q\land R)\equiv (P\lor Q)\land (P\lor R)$
-\end{enumerate}
 
-\end{prop}
 
-\newpage
+\subsubsection{Implication, équivalence}
+
 \begin{defn}[Implication]
 L'opérateur \textit{implication}, noté $\Rightarrow$, a pour table de vérité
-\begin{table}[h]
+
+\begin{table}[ht]
 \centering
 \begin{tabular}{|c|c|c|}\hline
 $P$ & $Q$ & $P\Rightarrow Q$ \\ \hline
@@ -208,12 +218,14 @@ $F$ & $V$ & $V$ \\\hline
 $F$ & $F$ & $V$ \\\hline
 \end{tabular}
 \end{table}
+
 $P\Rightarrow Q$ se lit << $P$ implique $Q$ >>.
 \end{defn}
 
 \begin{defn}[Équivalence]
 L'opérateur \textit{équivalence}, noté $\Leftrightarrow$, a pour table de vérité
-\begin{table}[h]
+
+\begin{table}[ht]
 \centering
 \begin{tabular}{|c|c|c|}\hline
 $P$ & $Q$ & $P\Leftrightarrow Q$ \\ \hline
@@ -223,15 +235,45 @@ $F$ & $V$ & $F$ \\\hline
 $F$ & $F$ & $V$ \\\hline
 \end{tabular}
 \end{table}
+
 $P\Leftrightarrow Q$ se lit << $P$ équivaut à $Q$ >>
 \end{defn}
 
+\subsubsection{Quelques équivalences de formules}
+
+\begin{prop}[Distributivités]\leavevmode
+\begin{enumerate}
+\item $P\land (Q\lor R) \equiv(P\land Q)\lor (P\land R)$
+\item $P\lor(Q\land R)\equiv (P\lor Q)\land (P\lor R)$
+\end{enumerate}
+
+\end{prop}
+
 \begin{prop}[Négation d'une formule, lois de De Morgan]\leavevmode
 \begin{enumerate}
-\item $\neg(P\land Q) \equiv (\neg P)\lor(\neg Q)$
-\item $\neg(P\lor Q) \equiv (\neg P)\land (\neg Q)$
+\item $\neg(P\land Q) \equiv (\neg P)\lor(\neg Q)$ (loi de De Morgan)
+\item $\neg(P\lor Q) \equiv (\neg P)\land (\neg Q)$ (deuxième loi de De Morgan)
+\item $\neg(P\Rightarrow Q)\equiv P\land\neg Q$.
+\item $\neg(P\Longleftrightarrow Q) \equiv P\Longleftrightarrow (\neg Q) \equiv (\neg P) \Longleftrightarrow Q$
 \end{enumerate}
 \end{prop}
+
+\begin{rem}
+Le point 3. donne un moyen simple de contredire une implication.
+\end{rem}
+
+\begin{exe}
+On peut montrer que l'affirmation << si le sol est mouillé alors il pleut >> est fausse. En effet, elle se réécrit << le sol est mouillé >> $\Rightarrow $ << il pleut >>, et comme on peut avoir << le sol est mouillé >> et << il ne pleut pas >> (il suffit d'arroser le sol quand il fait beau...), on a un contre-exemple.
+\end{exe}
+
+\begin{prop}\leavevmode
+\begin{enumerate}
+\item $P\Longrightarrow Q\equiv (P\Longrightarrow Q)\land(Q\Longrightarrow P)$ (principe de double implication)
+\item $P\Rightarrow Q \equiv \neg P\lor Q$
+\item $(P\land (P\Rightarrow Q))\Rightarrow Q\equiv V$ (\textit{modus ponens})
+\end{enumerate}
+\end{prop}
+
 
 \end{document}
 
