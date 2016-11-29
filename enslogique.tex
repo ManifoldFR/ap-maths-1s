@@ -1,0 +1,104 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{titling}
+\usepackage[shortlabels]{enumitem}
+
+\setdefaultlanguage{french}
+
+%% Theorem environments
+\theoremstyle{definition}
+\newtheorem{defn}{Définition}[section]
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{axio}[defn]{Axiome}
+\newtheorem{exe}{Exemple}
+
+
+\theoremstyle{remark}
+\newtheorem{rem}{Remarque}
+
+
+\begin{document}
+
+\begin{center}
+	\textsc{\LARGE Ensembles, Logique}
+\end{center}
+\vspace{1cm}
+
+\begin{flushright}
+\textit{<< La logique est l'hygiène des mathématiques. >>} — André Weil\\
+\textit{<< Tout ce qui est rare est super cher,\\
+    Une Maserati bon marché est rare,\\
+    Donc une Maserati bon marché, c'est super che >>} — Bruce Benamran
+\end{flushright}
+
+\section{Logique}
+
+\subsection{Propositions, formules}
+
+\begin{defn}[Proposition]
+Une \textit{proposition} est la donnée d'une affirmation $P$. Elle peut prendre deux valeurs de vérité : le \textit{Vrai} ($V$) et le \textit{Faux} ($F$).
+\end{defn}
+
+\begin{exe}\leavevmode
+\begin{enumerate}
+\item << Aristote est mortel. >>
+\item << Aristote est un chat. >>
+\item << Les lois de la physique aristotélicienne sont vraies. >>
+\end{enumerate}
+\end{exe}
+
+\begin{defn}[Formule propositionnelle]
+On peut partir des propositions de base dont on dispose pour construire des \textit{formules}, en les combinant avec des symboles appelés \textit{connecteurs logiques}.
+
+C'est donc la donnée d'une expression où sont articulées des propositions à l'aide de connecteurs. Elles sont en soi des propositions.
+\end{defn}
+
+On verra plus loin quels sont ces symboles qui permettent d'articuler des propositions pour créer une formule.
+
+
+La logique usuelle obéit au principe suivant (on peut décider de ne pas l'adopter, ce qui donne lieu à d'autres systèmes de logique bizarres étudiés par des chercheurs en logique...):
+
+\begin{axio}[Principe du tiers exclu]
+Une proposition prend la valeur \textit{Vrai} ou la valeur \textit{Faux}, \textbf{jamais les deux}.
+\end{axio}
+
+\begin{defn}[Identité de deux propositions]
+Deux formules $P$ et $Q$ sont dites \textit{équivalentes} ou \textit{identiques} si elles ont toujours même
+\end{defn}
+
+\subsection{Opérateurs logiques}
+
+\begin{defn}[Négation]
+Soir $P$ une proposition. On appelle \textit{négation de $P$} et on note $\neg P$ la proposition de valeur de vérité opposée à $P$: quand $P$ est vraie, $\neg P$ est fausse, et vice-versa. Sa table est donnée par
+\begin{center}
+  \begin{tabular}{|c|c|}\hline
+  $P$ & $\neg P$ \\ \hline
+  $V$ & $F$ \\ \hline
+  $F$ & $V$ \\ \hline
+  \end{tabular}
+\end{center}
+\end{defn}
+
+\begin{prop}
+Soit $P$ une proposition. Alors
+\[\neg\neg P \equiv P.
+\]
+\end{prop}
+
+\begin{exe}
+
+\end{exe}
+
+
+
+
+
+
+\end{document}
+
+
+
