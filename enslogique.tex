@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{geometry}
+\usepackage[a4paper]{geometry}
 \usepackage{mathtools,amssymb,amsthm}
 \usepackage{polyglossia}
 \usepackage{fontspec}
@@ -8,6 +8,7 @@
 \usepackage[shortlabels]{enumitem}
 
 \setdefaultlanguage{french}
+\frenchspacing
 
 %% Theorem environments
 \theoremstyle{definition}
@@ -29,10 +30,19 @@
 \vspace{1cm}
 
 \begin{flushright}
-\textit{<< La logique est l'hygiène des mathématiques. >>} — André Weil\\
+\textit{<< La logique est l'hygiène des mathématiques. >>} — André Weil\end{flushright}
+
+\begin{flushright}
+\begin{flushleft}
 \textit{<< Tout ce qui est rare est super cher,\\
-    Une Maserati bon marché est rare,\\
-    Donc une Maserati bon marché, c'est super che >>} — Bruce Benamran
+    Une Maserati bon marché, c'est rare,\\
+    Donc une Maserati bon marché, c'est super cher >>}
+\end{flushleft}
+— Bruce Benamran
+\end{flushright}
+
+\begin{flushright}
+<<La mathématique est une science dangereuse : elle dévoile les supercheries et les erreurs de calculs.>> — Galilée
 \end{flushright}
 
 \section{Logique}
@@ -47,7 +57,7 @@ Une \textit{proposition} est la donnée d'une affirmation $P$. Elle peut prendre
 \begin{enumerate}
 \item << Aristote est mortel. >>
 \item << Aristote est un chat. >>
-\item << Les lois de la physique aristotélicienne sont vraies. >>
+\item << Les lois de la physique d'Aristote sont vraies. >>
 \end{enumerate}
 \end{exe}
 
@@ -60,6 +70,7 @@ C'est donc la donnée d'une expression où sont articulées des propositions à 
 On verra plus loin quels sont ces symboles qui permettent d'articuler des propositions pour créer une formule.
 
 
+
 La logique usuelle obéit au principe suivant (on peut décider de ne pas l'adopter, ce qui donne lieu à d'autres systèmes de logique bizarres étudiés par des chercheurs en logique...):
 
 \begin{axio}[Principe du tiers exclu]
@@ -67,13 +78,31 @@ Une proposition prend la valeur \textit{Vrai} ou la valeur \textit{Faux}, \textb
 \end{axio}
 
 \begin{defn}[Identité de deux propositions]
-Deux formules $P$ et $Q$ sont dites \textit{équivalentes} ou \textit{identiques} si elles ont toujours même
+Deux formules $P$ et $Q$ sont dites \textit{équivalentes} ou \textit{identiques} si elles ont toujours même valeur de vérité, quelles que soient les valeurs de vérité des variables qui y interviennent. On note
+\[P\equiv Q
+\]
 \end{defn}
+
+\begin{exe}\leavevmode
+<< Aristote n'est pas mortel >> $\equiv$ << Aristote est immortel >>
+\end{exe}
+
+\begin{rem}Vous remarquerez qu'on ne se préoccupe pas de la véracité de ces propositions... Juste qu'elles reviennent à dire la même chose.
+\end{rem}
+
+\begin{defn}[Table de vérité]
+La table de vérité d'une formule est un tableau dans lequel sont listées les valeurs de vérité de cette formule en fonction de celles des propositions qui y interviennent.
+\end{defn}
+
+
+
+
+
 
 \subsection{Opérateurs logiques}
 
 \begin{defn}[Négation]
-Soir $P$ une proposition. On appelle \textit{négation de $P$} et on note $\neg P$ la proposition de valeur de vérité opposée à $P$: quand $P$ est vraie, $\neg P$ est fausse, et vice-versa. Sa table est donnée par
+Soir $P$ une proposition. On appelle \textit{négation de $P$} et on note $\neg P$ la proposition de valeur de vérité opposée à $P$: quand $P$ est vraie, $\neg P$ est fausse, et vice-versa. Sa table de vérité est donnée par
 \begin{center}
   \begin{tabular}{|c|c|}\hline
   $P$ & $\neg P$ \\ \hline
@@ -89,14 +118,120 @@ Soit $P$ une proposition. Alors
 \]
 \end{prop}
 
-\begin{exe}
+\begin{exe}\leavevmode\begin{enumerate}
+\item $\neg$<< Aristote est mortel >> $\equiv$ << Aristote est immortel >>
+\item $\neg$<< Aristote est un chat >> $\equiv$ << Aristote n'est pas un chat >>
+\item $\neg$<< Tous les hommes sont mortels $\equiv$ << \hspace{7cm} >>
+\end{enumerate}
 
 \end{exe}
 
 
+\begin{defn}[Conjonction]
+On appelle \textit{conjonction} et on note $\land$ l'opérateur dont la table est donnée par
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}\hline
+$P$ & $Q$ & $P\land Q$ \\ \hline
+$V$ & $V$ & $V$ \\\hline
+$V$ & $F$ & $F$ \\\hline
+$F$ & $V$ & $F$ \\\hline
+$F$ & $F$ & $F$ \\\hline
+\end{tabular}
+\end{table}
 
+$P\land Q$ se lit << $P$ et $Q$ >>.
+\end{defn}
 
+\begin{exe}
+<< Aristote est mortel >> $\land$ << Aristote est un chat >> est ...\\
+<< Tous les hommes sont mortels >> $\land$ << Tous les hommes sont mortels >> est ...\\
+<< Ce mammifère est un chat >>$\land $ << Ce mammifère n'est pas un chat >> est... \\
+\end{exe}
 
+\begin{rem} Observez que dans le dernier cas, on peut conclure sans rien vraiment savoir sur le mammifère en question !
+\end{rem}
+
+\begin{prop}
+Soient $P,Q,R$ des propositions.
+\begin{enumerate}
+\item $(P\land Q)\land R \equiv P\land (Q\land R)$
+\item $P\land Q \equiv Q\land P$
+\item $P\land P\equiv P$
+\end{enumerate}
+
+\end{prop}
+
+\begin{defn}[Disjonction]
+On appelle \textit{disjonction} et on note $\lor$ l'opérateur dont la table est donnée par
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}\hline
+$P$ & $Q$ & $P\lor Q$ \\ \hline
+$V$ & $V$ & $V$ \\\hline
+$V$ & $F$ & $V$ \\\hline
+$F$ & $V$ & $V$ \\\hline
+$F$ & $F$ & $F$ \\\hline
+\end{tabular}
+\end{table}
+
+$P\lor Q$ se lit << $P$ ou $Q$ >>.
+\end{defn}
+
+\begin{prop}
+Soient $P,Q,R$ des propositions.
+\begin{enumerate}
+\item $(P\lor Q)\lor R \equiv P\lor (Q\lor R)$
+\item $P\lor Q \equiv Q\lor P$
+\item $P\lor P\equiv P$
+\end{enumerate}
+\end{prop}
+
+\begin{prop}[Distributivités]\leavevmode
+\begin{enumerate}
+\item $P\land (Q\lor R) \equiv(P\land Q)\lor (P\land R)$
+\item $P\lor(Q\land R)\equiv (P\lor Q)\land (P\lor R)$
+\end{enumerate}
+
+\end{prop}
+
+\newpage
+\begin{defn}[Implication]
+L'opérateur \textit{implication}, noté $\Rightarrow$, a pour table de vérité
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}\hline
+$P$ & $Q$ & $P\Rightarrow Q$ \\ \hline
+$V$ & $V$ & $V$ \\\hline
+$V$ & $F$ & $F$ \\\hline
+$F$ & $V$ & $V$ \\\hline
+$F$ & $F$ & $V$ \\\hline
+\end{tabular}
+\end{table}
+$P\Rightarrow Q$ se lit << $P$ implique $Q$ >>.
+\end{defn}
+
+\begin{defn}[Équivalence]
+L'opérateur \textit{équivalence}, noté $\Leftrightarrow$, a pour table de vérité
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}\hline
+$P$ & $Q$ & $P\Leftrightarrow Q$ \\ \hline
+$V$ & $V$ & $V$ \\\hline
+$V$ & $F$ & $F$ \\\hline
+$F$ & $V$ & $F$ \\\hline
+$F$ & $F$ & $V$ \\\hline
+\end{tabular}
+\end{table}
+$P\Leftrightarrow Q$ se lit << $P$ équivaut à $Q$ >>
+\end{defn}
+
+\begin{prop}[Négation d'une formule, lois de De Morgan]\leavevmode
+\begin{enumerate}
+\item $\neg(P\land Q) \equiv (\neg P)\lor(\neg Q)$
+\item $\neg(P\lor Q) \equiv (\neg P)\land (\neg Q)$
+\end{enumerate}
+\end{prop}
 
 \end{document}
 
