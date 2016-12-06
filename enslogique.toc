@@ -1,0 +1,10 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Logique}{1}
+\contentsline {subsection}{\numberline {1.1}Propositions, formules}{1}
+\contentsline {subsection}{\numberline {1.2}Opérateurs logiques}{2}
+\contentsline {subsubsection}{\numberline {1.2.1}Négation}{2}
+\contentsline {subsubsection}{\numberline {1.2.2}Conjonction}{3}
+\contentsline {subsubsection}{\numberline {1.2.3}Disjonction}{3}
+\contentsline {subsubsection}{\numberline {1.2.4}Implication, équivalence}{4}
+\contentsline {subsubsection}{\numberline {1.2.5}Quelques équivalences de formules}{4}
+\contentsline {subsection}{\numberline {1.3}Formules quantifiées}{5}
