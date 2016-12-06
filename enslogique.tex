@@ -10,6 +10,15 @@
 \setdefaultlanguage{french}
 \frenchspacing
 
+\renewcommand\epsilon\varepsilon
+\renewcommand\phi\varphi
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+
 %% Theorem environments
 \theoremstyle{definition}
 \newtheorem{defn}{Définition}[section]
@@ -34,9 +43,20 @@
 
 \begin{flushright}
 \begin{flushleft}
+\textit{<<
+	Plus il y a de fromage, plus il y a de trous.\\
+	Plus il y a de trous, moins il y a de fromage.\\
+	Donc plus il y a de fromage, moins il y a de fromage.
+	 >>}
+\end{flushleft}
+— Paradoxe du gruyère
+\end{flushright}
+
+\begin{flushright}
+\begin{flushleft}
 \textit{<< Tout ce qui est rare est super cher,\\
-    Une Maserati bon marché, c'est rare,\\
-    Donc une Maserati bon marché, c'est super cher >>}
+    Une Maserati à 20 euros, c'est rare,\\
+    Donc une Maserati à 20 euros, c'est super cher >>}
 \end{flushleft}
 — Bruce Benamran
 \end{flushright}
@@ -46,7 +66,7 @@
 \end{flushright}
 
 
-\tableofcontents
+%\tableofcontents
 
 \section{Logique}
 
@@ -131,7 +151,7 @@ Soit $P$ une proposition. Alors
 
 \end{exe}
 
-\newpage
+
 \subsubsection{Conjonction}
 
 \begin{defn}[Conjonction]
@@ -222,6 +242,12 @@ $F$ & $F$ & $V$ \\\hline
 $P\Rightarrow Q$ se lit << $P$ implique $Q$ >>.
 \end{defn}
 
+\begin{exe}
+	Tous les hommes sont mortels.\\
+	Or Socrate est un homme.\\
+	Donc Socrate est mortel.
+\end{exe}
+
 \begin{defn}[Équivalence]
 L'opérateur \textit{équivalence}, noté $\Leftrightarrow$, a pour table de vérité
 
@@ -282,8 +308,8 @@ On peut montrer que l'affirmation << si le sol est mouillé alors il pleut >> es
 
 \begin{exo}[D]
 Niez:\begin{enumerate}
-\item ((A\Rightarrow B)\land C)\lor\neg B
-\item (((A\Leftrightarrow B)\lor C)\Rightarrow B)\Leftrightarrow A
+\item $((A\Rightarrow B)\land C)\lor\neg B$
+\item $(((A\Leftrightarrow B)\lor C)\Rightarrow B)\Leftrightarrow A$
 \end{enumerate}
 \end{exo}
 
@@ -292,22 +318,143 @@ Niez:\begin{enumerate}
 Maintenant, on va apprendre à manier des variables dans des formules logiques.
 
 \begin{defn}[Prédicat]
-
+On appelle \textit{prédicat} une articulation de relations faisant intervenir des variables.
 \end{defn}
 
 \begin{defn}[Quantificateur universel]
-Le quantificateur universel $\forall$, lu << pour tout >> est défini comme suit: le prédicat
+Le quantificateur universel $\forall$, lu << pour tout >> ou << quel que soit >>, est défini comme suit: la proposition
 \[ \forall x,P(x)\]
-est vrai si la proposition $P(x)$ est vraie quelle que soit la valeur prise par $x$.
+est vrai si $P(x)$ est vrai quelle que soit la valeur prise par $x$.
 \end{defn}
 
+\begin{prop}
+	$\neg(\forall x,P(x)) \equiv \exists x,\neg P(x)$
+\end{prop}
+
+\begin{exe}
+	$\neg$(<< Tous les bretons sont des indépendantistes >>) $\equiv$ << Il existe un breton qui n'est pas indépendantiste >>.
+\end{exe}
+
 \begin{defn}[Quantificateur existentiel]
-Le quantificateur universel $\exists$, lu << il existe >> est défini comme suit: le prédicat
+Le quantificateur existentiel $\exists$, lu << il existe >>, est défini comme suit: le prédicat
 \[ \exists x,P(x)\]
 est vrai si la proposition $P(x)$ est vraie pour un certain $x$. Dans ce cas, on peut se donner un $x$ qui vérifie $P(x)$, même si on ne peut pas l'expliciter...
 \end{defn}
 
-\end{document}
+\begin{rem}
+	Quand une variable est quantifiée dans une expression, on dit qu'elle est \textit{liée} ou \textit{muette}. Sinon, elle est \textit{libre}. Par exemple, dans
+	\[ \forall x,x+y \geq 0, \]
+	$x$ est liée et $y$ est libre.
+	
+	On peut changer le nom d'une variable muette. En l'occurrence, on peut changer $x$ par $z$ dans ce qui précède:
+	\[ \forall x,x+y \geq 0 \]
+	est la même chose que
+	\[ \forall z,z+y \geq 0. \]
+\end{rem}
 
+\begin{prop}
+	$\neg(\exists x,P(x))\equiv \forall x,\neg P(x). $
+\end{prop}
+
+\begin{exe}\begin{enumerate}
+		\item $P(x) :$ << $x \geq 2 \Rightarrow x^2 \geq 4$ >> est un prédicat, faisant intervenir les relations << $x^2\leq 0$ >> et << $ x=0$ >>.
+		
+		On a que la proposition $\forall x,P(x)$ est vraie. Elle s'écrit $\forall x,\ x\geq 2\Rightarrow x^2\geq 4 $, ce qui se réécrit, par abus de notation,
+		\[ \forall x\geq2,\ x^2\geq 4. \]
+		
+		En général, une proposition de la forme $\forall x,\ x\in E\Rightarrow Q(x)$, peut se réécrire
+		\[ \forall x\in E,\ Q(x). \]
+		
+		\item La proposition $\exists x,\ x\geq 0\land x^2=4 $, où intervient le prédicat $P(x):$ << $x\geq 0\land x^2=4 $ >>, se réécrit
+		\[ \exists x\geq 0,\ x^2=4. \]
+	\end{enumerate}	
+\end{exe}
+
+\begin{prop}\leavevmode
+	\begin{enumerate}
+		\item $\forall x,(P(x)\land Q(x))\equiv (\forall x,P(x))\land (\forall x,Q(x)) $.
+		\item $\exists x,(P(x)\lor Q(x))\equiv (\exists x,P(x))\lor(\exists x,Q(x)). $
+	\end{enumerate}
+\end{prop}
+
+
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Comment écrire une démonstration}
+
+Donnons quelques méthodes pour rédiger proprement une démonstration mathématique dans les règles de l'art — c'est-à-dire de façon correcte du point de vue logique, et structurée.
+
+D'abord, il faut décomposer l'énoncé que l'on veut montrer en des propositions plus simples. D'habitude, l'énoncé s'écrit $H\Rightarrow C$
+où $H$ contient les hypothèses, $C$ les conclusions. Il faut donc déconstruire $H$ et $C$ en des blocs que l'on peut traiter séparément, et recoller pour montrer ce que l'on veut.
+
+\begin{prop}[Montrer $A\land B$]
+	Montrer séparément qu'on a $A$, et qu'on a $B$.
+\end{prop}
+
+\begin{prop}[Montrer une implication $A\Rightarrow B$]
+	
+	
+	D'abord supposer $A$, ce que l'on peut écrire << supposons $A$ vraie >>, et ensuite montrer qu'on a $B$ en utilisant les règles...
+
+	Cela s'appelle montrer l'implication directe. On peut aussi ruser, et démontrer que $\neg B\Rightarrow \neg A$, puisque c'est la même chose que $A\Rightarrow B$.
+\end{prop}
+
+\begin{prop}[Montrer une équivalence $A\Leftrightarrow B$]
+	
+	
+	Typiquement, on peut montrer que $A\Rightarrow B$ (ce que l'on appelle le \textit{sens direct}), puis que $B\Rightarrow A$ (ce que l'on appelle le \textit{sens réciproque}).
+	
+	On peut aussi essayer d'enchaîner des équivalences assez évidentes, en justifiant éventuellement les moins évidentes par une précision entre parenthèses, un << puisque >>, ou encore un participe présent du style << $x\longmapsto x^2$ étant croissante sur $\R^+$ >>... Mais il faut faire attention à ce que cela ne nuise pas à la clarté de la démonstration.
+\end{prop}
+
+\begin{prop}[Montrer que $\forall x, A(x)$]
+	Il faut montrer que quel que soit $x$, $A(x)$ est vraie. Pour cela, on pose un $x$ quelconque, on suppose qu'il vérifie les hypothèses de $A(x)$ et en on montre la conclusion.
+\end{prop}
+
+\begin{prop}[Montrer $A\lor B$]
+	Il faut montrer que l'on a soit $A$, soit $B$... donc que si on n'a pas $A$, alors on aura nécessairement $B$. Il suffit donc de montrer l'implication $\neg A\Rightarrow B$.
+\end{prop}
+
+\begin{prop}[Montrer $\exists x,A(x)$]
+	On peut s'y prendre de plusieurs façons. On peut essayer d'exhiber un $x$ qui vérifie $A(x)$. Par exemple, pour montrer qu'il existe $x$ tel que $x^2=4$, on peut prendre $x=2$ et on a fini. 
+	
+	Si on n'y parvient pas, on peut essayer de le construire à la main. C'est loin d'être toujours facile.
+	
+	On peut des fois conclure en utilisant des théorème du cours donnant l'existence directement.
+\end{prop}
+
+\begin{exo}[M]
+	Montrer que si $n$ est un entier, $n$ est pair si et seulement si $n^2$ est pair.
+\end{exo}
+
+\begin{proof}
+	On décompose l'énoncé de la façon suivante:
+	\[ \forall n,n\text{ entier}\Rightarrow (n\text{ pair}\Leftrightarrow n^2\text{ pair}) \]
+	ou encore, avec l'abus de notation usuel:
+	\[ \forall n\text{ entier},(n\text{ pair}\Leftrightarrow n^2\text{ pair}). \]
+	
+	Pour démontrer l'implication, il faut se donner son hypothèse: soit $n$ un entier. Ensuite, il faut démontrer le deuxième bloc, le résultat << $n$ pair $\Leftrightarrow$ $n^2$ pair >>.
+	
+	Il s'agit d'une équivalence, donc on va procéder par double implication.
+	
+	\textbf{Le sens direct.} On va montrer l'implication << $n$ pair $\Rightarrow$ $n^2$ pair >>. On va utiliser la première méthode proposée. On suppose donc que $n$ est pair : il existe un entier $k$ tel que $n=2k$ (c'est la définition d'être pair). Alors $n^2=(2k)^2=2^2k^2=4k^2=2\times (2k^2)$, ce qui est pair.
+	
+	\textbf{Le sens réciproque.} On va montrer l'autre sens: << $n^2$ pair $\Rightarrow$ $n$ pair >>. Cela semble un peu corsé, donc on va plutôt montrer la contraposée: << $\neg(n\text{ pair})\Rightarrow \neg(n^2\text{ pair})$ >>.
+	
+	La négation de << être pair >> étant << être impair >>, cela revient à montrer que << $n$ impair $\Rightarrow$ $n^2$ impair >>. Cette implication paraît plus simple à montrer, donc on peut tenter de le faire directement: supposons $n$ impair. Alors il existe un entier $k$ tel que $n=2k+1$, et alors $n^2=(2k+1)^2=4k^2+4k + 1 = 2(2k^2+2k)+1$, ce qui est impair. D'où l'implication.
+	
+	Par contraposée on a bien << $n^2$ pair $\Rightarrow$ $n$ pair >>.
+\end{proof}
+
+
+\section{Ensembles}
+
+\subsection{Définitions intuitives}
+
+\begin{defn}
+	Un ensemble $E$ est une \textit{collection} d'objets $x$, que l'on appelle \textit{éléments de $E$}. Si $x$ est un élément de $E$, on dit que << $x$ appartient à $E$ >> et on note $x\in E$.
+\end{defn}
+
+\end{document}
 
 
