@@ -16,7 +16,7 @@
 \newtheorem{prop}[defn]{Proposition}
 \newtheorem{axio}[defn]{Axiome}
 \newtheorem{exe}{Exemple}
-
+\newtheorem{exo}{Exercice}
 
 \theoremstyle{remark}
 \newtheorem{rem}{Remarque}
@@ -197,7 +197,7 @@ Soient $P,Q,R$ des propositions.
 \item $(P\lor Q)\lor R \equiv P\lor (Q\lor R)$
 \item $P\lor Q \equiv Q\lor P$
 \item $P\lor P\equiv P$
-\item $p\lor \neg P\equiv V$ (principe du tiers exclu, encore)
+\item $P\lor \neg P\equiv V$ (principe du tiers exclu, encore)
 \end{enumerate}
 \end{prop}
 
@@ -239,6 +239,9 @@ $F$ & $F$ & $V$ \\\hline
 $P\Leftrightarrow Q$ se lit << $P$ équivaut à $Q$ >>
 \end{defn}
 
+
+
+
 \subsubsection{Quelques équivalences de formules}
 
 \begin{prop}[Distributivités]\leavevmode
@@ -269,11 +272,40 @@ On peut montrer que l'affirmation << si le sol est mouillé alors il pleut >> es
 \begin{prop}\leavevmode
 \begin{enumerate}
 \item $P\Longrightarrow Q\equiv (P\Longrightarrow Q)\land(Q\Longrightarrow P)$ (principe de double implication)
+\item $(P\Rightarrow Q)\equiv (\neg Q\Rightarrow \neg P)$ (principe de la contraposée)
+\item $(P\lor Q)\Rightarrow R\equiv (P\Rightarrow R)\land (Q\Rightarrow R)$ (disjonction de cas)
 \item $P\Rightarrow Q \equiv \neg P\lor Q$
-\item $(P\land (P\Rightarrow Q))\Rightarrow Q\equiv V$ (\textit{modus ponens})
+\item $(P\land (P\Rightarrow Q))\Rightarrow Q\equiv V$ (\textit{modus ponens} 
+\item $P\Rightarrow(Q\lor R) \equiv (P\land \neg Q)\Rightarrow R $
 \end{enumerate}
 \end{prop}
 
+\begin{exo}[D]
+Niez:\begin{enumerate}
+\item ((A\Rightarrow B)\land C)\lor\neg B
+\item (((A\Leftrightarrow B)\lor C)\Rightarrow B)\Leftrightarrow A
+\end{enumerate}
+\end{exo}
+
+\subsection{Formules quantifiées}
+
+Maintenant, on va apprendre à manier des variables dans des formules logiques.
+
+\begin{defn}[Prédicat]
+
+\end{defn}
+
+\begin{defn}[Quantificateur universel]
+Le quantificateur universel $\forall$, lu << pour tout >> est défini comme suit: le prédicat
+\[ \forall x,P(x)\]
+est vrai si la proposition $P(x)$ est vraie quelle que soit la valeur prise par $x$.
+\end{defn}
+
+\begin{defn}[Quantificateur existentiel]
+Le quantificateur universel $\exists$, lu << il existe >> est défini comme suit: le prédicat
+\[ \exists x,P(x)\]
+est vrai si la proposition $P(x)$ est vraie pour un certain $x$. Dans ce cas, on peut se donner un $x$ qui vérifie $P(x)$, même si on ne peut pas l'expliciter...
+\end{defn}
 
 \end{document}
 
