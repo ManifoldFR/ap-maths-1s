@@ -35,6 +35,12 @@
 \end{frame}
 
 \begin{frame}
+\tableofcontents
+\end{frame}
+
+\section{L'informatique, c'est quoi ?}
+
+\begin{frame}
 	\frametitle{Informatique: késako ?}
 	
 	Le mot \textit{informatique} est la contraction des mots \textit{information} et \textit{automatique} : il s'agit donc de la science du traitement automatique de l'information.
@@ -43,8 +49,10 @@
 	Un \textit{ordinateur} est la concrétisation de cette notion, une machine qui traite automatiquement des informations données en entrée, selon un \textit{programme informatique} qui dicte comment procéder.
 \end{frame}
 
+\section{Espace de travail}
+
 \begin{frame}[fragile]
-	\frametitle{À la découverte de Python}
+	\frametitle{Comment Pythonner}
 	
 	\begin{itemize}
 	\item<1-> Démarrez sur votre bureau le programme \textbf{Pyzo}.
@@ -63,8 +71,10 @@
 	
 \end{frame}
 
+\section{Calculs élémentaires}
+
 \begin{frame}[fragile]
-	\frametitle{Votre première manip'}
+	\frametitle{Premiers pas}
 	\begin{block}{\textbf{Exercice 1} Calculs élémentaires}
 		On va commencer par se familiariser avec les opérations arithmétiques de base que peut faire Python.
 		
@@ -85,6 +95,8 @@
 		\end{description}
 	\end{block}
 \end{frame}
+
+\section{Variables}
 
 \begin{frame}[fragile]
 
@@ -132,10 +144,14 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 	
 \end{frame}
 
-\begin{frame}[fragile]
+\section{Chaînes de caractères}
+
+\begin{frame}[fragile]{Chaînes de caractères}
+Un nouveau type de variable important: le type \verb|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. On peut les définir explicitement en incluant son message entre guillemets simples (\verb|'|) ou doubles (\verb|"|).\pause
+
+Il faut faire attention : quand on démarre par une guillemet d'un type, l'apparition d'une autre guillemet du même type clôt la chaîne.\pause
+
 	\begin{block}{\textbf{Exercice 3} Chaînes de caractères}
-	Un nouveau type de variable important: le type \verb|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. Définis explicitement en tapant un message encadré par des guillemets simples (\verb|' '|) ou doubles (\verb|" "|).
-	\pause
 	
 	\begin{itemize}[<+->]
 	\item Définir une variable \verb|Bonjour| prenant la valeur $0$.
@@ -145,8 +161,19 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 	\item Comparer \verb|type(Bonjour)|, \verb|type('Bonjour')| et \verb|type("Bonjour")|.
 	
 	\item Évaluer \verb|len("Bonjour")|. À quoi cela correspond-t-il ?
+    
+    \item Afficher \verb|J'aime la tartiflette| et  \verb|Il dit: "Bonjour !"|. Attention à utiliser des types de guillemets différents !
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]{Chaînes de caractères}{Opérations}
+
+
+	\begin{block}{\textbf{Exercice 3} (Suite)}
+    \begin{itemize}[<+->]
 	
-	\item Afficher \verb|J'aime la tartiflette| et  \verb|Il dit: "Bonjour !"|. Attention à utiliser des types de guillemets différents !
 	
 	\item Que se passe-t-il quand on affiche une chaîne contenant \verb|\n| ?
 	
@@ -180,21 +207,28 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 	
 \end{frame}
 
+\section{Structures conditionnelles}
+
+\subsection{Booléens}
+
 \begin{frame}[fragile]
 	\frametitle{Structures conditionnelles}
-	
+	\framesubtitle{Sémantique}
 	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
 	\begin{semiverbatim}if (condition):
         < traitement des données >
     else:
         < traitement des données >\end{semiverbatim}
     le \verb|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
+    \pause
     
-    La condition est une expression de type \verb|bool| (pour \textit{booléen}, nommé après le mathématicien et logicien George Boole). Une variable de type \verb|bool| prend deux valeurs seulement : \verb|True| et \verb|False|.
+    La condition est une expression de type \verb|bool| pour \textit{booléen}, nommé après le mathématicien et logicien George Boole. Une variable de type \verb|bool| prend deux valeurs : \verb|True| (\textit{Vrai}) et \verb|False| (\textit{Faux}).
 \end{frame}
 
-\begin{frame}[fragile]
-	Parmi les façons de construire des conditions booléennes, les plus courantes sont celles qui comparent les variables entre elles. Pour cela, on utilise les tests logiques de la table suivante:
+\subsection{Booléens}
+
+\begin{frame}[fragile]{Structures conditionnelles}{Booléens}
+	Parmi les façons de construire des conditions booléennes, les plus courantes sont celles qui comparent les variables entre elles. Pour cela, on utilise les tests logiques de la table suivante:\pause
 	\begin{figure}
 	\centering
 	\begin{tabular}{|l|c|}\hline
@@ -211,22 +245,30 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 	\begin{block}{Exemple}
 	Définir une variable \verb|x| égale à $3$. Quel est le type de l'expression \verb|x==3| ? L'évaluer. Que donne l'évaluation de \verb|x==2| ? Celle de \verb|x<=4| ? Celle de \verb|x<3| ? Celle de \verb|x!=2| ?
 	\end{block}
-	\pause
-	
-	On peut combiner deux booléens \verb|a| et \verb|b| pour faire des opérations logiques en utilisant les opérateurs suivants:
-	\begin{figure}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Structures conditionnelles}{Opérations sur les booléens}
+On peut combiner deux booléens \verb|a| et \verb|b| pour faire des opérations logiques en utilisant les opérateurs suivants:\pause
+\begin{figure}
 	\centering
 	\begin{tabular}{|l|c|}\hline
 	Négation & \verb|not(a)| \\
 	Conjonction (<< et >>) & \verb|a and b| \\
 	Disjonction (<< ou >>) & \verb|a or b| \\ \hline
-	\end{tabular}
-	\end{figure}
+\end{tabular}
+\end{figure}
+\pause
+
+\begin{block}{\textbf{Exercice 5}}
+	Écrire un programme qui demande deux nombres \verb|x| et \verb|y| à l'utilisateur et affiche s'ils sont tous les deux strictement positifs (c'est-à-dire s'ils sont $>0$).
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-	\begin{block}{\textbf{Exercice 5}}
-		Écrire un programme qui demande à l'utilisateur deux nombres $x$ et $y$, et affiche << \verb|Maximum de x et y = | >> suivi du maximum de $x$ et $y$ (le plus grand des deux).
+	\begin{block}{\textbf{Exercice 6}}
+	Écrire un programme qui demande à l'utilisateur deux nombres $x$ et $y$, et affiche << \verb|Maximum de x et y = | >> suivi du maximum de $x$ et $y$ (le plus grand des deux).
 	\end{block}
 \end{frame}
 \end{document}
