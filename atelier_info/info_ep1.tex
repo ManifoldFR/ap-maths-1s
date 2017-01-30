@@ -1,0 +1,232 @@
+\documentclass[10pt]{beamer}
+\usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\usetheme{Frankfurt}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{french}
+\frenchspacing
+
+\renewcommand\epsilon\varepsilon
+\renewcommand\phi\varphi
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
+
+\title{Atelier d'informatique}
+\subtitle{\textbf{Épisode I:} Introduction}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+	
+	<< \textit{Un programme informatique fait ce que vous lui avez dit de faire, pas ce que vous voulez qu'il fasse.} >> — Troisième loi de Greer
+\end{frame}
+
+\begin{frame}
+	\frametitle{Informatique: késako ?}
+	
+	Le mot \textit{informatique} est la contraction des mots \textit{information} et \textit{automatique} : il s'agit donc de la science du traitement automatique de l'information.
+	\pause
+	
+	Un \textit{ordinateur} est la concrétisation de cette notion, une machine qui traite automatiquement des informations données en entrée, selon un \textit{programme informatique} qui dicte comment procéder.
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{À la découverte de Python}
+	
+	\begin{itemize}
+	\item<1-> Démarrez sur votre bureau le programme \textbf{Pyzo}.
+	
+	\item<2-> \textbf{Pyzo} est un environnement de développement pour le langage de programmation Python. Il inclut une \textbf{console} (ou \textit{shell}, ou \textit{interpréteur}), où sont entrées les instructions à exécuter immédiatement, et une zone où écrire des scripts.
+	
+	\end{itemize}
+	\pause[3]
+	
+	\begin{figure}
+		\centering
+		\includegraphics[height=0.5\textheight]{screen_pyzo.png}
+		\caption{Pyzo.}
+	\end{figure}
+	
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Votre première manip'}
+	\begin{block}{\textbf{Exercice 1} Calculs élémentaires}
+		On va commencer par se familiariser avec les opérations arithmétiques de base que peut faire Python.
+		
+		\begin{description}[<+->]
+		\item[Addition] Entrer \verb|2+2| dans la console, appuyer sur \verb|Entrée| pour exécuter votre saisie. Vérifier que ça fait \verb|4|.
+		\item[Soustraction] Entrer \verb|4-3|. Vérifier que l'on trouve \verb|1|.
+		\item[Produit] Taper \verb|2*3|. Vérifier que l'on trouve \verb|6|.
+		\item[Division] Taper \verb|12/3|. Vérifier que l'on trouve \verb|4|. Taper \verb|4/5|. Vérifier que l'on trouve \verb|0.8|.
+		\item[...de CM1] Taper \verb|13//4|, et \verb|13%4|. Compléter la division posée suivante:
+			\[
+			\begin{array}{c|c}
+			13      & 4\\ \cline{2-2}
+			\ldots  & \ldots
+			\end{array}
+			 \]
+			Que remarquez-vous ?
+		\item[Puissances] Taper \verb|2**3|. Quel est le résultat ? Et celui de \verb|3**2| ?
+		\end{description}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+
+Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
+\pause
+	\begin{block}{\textbf{Exercice 2} Variables}
+		Une \textit{variable} est la donnée d'un emplacement mémoire où une valeur est stockée, et d'un nom.
+		\pause
+		
+		Le fait d'affecter une valeur à une variable s'appelle une << \textit{affectation} >>. En Python, on fait ça avec une expression de la forme \verb|x=...|	
+		\pause
+		
+		On peut également réaffecter une variable en recyclant simplement son nom.
+		\pause
+		
+		Pour afficher la valeur d'une variable, on peut demander à Python de l'évaluer en tapant son nom.
+		\pause
+		
+		\begin{itemize}[<+->]
+		\item Créer une variable $x$ qui a la valeur $3$. Est-ce qu'on peut écrire \verb|3=x| ?
+		
+		\item Créer une variable $y$ qui a la valeur $7x$. Modifier la valeur de $x$. Cela modifie-t-il la valeur de $y$ ?
+		
+		\item Rajouter $1$ à $x$ en la réaffectant, vérifier en évaluant. Même question avec $0.5$.
+		
+		\item Que font \verb|x+=1|, \verb|x-=1|, \verb|x*=2| ou encore \verb|x/=2| ?
+		
+		\item Entrer l'instruction \verb|x,y=y,x|. Quelles sont alors les valeurs de $x$ et de $y$ ?
+		\end{itemize}
+		\pause[8]
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\textbf{Remarque} Dans un langage de programmation un peu plus \textit{kasher}, on déclare et on affecte séparément une variable. Mais Python permet de déclarer une variable directement par affectation.
+	\pause
+	
+	\vspace{1em}
+	\textbf{À propos des types}
+	
+	La fonction \verb|type|, appliquée à une variable $x$ via l'instruction \verb|type(x)|, renvoie le type de la variable $x$. Essayez sur plusieurs valeurs: \verb|type(0)|, \verb|type(0.5)|, \verb|type(type)|, et \verb|type(0.)|.
+	\pause
+	
+	Les types \verb|int| et \verb|float| servent respectivement à représenter les nombres entiers et les nombres réels à virgule dans Python. On peut faire les opérations arithmétiques vues plus haut avec elles, même quand les variables en jeu sont d'un type et de l'autre.
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Exercice 3} Chaînes de caractères}
+	Un nouveau type de variable important: le type \verb|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. Définis explicitement en tapant un message encadré par des guillemets simples (\verb|' '|) ou doubles (\verb|" "|).
+	\pause
+	
+	\begin{itemize}[<+->]
+	\item Définir une variable \verb|Bonjour| prenant la valeur $0$.
+	
+	\item Que fait \verb|print(Bonjour)| ? Et les instructions \verb|print("Bonjour")| et \verb|print('Bonjour')| ?
+	
+	\item Comparer \verb|type(Bonjour)|, \verb|type('Bonjour')| et \verb|type("Bonjour")|.
+	
+	\item Évaluer \verb|len("Bonjour")|. À quoi cela correspond-t-il ?
+	
+	\item Afficher \verb|J'aime la tartiflette| et  \verb|Il dit: "Bonjour !"|. Attention à utiliser des types de guillemets différents !
+	
+	\item Que se passe-t-il quand on affiche une chaîne contenant \verb|\n| ?
+	
+	\item Définir deux chaines de caractères \verb|x| et \verb|y|: que fait \verb|print(x, y)| ? Est-ce que ça marche aussi si \verb|x| est une variable de type \verb|int| ?
+	
+	\item Évaluer la valeur de \verb|x+y|, l'afficher via \verb|print|.
+	
+	\item Afficher << \verb|1/100 est petit| >> en remplaçant \verb|1/100| par sa valeur. On utilisera \verb|"{} est petit".format()| où \verb|x| est la valeur voulue.
+	
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Premiers programmes}
+	
+	On va maintenant basculer sur la zone d'écriture de scripts. Un programme est une succession d'instructions qui sont effectuées lorsqu'il est exécuté.
+	\pause
+	
+	\begin{block}{\textbf{Exercice 4}}
+	\begin{itemize}[<+->]
+	\item Écrire un programme qui stocke la chaîne << \verb|Bonjour| >> dans une variable \verb|x|, puis l'affiche, puis affiche << \verb|Bonjour Bonjour| >>.
+	
+	\item Écrire un programme qui demande à l'utilisateur d'entrer un texte, affiche << \verb|Vous avez entré:| >> suivi du texte entré. On utilisera la fonction \verb|input|:	\begin{semiverbatim}texte = input()\end{semiverbatim}
+	demande, à son exécution, une chaîne de caractère à l'utilisateur, puis la stocke dans la variable \verb|texte|.
+	
+	\item Écrire un programme qui demande à l'utilisateur un nombre, le stocke dans une variable \verb|x|, puis affiche << \verb|f(x) = | >> suivi de la valeur de $\frac{1}{1+x^2}$. On pourra utiliser \verb|input|, convertir son entrée (initialement de type \verb|str|) en un entier via le constructeur \verb|int|.
+	
+	\end{itemize}
+	\end{block}
+	
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Structures conditionnelles}
+	
+	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
+	\begin{semiverbatim}if (condition):
+        < traitement des données >
+    else:
+        < traitement des données >\end{semiverbatim}
+    le \verb|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
+    
+    La condition est une expression de type \verb|bool| (pour \textit{booléen}, nommé après le mathématicien et logicien George Boole). Une variable de type \verb|bool| prend deux valeurs seulement : \verb|True| et \verb|False|.
+\end{frame}
+
+\begin{frame}[fragile]
+	Parmi les façons de construire des conditions booléennes, les plus courantes sont celles qui comparent les variables entre elles. Pour cela, on utilise les tests logiques de la table suivante:
+	\begin{figure}
+	\centering
+	\begin{tabular}{|l|c|}\hline
+	Égalité & \verb|x==y| \\ 
+	Différent & \verb|x!=y| \\ 
+	Inférieur ou égal & \verb|x<=y| \\ 
+	Inférieur strictement & \verb|x<y| \\ 
+	Supérieur ou égal & \verb|x>=y| \\
+	Supérieur strictement & \verb|x>y| \\ \hline
+	\end{tabular}
+	\end{figure}
+	\pause
+	
+	\begin{block}{Exemple}
+	Définir une variable \verb|x| égale à $3$. Quel est le type de l'expression \verb|x==3| ? L'évaluer. Que donne l'évaluation de \verb|x==2| ? Celle de \verb|x<=4| ? Celle de \verb|x<3| ? Celle de \verb|x!=2| ?
+	\end{block}
+	\pause
+	
+	On peut combiner deux booléens \verb|a| et \verb|b| pour faire des opérations logiques en utilisant les opérateurs suivants:
+	\begin{figure}
+	\centering
+	\begin{tabular}{|l|c|}\hline
+	Négation & \verb|not(a)| \\
+	Conjonction (<< et >>) & \verb|a and b| \\
+	Disjonction (<< ou >>) & \verb|a or b| \\ \hline
+	\end{tabular}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Exercice 5}}
+		Écrire un programme qui demande à l'utilisateur deux nombres $x$ et $y$, et affiche << \verb|Maximum de x et y = | >> suivi du maximum de $x$ et $y$ (le plus grand des deux).
+	\end{block}
+\end{frame}
+\end{document}
