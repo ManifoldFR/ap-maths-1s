@@ -1,17 +1,31 @@
 \documentclass[10pt]{beamer}
 \usepackage{geometry}
+\usepackage{polyglossia}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphicx}
 
+\setdefaultlanguage{french}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{green}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{brown}\ttfamily,
+	morecomment=[l][\color{blue}]{\#},
+	columns=fixed,
+	autogobble=true
+	keepspaces=false
+}
+
 \usetheme{Frankfurt}
 
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\setdefaultlanguage{french}
 \frenchspacing
+\setdefaultlanguage{french}
 
 \renewcommand\epsilon\varepsilon
 \renewcommand\phi\varphi
@@ -41,7 +55,7 @@ Dans ce chapitre, nous verrons une autre façon d'éviter de réécrire 9001 foi
 
 \section{Introduction}
 
-\begin{frame}{Fonction ? Comme $f\,(x)$ ?}
+\begin{frame}[fragile]{Fonction ? Comme $f\,(x)$ ?}
 
 Dans un langage de programmation, les \textit{fonctions} sont des objets qui prennent en argument des variables et effectuent une série d'instructions.
 \pause
@@ -62,24 +76,25 @@ Tout d'abord, débarrassons-nous d'idées préconçues :
 \begin{frame}[fragile]{Sémantique}
 
 Sous Python, on définit une fonction selon la syntaxe suivante:\pause
-\begin{semiverbatim}\textbf{def} nom_fonction(*args, **kwargs):
+\begin{lstlisting}def nom_fonction(*args, **kwargs):
     < instructions >
-    \textcolor{green}{\textbf{return}} < valeur >\end{semiverbatim}
+    return < valeur >\end{lstlisting}
 \pause
-où \verb|args| est un ensemble d'\textit{arguments}, séparés par des virgules, et \verb|kwargs| est un ensemble d'argument-clés ou \textit{keyword arguments}, qu'il faut introduire via un mot-clé lorsqu'on fait appel à la fonction.
+où \lstinline|args| est un ensemble d'\textit{arguments}, séparés par des virgules, et \lstinline|kwargs| est un ensemble d'argument-clés ou \textit{keyword arguments}, qu'il faut introduire via un mot-clé lorsqu'on fait appel à la fonction.
 \end{frame}
 
 \begin{frame}[fragile]{Sémantique}
 \begin{block}{\textbf{Exemple}}
-Par exemple, on définit la fonction \verb|f| suivante:\pause
-\begin{semiverbatim}
-\textbf{def} f(nombre, nom="eddy malou"):\pause
-    \textcolor{green}{\textbf{if}} n == 42:
-        \textbf{return} "Je suis le 1er savant de la République" + \\
-            "Démocratique du Congo" + nom\pause
-    \textcolor{green}{\textbf{else}}:
+Par exemple, on définit la fonction \lstinline|f| suivante:\pause
+\begin{lstlisting}[escapechar=\%]
+def f(nombre, nom="eddy malou"): %\pause%
+    if n == 42:
+        return "Je suis le 1er savant de la" + \
+		"République Démocratique du Congo" + \
+		nom %\pause%
+    else:
         print("Vous me décevez")
-\end{semiverbatim}
+\end{lstlisting}
 \end{block}
 \pause
 
@@ -88,20 +103,22 @@ Que fait cette fonction ?
 \end{frame}
 
 \begin{frame}[fragile]{Sémantique}
-Pour faire appel à une fonction qui s'appelle \verb|f|, par exemple, on utilise la syntaxe évidente :
-\begin{semiverbatim}f(arg1, arg2, ..., kwarg1 = < valeur >, ... )\end{semiverbatim}
-\pause
-
-\begin{block}{\textbf{Exemple}}
-\verb|f(41, nom = "jean-marc")| fait appel à la fonction \verb|f|, qui a un argument dépendant de la position, qui a pour valeur \verb|41|, et un argument-clé nommé \verb|nom|, qui prend pour valeur la chaîne \verb|"jean-marc"|.
-\end{block}
+	Pour faire appel à une fonction qui s'appelle \lstinline|f|, par exemple, on utilise la syntaxe évidente :
+	\begin{lstlisting}
+	f(arg1, arg2, ..., kwarg1 = < valeur >, ...)
+	\end{lstlisting}
+	\pause
+	
+	\begin{block}{\textbf{Exemple}}
+	\lstinline|f(41, nom = "jean-marc")| fait appel à la fonction \lstinline|f|, qui a un argument dépendant de la position, qui a pour valeur \lstinline|41|, et un argument-clé nommé \lstinline|nom|, qui prend pour valeur la chaîne \lstinline|"jean-marc"|.
+	\end{block}
 \end{frame}
 
 \section{Exercices}
 
 \begin{frame}[fragile]{Exercices}
 \begin{block}{\textbf{Exercice 1}}
-	Écrire une fonction \verb|f| qui correspond à la fonction réelle
+	Écrire une fonction \lstinline|f| qui correspond à la fonction réelle
     \[
     \begin{array}{rl}
     \mathbb{R} &\longrightarrow \mathbb{R} \\
@@ -115,7 +132,7 @@ Pour faire appel à une fonction qui s'appelle \verb|f|, par exemple, on utilise
 
 \begin{frame}[fragile]{Exercices}
 \begin{block}{\textbf{Exercice 2}}
-	Écrire une fonction \verb|f| qui correspond à la fonction valeur absolue $|x|$ définie par
+	Écrire une fonction \lstinline|f| qui correspond à la fonction valeur absolue $|x|$ définie par
     \[|x| = 
     \begin{cases}
     x & \text{si $x\geq 0$}\\
@@ -127,13 +144,13 @@ Pour faire appel à une fonction qui s'appelle \verb|f|, par exemple, on utilise
 \end{block}
 \pause
 
-On verra plus tard comment représenter graphiquement des fonctions numériques, via le module \verb|matplotlib|.
+On verra plus tard comment représenter graphiquement des fonctions numériques, via le module \lstinline|matplotlib|.
 
 \end{frame}
 
 \begin{frame}[fragile]
 \begin{block}{\textbf{Exercice 3}}
-Écrire une fonction \verb|divise| prenant en argument deux entiers \verb|n| et \verb|d| et renvoie un booléen qui vaut \verb|True| si $d$ divise $n$, et \verb|False| sinon.
+Écrire une fonction \lstinline|divise| prenant en argument deux entiers \lstinline|n| et \lstinline|d| et renvoie un booléen qui vaut \lstinline|True| si $d$ divise $n$, et \lstinline|False| sinon.
 \pause
 \textbf{Indication} L'entier $d$ divise l'entier $n$ lorsque le reste de la division de $n$ par $d$ est nul.
 \end{block}
@@ -141,10 +158,10 @@ On verra plus tard comment représenter graphiquement des fonctions numériques,
 
 \begin{frame}[fragile]
 \begin{block}{\textbf{Exercice 4} Maximum d'une liste}
-Écrire une fonction \verb|maxListe| qui prend en argument une liste \verb|l| et renvoie son plus grand élément, et l'indice du premier endroit où il se situe.
+Écrire une fonction \lstinline|maxListe| qui prend en argument une liste \lstinline|l| et renvoie son plus grand élément, et l'indice du premier endroit où il se situe.
 \pause
 
-\textbf{Indication} Utiliser deux variables \verb|valMax| et \verb|posMax|, initialement égales à \verb|l[0]| et \verb|0| respectivement, puis une boucle itérative \verb|for| parcourant la liste pour les mettre à jour.
+\textbf{Indication} Utiliser deux variables \lstinline|valMax| et \lstinline|posMax|, initialement égales à \lstinline|l[0]| et \lstinline|0| respectivement, puis une boucle itérative \lstinline|for| parcourant la liste pour les mettre à jour.
 \end{block}
 \pause
 
@@ -155,15 +172,15 @@ Trouver le maximum (ou le minimum) d'une liste donnée est un problème classiqu
 \begin{block}{\textbf{Exercice 5} Suite}
 On définit la suite $(u_n)$ suivante: $u_0\in\mathbb{R}$, et pour tout $n\in\mathbb{N}$, \[u_{n+1} = \sin(u_n).\]
 \pause
-Écrire une fonction \verb|suite| qui prend en argument un entier \verb|N| et un réel \verb|u0| puis génère la liste des termes de $(u_n)$ de $0$ à $N$.
+Écrire une fonction \lstinline|suite| qui prend en argument un entier \lstinline|N| et un réel \lstinline|u0| puis génère la liste des termes de $(u_n)$ de $0$ à $N$.
 \pause
 Pour utiliser la fonction $\sin$, on l'importera au début du script comme suit:
-\begin{semiverbatim}
-\textcolor{green}{\textbf{from}} numpy \textcolor{green}{\textbf{import}} sin
-\end{semiverbatim}
+\begin{lstlisting}
+from numpy import sin
+\end{lstlisting}
 \pause
 
-\textbf{Indication} On initialisera la liste en donnant l'instruction \verb|termes = [u0]| au début de la fonction, avant de passer dans une boucle \verb|for i in range(N)|. À la  $i$-ème étape de la boucle, le dernier élément de la liste, \verb|termes[-1]|, est égal à $u_i$.
+\textbf{Indication} On initialisera la liste en donnant l'instruction \lstinline|termes = [u0]| au début de la fonction, avant de passer dans une boucle \lstinline|for i in range(N)|. À la  $i$-ème étape de la boucle, le dernier élément de la liste, \lstinline|termes[-1]|, est égal à $u_i$.
 
 \end{block}
 \end{frame}
@@ -178,13 +195,13 @@ Pour info, voici quelques tracés de la suite:
 
 \begin{frame}[fragile]
 \begin{block}{\textbf{Correction de l'exercice 5}}
-\begin{semiverbatim}\textcolor{green}{from} numpy \textcolor{green}{import} sin
-\textbf{def} suite(u0, N):
+\begin{lstlisting}from numpy import sin
+def suite(u0, N):
     termes = [u0]
-    \textcolor{green}{\textbf{for}} i \textcolor{green}{\textbf{in}} range(N+1):
+    for i in range(N+1):
         ui = termes[-1]
         termes.append(sin(ui))
-    \textcolor{green}{\textbf{return}} termes\end{semiverbatim}
+    return termes\end{lstlisting}
 \end{block}
 \end{frame}
 

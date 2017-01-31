@@ -1,17 +1,29 @@
 \documentclass[10pt]{beamer}
 \usepackage{geometry}
+\usepackage{polyglossia}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphicx}
+\usepackage{unicode-math}
+
+\setdefaultlanguage{french}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{green}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{brown}\ttfamily,
+	morecomment=[l][\color{blue}]{\#},
+	columns=fixed,
+	autogobble=true
+	keepspaces=false	
+}
 
 \usetheme{Frankfurt}
-
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\setdefaultlanguage{french}
-\frenchspacing
 
 \renewcommand\epsilon\varepsilon
 \renewcommand\phi\varphi
@@ -145,8 +157,9 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 \end{frame}
 
 \section{Chaînes de caractères}
+\subsection{Généralités}
 
-\begin{frame}[fragile]{Chaînes de caractères}
+\begin{frame}[fragile]{Chaînes de caractères}{Généralités}
 Un nouveau type de variable important: le type \verb|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. On peut les définir explicitement en incluant son message entre guillemets simples (\verb|'|) ou doubles (\verb|"|).\pause
 
 Il faut faire attention : quand on démarre par une guillemet d'un type, l'apparition d'une autre guillemet du même type clôt la chaîne.\pause
@@ -168,6 +181,8 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 
 \end{frame}
 
+\subsection{Opérations sur les chaînes}
+
 \begin{frame}[fragile]{Chaînes de caractères}{Opérations}
 
 
@@ -187,6 +202,8 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 	\end{block}
 \end{frame}
 
+\section{Premiers programmes}
+
 \begin{frame}[fragile]
 	\frametitle{Premiers programmes}
 	
@@ -197,14 +214,16 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 	\begin{itemize}[<+->]
 	\item Écrire un programme qui stocke la chaîne << \verb|Bonjour| >> dans une variable \verb|x|, puis l'affiche, puis affiche << \verb|Bonjour Bonjour| >>.
 	
-	\item Écrire un programme qui demande à l'utilisateur d'entrer un texte, affiche << \verb|Vous avez entré:| >> suivi du texte entré. On utilisera la fonction \verb|input|:	\begin{semiverbatim}texte = input()\end{semiverbatim}
+	\item Écrire un programme qui demande à l'utilisateur d'entrer un texte, affiche << \verb|Vous avez entré:| >> suivi du texte entré. On utilisera la fonction \verb|input|:	
+	\begin{lstlisting}
+	texte = input()
+	\end{lstlisting}
 	demande, à son exécution, une chaîne de caractère à l'utilisateur, puis la stocke dans la variable \verb|texte|.
 	
 	\item Écrire un programme qui demande à l'utilisateur un nombre, le stocke dans une variable \verb|x|, puis affiche << \verb|f(x) = | >> suivi de la valeur de $\frac{1}{1+x^2}$. On pourra utiliser \verb|input|, convertir son entrée (initialement de type \verb|str|) en un entier via le constructeur \verb|int|.
 	
 	\end{itemize}
 	\end{block}
-	
 \end{frame}
 
 \section{Structures conditionnelles}
@@ -215,10 +234,12 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 	\frametitle{Structures conditionnelles}
 	\framesubtitle{Sémantique}
 	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
-	\begin{semiverbatim}if (condition):
-        < traitement des données >
-    else:
-        < traitement des données >\end{semiverbatim}
+	\begin{lstlisting}
+	if (condition):
+		< traitement des données >
+	else:
+		< traitement des données >
+    \end{lstlisting}
     le \verb|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
     \pause
     

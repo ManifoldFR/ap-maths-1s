@@ -1,15 +1,30 @@
 \documentclass[10pt]{beamer}
 \usepackage{geometry}
+\usepackage{polyglossia}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphicx}
+\usepackage{unicode-math}
+
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{green}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{brown}\ttfamily,
+	morecomment=[l][\color{blue}]{\#},
+	columns=fixed,
+	autogobble=true
+	keepspaces=false	
+}
 
 \usetheme{Frankfurt}
 
-\usepackage{fontspec}
-\usepackage{polyglossia}
+\frenchspacing
 \setdefaultlanguage{french}
 
 \renewcommand\epsilon\varepsilon
@@ -38,51 +53,72 @@
 	Dans ce chapitre, nous allons voir la notion de \textit{structure de données}, permettant de stocker et organiser un ensemble de données au sein d'un seul objet dans la mémoire de l'ordinateur, avec un type spécifique permettant de les traiter.
 	\pause
 	
-	On verra principalement le type \verb|list| implémenté par défaut dans Python.
+	On verra principalement le type \lstinline|list| implémenté par défaut dans Python.
 \end{frame}
+
+\frame{\tableofcontents}
 
 \section{Listes Python}
 
+\subsection{Les bases}
+
 \begin{frame}[fragile]{Listes Python}{Bases}
-	Sous Python, une liste \verb|l| une collection d'éléments de la forme $e = (\verb|mem|, \verb|suivant|)$ où \verb|mem| est l'adresse mémoire d'une valeur, et \verb|suivant| un pointeur vers le successeur de $e$ au sein de la liste \verb|l|. Ainsi chaque élément contient où trouver la valeur correspondante et où trouver l'élément suivant.
+	Sous Python, une liste \lstinline|l| une collection d'éléments de la forme $e = ($\lstinline|mem|, \lstinline|suivant|$)$ où \lstinline|mem| est l'adresse mémoire d'une valeur, et \lstinline|suivant| un pointeur vers le successeur de $e$ au sein de la liste \lstinline|l|. Ainsi chaque élément contient où trouver la valeur correspondante et où trouver l'élément suivant.
 	\pause
 	
-	Pour définir une liste en Python, plusieurs méthodes son possibles. On va commencer avec la définition d'une liste par explicitation : on énumère les éléments de la liste que l'on veut, entre des crochets \verb|[| et \verb|]|, et séparés par une virgule (\verb|,|).
+	Pour définir une liste en Python, plusieurs méthodes son possibles. On va commencer avec la définition d'une liste par explicitation : on énumère les éléments de la liste que l'on veut, entre des crochets \lstinline|[| et \lstinline|]|, et séparés par une virgule (\lstinline|,|).
 	\pause
 	
 	Il n'est pas obligé d'entrer des valeurs du même type, même si cela n'est pas vraiment conseillé.
 	\pause
 	
 	\begin{block}{\textbf{Exemple}}
-		Dans la console, entrez l'instruction \verb|l = [0,1,2,3,4,5]|. Affichez \verb|l|.
+		Dans la console, entrez l'instruction \lstinline|l = [0,1,2,3,4,5]|. Affichez \lstinline|l|.
 		\pause
 		
-		Évaluez l'expression \verb|len(l)|. Que remarquez-vous ?
+		Évaluez l'expression \lstinline|len(l)|. Que remarquez-vous ?
 	\end{block}
 	
-	La fonction \verb|len| permet en effet d'évaluer la longueur d'une liste, comme elle servait à évaluer celle d'une chaîne de caractères.
+	La fonction \lstinline|len| permet en effet d'évaluer la longueur d'une liste, comme elle servait à évaluer celle d'une chaîne de caractères.
 \end{frame}
 
+\subsection{Accéder à un élément}
+
 \begin{frame}[fragile]{Listes Python}{Accéder à un élément dans une liste}
-	Pour accéder à un élément d'une liste, on utilise la syntaxe \verb|l[i]|, où \verb|i| est la position de l'élément de la liste qui nous intéresse... mais attention, on commence à compter à partir de zéro !
+	Pour accéder à un élément d'une liste, on utilise la syntaxe \lstinline|l[i]|, où \lstinline|i| est la position de l'élément de la liste qui nous intéresse... mais attention, on commence à compter à partir de zéro !
 	\pause
 	
 	\begin{block}{\textbf{Exemple}}
-		Que vaut \verb|l[0]| ? Tentez d'évaluer \verb|l[6]|.
+		Que vaut \lstinline|l[0]| ? Tentez d'évaluer \lstinline|l[6]|.
 	\end{block}
 	\pause
 	
 	On peut même compter à rebours...
 	\begin{block}{\textbf{Exemple}}
-		Que vaut \verb|l[-1]| ? Et \verb|l[-2]| ?
+		Que vaut \lstinline|l[-1]| ? Et \lstinline|l[-2]| ?
 	\end{block}
-	\pause
-	
-	Pour obtenir une << sous-liste >>, ou un \textit{slicing}, des termes de \verb|i| à \verb|j-1|, on utilise la syntaxe \verb|l[i:j]|.\pause \,Pour ne prendre qu'un élément sur 2, on utilise \verb|l[i:j:2]| ou plus généralement \verb|l[i:j:k]| pour n'en prendre que un sur \verb|k|.\pause 
-	
-	Les valeurs par défaut (utilisées quand rien n'est précisé) de \verb|i|, \verb|j| et \verb|k| sont respectivement $0$, l'indice de fin de la liste, et $1$.
 \end{frame}
 
+\subsection{Slicing}
+
+\begin{frame}[fragile]{Listes dans Python}{\textit{Slicing}}
+	Pour obtenir une << sous-liste >>, ou un \textit{slicing}, composé des termes de \lstinline|i| à \lstinline|j-1|, on utilise la syntaxe \lstinline|l[i:j]|.\pause \,Pour ne prendre qu'un élément sur 2, on utilise \lstinline|l[i:j:2]| ou plus généralement \lstinline|l[i:j:p]| pour n'en prendre que un sur \lstinline|p|.\pause 
+	
+	Les valeurs par défaut (utilisées quand rien n'est précisé) de \lstinline|i|, \lstinline|j| et \lstinline|k| sont respectivement $0$, l'indice de fin de la liste, et $1$.\pause
+	
+	On peut modifier en un coup la tranche \lstinline|[i:j:p]|, en l'affectant:
+	\begin{lstlisting}l[i:j:p] = liste_de_valeurs
+	\end{lstlisting}
+	
+	\begin{block}{\textbf{Exercice}}
+	\begin{itemize}[<+->]
+	\item Définissez une liste \lstinline|li| de dix entiers.
+	\item Extrayez-en la tranche \lstinline|[2:6]|. Affichez le résultat. Triez la tranche (via la méthode \lstinline|nom_liste.sort()|), et remettez le résultat dans \lstinline|li|. Affichez \lstinline|li|.
+	\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Modifier une liste}
 
 \begin{frame}[fragile]{Listes Python}{Modifier une liste}
 	Les listes Python sont des objets dits \textit{mutables} : on peut modifier les valeurs qu'ils contiennent.
@@ -90,31 +126,50 @@
 	
 	En Python, on peut modifier un élément d'une liste en réaffectant la valeur comme on le ferait avec une variable.
 	\begin{block}{\textbf{Exemple}}
-		Entrez \verb|l[0] = "banane"| et affichez \verb|l|. Que remarquez-vous ?
+		Entrez \lstinline|l[0] = "banane"| et affichez \lstinline|l|. Que remarquez-vous ?
 	\end{block}
 	\pause
 	
 	Mais, une liste n'est qu'une collection d'adresses mémoire et pointeurs ! 
 	\begin{block}{\textbf{Exemple}}
-	Copiez la liste \verb|l| dans une autre variable \verb|t|. Exécutez l'instruction \verb|t[0] = "Tartiflette"|. Affichez \verb|t| pour vérifier que l'affectation a été faite.
+	Copiez la liste \lstinline|l| dans une autre variable \lstinline|t|. Exécutez l'instruction \lstinline|t[0] = "Tartiflette"|. Affichez \lstinline|t| pour vérifier que l'affectation a été faite.
 	\pause
 	
-	Maintenant, affichez \verb|l|. Que remarquez-vous ?
+	Maintenant, affichez \lstinline|l|. Que remarquez-vous ?
 	\end{block}
 	
-	Il existe une parade, en faisant un \textit{slicing} : \verb|t = l[:]|. Mais ce n'est pas tout à fait idéal...
+	Il existe une parade, en faisant un \textit{slicing} : \lstinline|t = l[:]|. Mais ce n'est pas tout à fait idéal...
 \end{frame}
 
 \begin{frame}[fragile]{Listes Python}{Modifier une liste (suite)}
-	Enfin, on peut ajouter une valeur à une liste en utilisant la méthode \verb|append|, qui s'utilise comme suit : \begin{semiverbatim}l.append(x)\end{semiverbatim}
-	ajoute la valeur \verb|x| à la fin de la liste \verb|l|.
+	Enfin, on peut ajouter une valeur à une liste en utilisant la méthode \lstinline|append| : \lstinline|l.append(x)| ajoute la valeur \lstinline|x| à la fin de la liste \lstinline|l|.
+
+	\begin{block}{\textbf{Exemple}}
+		Effectuez l'instruction \lstinline|l.append(18)|, et affichez \lstinline|l|. Vérifiez la longueur via \lstinline|len|.
+	\end{block}
+	\pause
+	
+	Si vous souhaitez insérer un élément \lstinline|x| en position \lstinline|i|, utilisez \lstinline|l.insert(i,x)|.
+	\pause
+	
+	Si vous voulez étendre la liste \lstinline|l1| avec les valeurs d'une deuxième liste \lstinline|l2|, utilisez \lstinline|l1.extend(l2)|.
+	\pause
+	
+	La méthode \lstinline|l.sort()| trie la liste, la méthode \lstinline|l.reverse()| renverse son ordre.
+\end{frame}
+
+\subsection{Opérations sur les listes}
+
+\begin{frame}[fragile]{Listes dans Python}{Opérations sur les listes}
+	On peut ajouter deux listes ensemble: \lstinline|l1 + l2| produit la \textit{concaténation} des listes \lstinline|l1| et \lstinline|l2| (les éléments de la première suivis de ceux de la seconde).
 	
 	\begin{block}{\textbf{Exemple}}
-		Effectuez l'instruction \verb|l.append(18)|, et affichez \verb|l|. Vérifiez la longueur via \verb|len|.
+		Définissez deux listes \lstinline|l1| et \lstinline|l2|, affichez \lstinline|l1 + l2|.
 	\end{block}
 \end{frame}
 
 \section{Boucles d'instructions}
+\subsection{Introduction}
 
 \begin{frame}[fragile]{Boucles}{Introduction}
 	Des fois, on veut exécuter plusieurs fois les mêmes instructions au sein d'un programme, et le nombre de fois peut soit être très grand, soit dépendre des variables en jeu.
@@ -123,33 +178,42 @@
 	En tout cas, on ne va pas réécrire plusieurs fois ces mêmes instructions. Pour cela, on utilise des boucles.
 	\pause
 	
-	Python propose deux types de boucle. La boucle itérative, \verb|for|, s'exécutant en lisant les éléments d'une structure de donnée que l'on peut parcourir, telle une liste, et la boucle conditionnelle \verb|while| qui ne s'arrête que lorsqu'une condition booléenne à vérifier prend la valeur \verb|False|.
+	Python propose deux types de boucle. La boucle itérative, \lstinline|for|, s'exécutant en lisant les éléments d'une structure de donnée que l'on peut parcourir, telle une liste, et la boucle conditionnelle \lstinline|while| qui ne s'arrête que lorsqu'une condition booléenne à vérifier prend la valeur \lstinline|False|.
 \end{frame}
 
+\subsection{Boucle itérative}
+
 \begin{frame}[fragile]{Boucles}{Boucle itérative}
-	Sous Python, elle est implémentée comme suit:
-	\begin{semiverbatim}for i in itérable:
-    < traitement >\end{semiverbatim}
-	où \verb|itérable| peut être une liste, par exemple, ou encore une chaîne de caractères, ou généralement tout objet ayant l'attribut \verb|'__iter'|, c'est-à-dire sur lequel on peut itérer.
-	\pause
+Sous Python, elle est implémentée comme suit:
+\begin{lstlisting}
+for i in itérable:
+    < traitement >
+\end{lstlisting}
+où \lstinline|itérable| peut être une liste, par exemple, ou encore une chaîne de caractères, ou généralement tout objet ayant l'attribut \lstinline|'__iter'|, c'est-à-dire sur lequel on peut itérer.
+\pause
 	
 	\begin{block}{\textbf{Exemple}}
 		\begin{itemize}[<+->]
-		\item Écrire un programme qui affiche 20 fois << \verb|J'aime la tartiflette| >>. On peut générer un itérable d'entiers allant de 0 à \verb|N-1| via \verb|range(N)|, ou de façon équivalente \verb|range(0,N)|.
+		\item Écrire un programme qui affiche 20 fois << \lstinline|J'aime la tartiflette| >>. On peut générer un itérable d'entiers allant de 0 à \lstinline|N-1| via \lstinline|range(N)|, ou de façon équivalente \lstinline|range(0,N)|.
 		
 		\item Écrire un programme qui compte de 1 à 10.
 		
-		\item Écrire un programme qui ajoute les inverses des entiers de $1$ à \verb|N|, où \verb|N| est un entier demandé à l'utilisateur.
+		\item Écrire un programme qui ajoute les inverses des entiers de $1$ à \lstinline|N|, où \lstinline|N| est un entier demandé à l'utilisateur.
 		\end{itemize}
 	\end{block}
 \end{frame}
 
+\subsection{Boucle conditionnelle}
+
 \begin{frame}[fragile]{Boucles}{Boucle conditionnelle}
-	Sous Python, elle est implémentée comme suit:\begin{semiverbatim}while (condition):
-    < traitement >\end{semiverbatim}
-	où \verb|condition| est un booléen. La boucle s'exécute tant que le booléen est vrai.
-	Pour forcer la sortie de boucle, on peut utiliser l'instruction \verb|break| au sein du traitement.
-	
+	Sous Python, elle est implémentée comme suit:
+	\begin{lstlisting}
+	while (condition):
+	    < traitement >
+	\end{lstlisting}
+	où \lstinline|condition| est un booléen. La boucle s'exécute tant que le booléen est vrai.
+	Pour forcer la sortie de boucle, on peut utiliser l'instruction \lstinline|break| au sein du traitement.
+		
 	\begin{block}{\textbf{Exemple}}
 		Écrire un programme qui demande un entier à l'utilisateur tant que celui-ci n'est pas égal à $42$.
 	\end{block}
