@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,xcolor={dvipsnames}]{beamer}
 \usepackage{geometry}
 \usepackage{polyglossia}
 \usepackage{mathtools}
@@ -6,24 +6,25 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{unicode-math}
-
-\setdefaultlanguage{french}
 \usepackage{listings}
 \usepackage{lstautogobble}
 
 \lstset{language=Python,
+	escapechar=\%,
 	basicstyle=\ttfamily,
-	keywordstyle=\color{green}\ttfamily,
+	keywordstyle=\color{OliveGreen}\ttfamily,
 	stringstyle=\color{red}\ttfamily,
 	commentstyle=\color{brown}\ttfamily,
 	morecomment=[l][\color{blue}]{\#},
 	columns=fixed,
 	autogobble=true
-	keepspaces=false	
+	keepspaces=false
 }
 
 \usetheme{Frankfurt}
+
+\frenchspacing
+\setdefaultlanguage{french}
 
 \renewcommand\epsilon\varepsilon
 \renewcommand\phi\varphi
@@ -34,6 +35,20 @@
 \newcommand{\CC}{\mathbb C}
 \newcommand{\K}{\mathbb K}
 \DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
+
+\newcounter{Exercice}
+\resetcounteronoverlays{Exercice}
+\newenvironment{exo}{
+	\refstepcounter{Exercice}
+	\begin{block}{\textbf{Exercice~\theExercice}}
+	}{\end{block}}
+
+\newcounter{Exemple}
+\resetcounteronoverlays{Exemple}
+\newenvironment{exem}{
+	\refstepcounter{Exemple}
+	\begin{block}{\textbf{Exemple~\theExemple}}
+	}{\end{block}}
 
 \title{Atelier d'informatique}
 \subtitle{\textbf{Épisode I:} Introduction}
@@ -87,15 +102,15 @@
 
 \begin{frame}[fragile]
 	\frametitle{Premiers pas}
-	\begin{block}{\textbf{Exercice 1} Calculs élémentaires}
+	\begin{exo}
 		On va commencer par se familiariser avec les opérations arithmétiques de base que peut faire Python.
 		
 		\begin{description}[<+->]
-		\item[Addition] Entrer \verb|2+2| dans la console, appuyer sur \verb|Entrée| pour exécuter votre saisie. Vérifier que ça fait \verb|4|.
-		\item[Soustraction] Entrer \verb|4-3|. Vérifier que l'on trouve \verb|1|.
-		\item[Produit] Taper \verb|2*3|. Vérifier que l'on trouve \verb|6|.
-		\item[Division] Taper \verb|12/3|. Vérifier que l'on trouve \verb|4|. Taper \verb|4/5|. Vérifier que l'on trouve \verb|0.8|.
-		\item[...de CM1] Taper \verb|13//4|, et \verb|13%4|. Compléter la division posée suivante:
+		\item[Addition] Entrer \lstinline|2+2| dans la console, appuyer sur \lstinline|Entrée| pour exécuter votre saisie. Vérifier que ça fait \lstinline|4|.
+		\item[Soustraction] Entrer \lstinline|4-3|. Vérifier que l'on trouve \lstinline|1|.
+		\item[Produit] Taper \lstinline|2*3|. Vérifier que l'on trouve \lstinline|6|.
+		\item[Division] Taper \lstinline|12/3|. Vérifier que l'on trouve \lstinline|4|. Taper \lstinline|4/5|. Vérifier que l'on trouve \lstinline|0.8|.
+		\item[...de CM1] Taper \lstinline|13//4|, et \lstinline|13%4|. Compléter la division posée suivante:
 			\[
 			\begin{array}{c|c}
 			13      & 4\\ \cline{2-2}
@@ -103,43 +118,45 @@
 			\end{array}
 			 \]
 			Que remarquez-vous ?
-		\item[Puissances] Taper \verb|2**3|. Quel est le résultat ? Et celui de \verb|3**2| ?
+		\item[Puissances] Taper \lstinline|2**3|. Quel est le résultat ? Et celui de \lstinline|3**2| ?
 		\end{description}
-	\end{block}
+	\end{exo}
 \end{frame}
 
 \section{Variables}
 
 \begin{frame}[fragile]
+\frametitle{Variables}
 
 Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 \pause
-	\begin{block}{\textbf{Exercice 2} Variables}
-		Une \textit{variable} est la donnée d'un emplacement mémoire où une valeur est stockée, et d'un nom.
-		\pause
-		
-		Le fait d'affecter une valeur à une variable s'appelle une << \textit{affectation} >>. En Python, on fait ça avec une expression de la forme \verb|x=...|	
-		\pause
-		
-		On peut également réaffecter une variable en recyclant simplement son nom.
-		\pause
-		
-		Pour afficher la valeur d'une variable, on peut demander à Python de l'évaluer en tapant son nom.
-		\pause
+
+Une \textit{variable} est la donnée d'un emplacement mémoire où une valeur est stockée, et d'un nom.
+\pause
+
+Le fait d'affecter une valeur à une variable s'appelle une << \textit{affectation} >>. En Python, on fait ça avec une expression de la forme \lstinline|x=...|	
+\pause
+
+On peut également réaffecter une variable en recyclant simplement son nom.
+\pause
+
+Pour afficher la valeur d'une variable, on peut demander à Python de l'évaluer en tapant son nom.
+\pause
+	\begin{exo}
 		
 		\begin{itemize}[<+->]
-		\item Créer une variable $x$ qui a la valeur $3$. Est-ce qu'on peut écrire \verb|3=x| ?
+		\item Créer une variable $x$ qui a la valeur $3$. Est-ce qu'on peut écrire \lstinline|3=x| ?
 		
 		\item Créer une variable $y$ qui a la valeur $7x$. Modifier la valeur de $x$. Cela modifie-t-il la valeur de $y$ ?
 		
 		\item Rajouter $1$ à $x$ en la réaffectant, vérifier en évaluant. Même question avec $0.5$.
 		
-		\item Que font \verb|x+=1|, \verb|x-=1|, \verb|x*=2| ou encore \verb|x/=2| ?
+		\item Que font \lstinline|x+=1|, \lstinline|x-=1|, \lstinline|x*=2| ou encore \lstinline|x/=2| ?
 		
-		\item Entrer l'instruction \verb|x,y=y,x|. Quelles sont alors les valeurs de $x$ et de $y$ ?
+		\item Entrer l'instruction \lstinline|x,y=y,x|. Quelles sont alors les valeurs de $x$ et de $y$ ?
 		\end{itemize}
 		\pause[8]
-	\end{block}
+	\end{exo}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -149,10 +166,10 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 	\vspace{1em}
 	\textbf{À propos des types}
 	
-	La fonction \verb|type|, appliquée à une variable $x$ via l'instruction \verb|type(x)|, renvoie le type de la variable $x$. Essayez sur plusieurs valeurs: \verb|type(0)|, \verb|type(0.5)|, \verb|type(type)|, et \verb|type(0.)|.
+	La fonction \lstinline|type|, appliquée à une variable $x$ via l'instruction \lstinline|type(x)|, renvoie le type de la variable $x$. Essayez sur plusieurs valeurs: \lstinline|type(0)|, \lstinline|type(0.5)|, \lstinline|type(type)|, et \lstinline|type(0.)|.
 	\pause
 	
-	Les types \verb|int| et \verb|float| servent respectivement à représenter les nombres entiers et les nombres réels à virgule dans Python. On peut faire les opérations arithmétiques vues plus haut avec elles, même quand les variables en jeu sont d'un type et de l'autre.
+	Les types \lstinline|int| et \lstinline|float| servent respectivement à représenter les nombres entiers et les nombres réels à virgule dans Python. On peut faire les opérations arithmétiques vues plus haut avec elles, même quand les variables en jeu sont d'un type et de l'autre.
 	
 \end{frame}
 
@@ -160,24 +177,24 @@ Mais Python est bien plus puissant qu'une simple \textit{Casio collège}...
 \subsection{Généralités}
 
 \begin{frame}[fragile]{Chaînes de caractères}{Généralités}
-Un nouveau type de variable important: le type \verb|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. On peut les définir explicitement en incluant son message entre guillemets simples (\verb|'|) ou doubles (\verb|"|).\pause
+Un nouveau type de variable important: le type \lstinline|str|, pour \textit{string} ou \textit{chaîne de caractères}, en français. On peut les définir explicitement en incluant son message entre guillemets simples (\lstinline|'|) ou doubles (\lstinline|"|).\pause
 
 Il faut faire attention : quand on démarre par une guillemet d'un type, l'apparition d'une autre guillemet du même type clôt la chaîne.\pause
 
-	\begin{block}{\textbf{Exercice 3} Chaînes de caractères}
+	\begin{exo}
 	
 	\begin{itemize}[<+->]
-	\item Définir une variable \verb|Bonjour| prenant la valeur $0$.
+	\item Définir une variable \lstinline|Bonjour| prenant la valeur $0$.
 	
-	\item Que fait \verb|print(Bonjour)| ? Et les instructions \verb|print("Bonjour")| et \verb|print('Bonjour')| ?
+	\item Que fait \lstinline|print(Bonjour)| ? Et les instructions \lstinline|print("Bonjour")| et \lstinline|print('Bonjour')| ?
 	
-	\item Comparer \verb|type(Bonjour)|, \verb|type('Bonjour')| et \verb|type("Bonjour")|.
+	\item Comparer \lstinline|type(Bonjour)|, \lstinline|type('Bonjour')| et \lstinline|type("Bonjour")|.
 	
-	\item Évaluer \verb|len("Bonjour")|. À quoi cela correspond-t-il ?
+	\item Évaluer \lstinline|len("Bonjour")|. À quoi cela correspond-t-il ?
     
-    \item Afficher \verb|J'aime la tartiflette| et  \verb|Il dit: "Bonjour !"|. Attention à utiliser des types de guillemets différents !
+    \item Afficher \lstinline|J'aime la tartiflette| et  \lstinline|Il dit: "Bonjour !"|. Attention à utiliser des types de guillemets différents !
     \end{itemize}
-\end{block}
+\end{exo}
 
 \end{frame}
 
@@ -186,20 +203,20 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 \begin{frame}[fragile]{Chaînes de caractères}{Opérations}
 
 
-	\begin{block}{\textbf{Exercice 3} (Suite)}
+	\begin{exo}
     \begin{itemize}[<+->]
 	
 	
-	\item Que se passe-t-il quand on affiche une chaîne contenant \verb|\n| ?
+	\item Que se passe-t-il quand on affiche une chaîne contenant \lstinline|\n| ?
 	
-	\item Définir deux chaines de caractères \verb|x| et \verb|y|: que fait \verb|print(x, y)| ? Est-ce que ça marche aussi si \verb|x| est une variable de type \verb|int| ?
+	\item Définir deux chaines de caractères \lstinline|x| et \lstinline|y|: que fait \lstinline|print(x, y)| ? Est-ce que ça marche aussi si \lstinline|x| est une variable de type \lstinline|int| ?
 	
-	\item Évaluer la valeur de \verb|x+y|, l'afficher via \verb|print|.
+	\item Évaluer la valeur de \lstinline|x+y|, l'afficher via \lstinline|print|.
 	
-	\item Afficher << \verb|1/100 est petit| >> en remplaçant \verb|1/100| par sa valeur. On utilisera \verb|"{} est petit".format()| où \verb|x| est la valeur voulue.
+	\item Afficher << \lstinline|1/100 est petit| >> en remplaçant \lstinline|1/100| par sa valeur. On utilisera \lstinline|"{} est petit".format()| où \lstinline|x| est la valeur voulue.
 	
 	\end{itemize}
-	\end{block}
+	\end{exo}
 \end{frame}
 
 \section{Premiers programmes}
@@ -210,86 +227,21 @@ Il faut faire attention : quand on démarre par une guillemet d'un type, l'appar
 	On va maintenant basculer sur la zone d'écriture de scripts. Un programme est une succession d'instructions qui sont effectuées lorsqu'il est exécuté.
 	\pause
 	
-	\begin{block}{\textbf{Exercice 4}}
+	\begin{exo}
 	\begin{itemize}[<+->]
-	\item Écrire un programme qui stocke la chaîne << \verb|Bonjour| >> dans une variable \verb|x|, puis l'affiche, puis affiche << \verb|Bonjour Bonjour| >>.
+	\item Écrire un programme qui stocke la chaîne << \lstinline|Bonjour| >> dans une variable \lstinline|x|, puis l'affiche, puis affiche << \lstinline|Bonjour Bonjour| >>.
 	
-	\item Écrire un programme qui demande à l'utilisateur d'entrer un texte, affiche << \verb|Vous avez entré:| >> suivi du texte entré. On utilisera la fonction \verb|input|:	
+	\item Écrire un programme qui demande à l'utilisateur d'entrer un texte, affiche << \lstinline|Vous avez entré:| >> suivi du texte entré. On utilisera la fonction \lstinline|input|:	
 	\begin{lstlisting}
 	texte = input()
 	\end{lstlisting}
-	demande, à son exécution, une chaîne de caractère à l'utilisateur, puis la stocke dans la variable \verb|texte|.
+	demande, à son exécution, une chaîne de caractère à l'utilisateur, puis la stocke dans la variable \lstinline|texte|.
 	
-	\item Écrire un programme qui demande à l'utilisateur un nombre, le stocke dans une variable \verb|x|, puis affiche << \verb|f(x) = | >> suivi de la valeur de $\frac{1}{1+x^2}$. On pourra utiliser \verb|input|, convertir son entrée (initialement de type \verb|str|) en un entier via le constructeur \verb|int|.
+	\item Écrire un programme qui demande à l'utilisateur un nombre, le stocke dans une variable \lstinline|x|, puis affiche << \lstinline|f(x) = | >> suivi de la valeur de $\frac{1}{1+x^2}$. On pourra utiliser \lstinline|input|, convertir son entrée (initialement de type \lstinline|str|) en un entier via le constructeur \lstinline|int|.
 	
 	\end{itemize}
-	\end{block}
-\end{frame}
-
-\section{Structures conditionnelles}
-
-\subsection{Booléens}
-
-\begin{frame}[fragile]
-	\frametitle{Structures conditionnelles}
-	\framesubtitle{Sémantique}
-	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
-	\begin{lstlisting}
-	if (condition):
-		< traitement des données >
-	else:
-		< traitement des données >
-    \end{lstlisting}
-    le \verb|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
-    \pause
-    
-    La condition est une expression de type \verb|bool| pour \textit{booléen}, nommé après le mathématicien et logicien George Boole. Une variable de type \verb|bool| prend deux valeurs : \verb|True| (\textit{Vrai}) et \verb|False| (\textit{Faux}).
-\end{frame}
-
-\subsection{Booléens}
-
-\begin{frame}[fragile]{Structures conditionnelles}{Booléens}
-	Parmi les façons de construire des conditions booléennes, les plus courantes sont celles qui comparent les variables entre elles. Pour cela, on utilise les tests logiques de la table suivante:\pause
-	\begin{figure}
-	\centering
-	\begin{tabular}{|l|c|}\hline
-	Égalité & \verb|x==y| \\ 
-	Différent & \verb|x!=y| \\ 
-	Inférieur ou égal & \verb|x<=y| \\ 
-	Inférieur strictement & \verb|x<y| \\ 
-	Supérieur ou égal & \verb|x>=y| \\
-	Supérieur strictement & \verb|x>y| \\ \hline
-	\end{tabular}
-	\end{figure}
-	\pause
-	
-	\begin{block}{Exemple}
-	Définir une variable \verb|x| égale à $3$. Quel est le type de l'expression \verb|x==3| ? L'évaluer. Que donne l'évaluation de \verb|x==2| ? Celle de \verb|x<=4| ? Celle de \verb|x<3| ? Celle de \verb|x!=2| ?
-	\end{block}
+	\end{exo}
 \end{frame}
 
 
-
-\begin{frame}[fragile]{Structures conditionnelles}{Opérations sur les booléens}
-On peut combiner deux booléens \verb|a| et \verb|b| pour faire des opérations logiques en utilisant les opérateurs suivants:\pause
-\begin{figure}
-	\centering
-	\begin{tabular}{|l|c|}\hline
-	Négation & \verb|not(a)| \\
-	Conjonction (<< et >>) & \verb|a and b| \\
-	Disjonction (<< ou >>) & \verb|a or b| \\ \hline
-\end{tabular}
-\end{figure}
-\pause
-
-\begin{block}{\textbf{Exercice 5}}
-	Écrire un programme qui demande deux nombres \verb|x| et \verb|y| à l'utilisateur et affiche s'ils sont tous les deux strictement positifs (c'est-à-dire s'ils sont $>0$).
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-	\begin{block}{\textbf{Exercice 6}}
-	Écrire un programme qui demande à l'utilisateur deux nombres $x$ et $y$, et affiche << \verb|Maximum de x et y = | >> suivi du maximum de $x$ et $y$ (le plus grand des deux).
-	\end{block}
-\end{frame}
 \end{document}

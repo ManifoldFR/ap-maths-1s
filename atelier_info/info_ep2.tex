@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,xcolor={dvipsnames}]{beamer}
 \usepackage{geometry}
 \usepackage{polyglossia}
 \usepackage{mathtools}
@@ -6,20 +6,19 @@
 \usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{unicode-math}
-
 \usepackage{listings}
 \usepackage{lstautogobble}
 
 \lstset{language=Python,
+	escapechar=\%,
 	basicstyle=\ttfamily,
-	keywordstyle=\color{green}\ttfamily,
+	keywordstyle=\color{OliveGreen}\ttfamily,
 	stringstyle=\color{red}\ttfamily,
 	commentstyle=\color{brown}\ttfamily,
 	morecomment=[l][\color{blue}]{\#},
 	columns=fixed,
 	autogobble=true
-	keepspaces=false	
+	keepspaces=true	
 }
 
 \usetheme{Frankfurt}
@@ -36,6 +35,20 @@
 \newcommand{\CC}{\mathbb C}
 \newcommand{\K}{\mathbb K}
 \DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
+
+\newcounter{Exercice}
+\resetcounteronoverlays{Exercice}
+\newenvironment{exo}{
+	\refstepcounter{Exercice}
+	\begin{block}{\textbf{Exercice~\theExercice}}
+}{\end{block}}
+
+\newcounter{Exemple}
+\resetcounteronoverlays{Exemple}
+\newenvironment{exem}{
+	\refstepcounter{Exemple}
+	\begin{block}{\textbf{Exemple~\theExemple}}
+	}{\end{block}}
 
 \title{Atelier d'informatique}
 \subtitle{\textbf{Épisode II:} Structures de données}
@@ -58,6 +71,82 @@
 
 \frame{\tableofcontents}
 
+\section{Structures conditionnelles}
+
+\subsection{Sémantique}
+
+\begin{frame}[fragile]
+	\frametitle{Structures conditionnelles}
+	\framesubtitle{Sémantique}
+	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
+	\begin{lstlisting}
+	if (condition):
+	< traitement des données >
+	else:
+	< traitement des données >
+	\end{lstlisting}
+	le \lstinline|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
+	\pause
+	
+	La condition est une expression de type \lstinline|bool| pour \textit{booléen}, nommé après le mathématicien et logicien George Boole. Une variable de type \lstinline|bool| prend deux valeurs : \lstinline|True| (\textit{Vrai}) et \lstinline|False| (\textit{Faux}).
+\end{frame}
+
+\subsection{Tests de comparaison}
+
+\begin{frame}[fragile]{Structures conditionnelles}{Tests de comparaison}
+	Parmi les façons de construire des conditions booléennes, les plus courantes sont celles qui comparent les variables entre elles. Pour cela, on utilise les tests logiques de la table suivante:\pause
+	\begin{figure}
+		\centering
+		\begin{tabular}{|l|c|}\hline
+			Égalité & \lstinline|x==y| \\ 
+			Différent & \lstinline|x!=y| \\ 
+			Inférieur ou égal & \lstinline|x<=y| \\ 
+			Inférieur strictement & \lstinline|x<y| \\ 
+			Supérieur ou égal & \lstinline|x>=y| \\
+			Supérieur strictement & \lstinline|x>y| \\ \hline
+		\end{tabular}
+	\end{figure}
+	\pause
+	
+	\textbf{Remarque} Les comparaisons de type égalité fonctionnent sur toutes les variables (sauf celles de type \lstinline|None|, dans lequel cas on teste \lstinline|is None|). Les comparaisons de type inférieur/supérieur fonctionnent sur les nombres, ainsi que sur les chaînes de caractères. Dans le premier cas, c'est l'ordre usuel sur les nombres réels, et dans le deuxième cas l'ordre lexicographique (l'ordre des mots dans un dictionnaire).
+\end{frame}
+
+
+\begin{frame}
+	\begin{exem}
+		Définissez une variable \lstinline|x| égale à $3$. Quel est le type de l'expression \lstinline|x==3| ? Évaluez sa valeur. Que donne l'évaluation de \lstinline|x==2| ? Celle de \lstinline|x<=4| ? Celle de \lstinline|x<3| ? Celle de \lstinline|x!=2| ?
+	\end{exem}
+
+	\begin{exem}
+		Définissez une variable \lstinline|x| contenant la chaîne de caractère \lstinline|"Wolfgang"|. Évaluez les booléens \lstinline|x > "Amadeus"| et \lstinline|x < "Mozart"|. Comparez \lstinline|x| et \lstinline|"Wagner"|.
+	\end{exem}
+\end{frame}
+
+
+\subsection{Opérations sur les booléens}
+\begin{frame}[fragile]{Structures conditionnelles}{Opérations sur les booléens}
+	On peut combiner deux booléens \lstinline|a| et \lstinline|b| pour faire des opérations logiques en utilisant les opérateurs suivants:\pause
+	\begin{figure}
+		\centering
+		\begin{tabular}{|l|c|}\hline
+			Négation & \lstinline|not(a)| \\
+			Conjonction (<< et >>) & \lstinline|a and b| \\
+			Disjonction (<< ou >>) & \lstinline|a or b| \\ \hline
+		\end{tabular}
+	\end{figure}
+	\pause
+	
+	\begin{exo}
+		Écrire un programme qui demande deux nombres \lstinline|x| et \lstinline|y| à l'utilisateur et affiche s'ils sont tous les deux strictement positifs (c'est-à-dire s'ils sont $>0$).
+	\end{exo}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{exo}
+		Écrire un programme qui demande à l'utilisateur deux nombres $x$ et $y$, et affiche << \lstinline|Maximum de x et y = | >> suivi du maximum de $x$ et $y$ (le plus grand des deux).
+	\end{exo}
+\end{frame}
+
 \section{Listes Python}
 
 \subsection{Les bases}
@@ -72,12 +161,12 @@
 	Il n'est pas obligé d'entrer des valeurs du même type, même si cela n'est pas vraiment conseillé.
 	\pause
 	
-	\begin{block}{\textbf{Exemple}}
+	\begin{exem}
 		Dans la console, entrez l'instruction \lstinline|l = [0,1,2,3,4,5]|. Affichez \lstinline|l|.
 		\pause
 		
 		Évaluez l'expression \lstinline|len(l)|. Que remarquez-vous ?
-	\end{block}
+	\end{exem}
 	
 	La fonction \lstinline|len| permet en effet d'évaluer la longueur d'une liste, comme elle servait à évaluer celle d'une chaîne de caractères.
 \end{frame}
@@ -88,15 +177,55 @@
 	Pour accéder à un élément d'une liste, on utilise la syntaxe \lstinline|l[i]|, où \lstinline|i| est la position de l'élément de la liste qui nous intéresse... mais attention, on commence à compter à partir de zéro !
 	\pause
 	
-	\begin{block}{\textbf{Exemple}}
+	\begin{exem}
 		Que vaut \lstinline|l[0]| ? Tentez d'évaluer \lstinline|l[6]|.
-	\end{block}
+	\end{exem}
 	\pause
 	
 	On peut même compter à rebours...
-	\begin{block}{\textbf{Exemple}}
+	\begin{exem}
 		Que vaut \lstinline|l[-1]| ? Et \lstinline|l[-2]| ?
-	\end{block}
+	\end{exem}
+\end{frame}
+
+\subsection{Modifier une liste}
+
+\begin{frame}[fragile]{Listes Python}{Modifier une liste}
+	Les listes Python sont des objets dits \textit{mutables} : on peut modifier les valeurs qu'ils contiennent.
+	\pause
+	
+	En Python, on peut modifier un élément d'une liste en réaffectant la valeur comme on le ferait avec une variable.
+	\begin{exem}
+		Entrez \lstinline|l[0] = "Banane"| et affichez \lstinline|l|. Que remarquez-vous ?
+	\end{exem}
+	\pause
+	
+	Mais, une liste n'est qu'une collection d'adresses mémoire et pointeurs ! 
+	\begin{exem}
+	Copiez la liste \lstinline|l| dans une autre variable \lstinline|t|. Exécutez l'instruction \lstinline|t[0] = "Hegel"|. Affichez \lstinline|t| pour vérifier que l'affectation a été faite.
+	\pause
+	
+	Maintenant, affichez \lstinline|l|. Que remarquez-vous ?
+	\end{exem}
+	
+	Il existe une parade, en faisant un \textit{slicing} : \lstinline|t = l[:]|. Mais ce n'est pas tout à fait idéal...
+\end{frame}
+
+\begin{frame}[fragile]{Listes Python}{Modifier une liste (suite)}
+	Enfin, on peut ajouter une valeur à une liste en utilisant la méthode \lstinline|append| : \lstinline|l.append(x)| ajoute la valeur \lstinline|x| à la fin de la liste \lstinline|l|.
+
+	\begin{exem}
+		Effectuez l'instruction \lstinline|l.append(18)|, et affichez \lstinline|l|. Vérifiez la longueur via \lstinline|len|.
+	\end{exem}
+	\pause
+	
+	Si vous souhaitez insérer un élément \lstinline|x| en position \lstinline|i|, utilisez \lstinline|l.insert(i,x)|.
+	\pause
+	
+	Si vous voulez étendre la liste \lstinline|l1| avec les valeurs d'une deuxième liste \lstinline|l2|, utilisez \lstinline|l1.extend(l2)|.
+	\pause
+	
+	La méthode \lstinline|l.sort()| trie la liste, la méthode \lstinline|l.reverse()| renverse son ordre.
 \end{frame}
 
 \subsection{Slicing}
@@ -110,52 +239,12 @@
 	\begin{lstlisting}l[i:j:p] = liste_de_valeurs
 	\end{lstlisting}
 	
-	\begin{block}{\textbf{Exercice}}
-	\begin{itemize}[<+->]
-	\item Définissez une liste \lstinline|li| de dix entiers.
-	\item Extrayez-en la tranche \lstinline|[2:6]|. Affichez le résultat. Triez la tranche (via la méthode \lstinline|nom_liste.sort()|), et remettez le résultat dans \lstinline|li|. Affichez \lstinline|li|.
-	\end{itemize}
-	\end{block}
-\end{frame}
-
-\subsection{Modifier une liste}
-
-\begin{frame}[fragile]{Listes Python}{Modifier une liste}
-	Les listes Python sont des objets dits \textit{mutables} : on peut modifier les valeurs qu'ils contiennent.
-	\pause
-	
-	En Python, on peut modifier un élément d'une liste en réaffectant la valeur comme on le ferait avec une variable.
-	\begin{block}{\textbf{Exemple}}
-		Entrez \lstinline|l[0] = "banane"| et affichez \lstinline|l|. Que remarquez-vous ?
-	\end{block}
-	\pause
-	
-	Mais, une liste n'est qu'une collection d'adresses mémoire et pointeurs ! 
-	\begin{block}{\textbf{Exemple}}
-	Copiez la liste \lstinline|l| dans une autre variable \lstinline|t|. Exécutez l'instruction \lstinline|t[0] = "Tartiflette"|. Affichez \lstinline|t| pour vérifier que l'affectation a été faite.
-	\pause
-	
-	Maintenant, affichez \lstinline|l|. Que remarquez-vous ?
-	\end{block}
-	
-	Il existe une parade, en faisant un \textit{slicing} : \lstinline|t = l[:]|. Mais ce n'est pas tout à fait idéal...
-\end{frame}
-
-\begin{frame}[fragile]{Listes Python}{Modifier une liste (suite)}
-	Enfin, on peut ajouter une valeur à une liste en utilisant la méthode \lstinline|append| : \lstinline|l.append(x)| ajoute la valeur \lstinline|x| à la fin de la liste \lstinline|l|.
-
-	\begin{block}{\textbf{Exemple}}
-		Effectuez l'instruction \lstinline|l.append(18)|, et affichez \lstinline|l|. Vérifiez la longueur via \lstinline|len|.
-	\end{block}
-	\pause
-	
-	Si vous souhaitez insérer un élément \lstinline|x| en position \lstinline|i|, utilisez \lstinline|l.insert(i,x)|.
-	\pause
-	
-	Si vous voulez étendre la liste \lstinline|l1| avec les valeurs d'une deuxième liste \lstinline|l2|, utilisez \lstinline|l1.extend(l2)|.
-	\pause
-	
-	La méthode \lstinline|l.sort()| trie la liste, la méthode \lstinline|l.reverse()| renverse son ordre.
+	\begin{exo}
+		\begin{itemize}[<+->]
+			\item Définissez une liste \lstinline|li| de dix entiers.
+			\item Extrayez-en la tranche \lstinline|[2:6]|. Affichez le résultat. Triez la tranche (via la méthode \lstinline|nom_liste.sort()|), et remettez le résultat dans \lstinline|li|. Affichez \lstinline|li|.
+		\end{itemize}
+	\end{exo}
 \end{frame}
 
 \subsection{Opérations sur les listes}
@@ -163,9 +252,9 @@
 \begin{frame}[fragile]{Listes dans Python}{Opérations sur les listes}
 	On peut ajouter deux listes ensemble: \lstinline|l1 + l2| produit la \textit{concaténation} des listes \lstinline|l1| et \lstinline|l2| (les éléments de la première suivis de ceux de la seconde).
 	
-	\begin{block}{\textbf{Exemple}}
+	\begin{exem}
 		Définissez deux listes \lstinline|l1| et \lstinline|l2|, affichez \lstinline|l1 + l2|.
-	\end{block}
+	\end{exem}
 \end{frame}
 
 \section{Boucles d'instructions}
@@ -189,18 +278,21 @@ Sous Python, elle est implémentée comme suit:
 for i in itérable:
     < traitement >
 \end{lstlisting}
-où \lstinline|itérable| peut être une liste, par exemple, ou encore une chaîne de caractères, ou généralement tout objet ayant l'attribut \lstinline|'__iter'|, c'est-à-dire sur lequel on peut itérer.
+où \lstinline|itérable| peut être une liste, par exemple, ou encore une chaîne de caractères, ou généralement tout objet que l'on peut parcourir.
 \pause
-	
-	\begin{block}{\textbf{Exemple}}
+
+Le plus souvent, pour parcourir l'ensemble $\intcc{0,N-1}$ des entiers de $0$ à $N-1$, on utilise \lstinline|range(N)|. En général, \lstinline|range(i,j)| correspond à l'ensemble $\intcc{i,j-1}$ des entiers de $i$ à $j-1$.
+\pause
+
+	\begin{exo}
 		\begin{itemize}[<+->]
-		\item Écrire un programme qui affiche 20 fois << \lstinline|J'aime la tartiflette| >>. On peut générer un itérable d'entiers allant de 0 à \lstinline|N-1| via \lstinline|range(N)|, ou de façon équivalente \lstinline|range(0,N)|.
+		\item Écrire un programme qui affiche 20 fois \lstinline|"J'aime la tartiflette"|.
 		
 		\item Écrire un programme qui compte de 1 à 10.
 		
 		\item Écrire un programme qui ajoute les inverses des entiers de $1$ à \lstinline|N|, où \lstinline|N| est un entier demandé à l'utilisateur.
 		\end{itemize}
-	\end{block}
+	\end{exo}
 \end{frame}
 
 \subsection{Boucle conditionnelle}
@@ -214,9 +306,9 @@ où \lstinline|itérable| peut être une liste, par exemple, ou encore une chaî
 	où \lstinline|condition| est un booléen. La boucle s'exécute tant que le booléen est vrai.
 	Pour forcer la sortie de boucle, on peut utiliser l'instruction \lstinline|break| au sein du traitement.
 		
-	\begin{block}{\textbf{Exemple}}
+	\begin{exo}
 		Écrire un programme qui demande un entier à l'utilisateur tant que celui-ci n'est pas égal à $42$.
-	\end{block}
+	\end{exo}
 \end{frame}
 
 \end{document}

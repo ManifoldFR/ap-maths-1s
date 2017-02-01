@@ -1,0 +1,90 @@
+\documentclass[10pt,xcolor={dvipsnames}]{beamer}
+\usepackage{geometry}
+\usepackage{polyglossia}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\setdefaultlanguage{french}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\lstset{language=Python,
+	escapechar=\%,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{OliveGreen}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{brown}\ttfamily,
+	morecomment=[l][\color{blue}]{\#},
+	columns=fixed,
+	autogobble=true
+	keepspaces=false
+}
+
+\usetheme{Frankfurt}
+
+\frenchspacing
+\setdefaultlanguage{french}
+
+\renewcommand\epsilon\varepsilon
+\renewcommand\phi\varphi
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
+
+\newcounter{Exercice}
+\resetcounteronoverlays{Exercice}
+\newenvironment{exo}{
+	\refstepcounter{Exercice}
+	\begin{block}{\textbf{Exercice~\theExercice}}
+	}{\end{block}}
+
+\newcounter{Exemple}
+\resetcounteronoverlays{Exemple}
+\newenvironment{exem}{
+	\refstepcounter{Exemple}
+	\begin{block}{\textbf{Exemple~\theExemple}}
+	}{\end{block}}
+
+\title{Atelier d'informatique}
+\subtitle{\textbf{Épisode IV:} Algorithmes de tri}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\frame{\tableofcontents}
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+	Dans ce chapitre, on s'intéresse au problème ultra-classique du tri des éléments d'une liste, quand ils sont comparables entre eux : des nombres pour l'ordre usuel sur $\R$, ou des chaînes de caractères pour l'ordre lexicographique (l'ordre des mots dans un dictionnaire).
+	\pause
+	
+	Les algorithmes de tri, suites d'instructions permettant de résoudre ce problème, sont multiples et constituent des sujets d'étude classique pour l'informaticien en herbe :\pause\, efficacité,\pause\, complexité temporelle (temps d'exécution),\pause\, stabilité (est-ce que le temps d'exécution augmente beaucoup si je modifie un petit peu ma liste ?).
+	\pause
+	
+	On verra dans ce chapitre quelques algorithmes simples, que l'on essaiera de programmer en langage Python.
+\end{frame}
+
+\section{Tri par sélection}
+
+\begin{frame}{Tri par sélection}
+	On va commencer par l'algorithme de tri le plus évident de tous. Étant donnée une liste \lstinline|l|, on sélectionne son plus grand élément, que l'on place à la fin. Maintenant, on recommence sur ce qui reste de la liste. Et ainsi de suite.
+	\pause
+	
+	Au niveau du nombre de calculs, si $n$ est la longueur de la liste, on effectue au plus $n$ comparaisons pour trouver son plus grand élément. Pour le plus grand élément de ce qui reste, on fait au plus $n-1$ comparaisons. Puis $n-2$... ainsi de suite. Finalement, on fait au pire
+	\begin{equation*}
+	n + n-1 + n-2 + \cdots + 1 = 1 + 2 + \cdots + n = \frac{n(n-1)}{2}
+	\end{equation*}
+	comparaisons (formule démontrée en classe de Première S).	
+\end{frame}
+
+\end{document}
