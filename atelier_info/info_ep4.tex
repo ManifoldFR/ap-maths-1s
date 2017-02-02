@@ -24,11 +24,6 @@
 
 \usetheme{Frankfurt}
 
-\frenchspacing
-\setdefaultlanguage{french}
-
-\renewcommand\epsilon\varepsilon
-\renewcommand\phi\varphi
 \newcommand{\N}{\mathbb N}
 \newcommand{\Z}{\mathbb Z}
 \newcommand{\R}{\mathbb R}
@@ -39,10 +34,20 @@
 
 \newcounter{Exercice}
 \resetcounteronoverlays{Exercice}
-\newenvironment{exo}{
+\makeatletter
+\newenvironment{exo}[1][\@nil]{
+	\def\tmp{#1}
 	\refstepcounter{Exercice}
-	\begin{block}{\textbf{Exercice~\theExercice}}
+	\begin{block}{
+			\textbf{Exercice~\theExercice}
+			\ifx\tmp\@nnil
+			%
+			\else
+			(#1)
+			\fi
+		}
 	}{\end{block}}
+\makeatother
 
 \newcounter{Exemple}
 \resetcounteronoverlays{Exemple}
@@ -80,11 +85,73 @@
 	On va commencer par l'algorithme de tri le plus évident de tous. Étant donnée une liste \lstinline|l|, on sélectionne son plus grand élément, que l'on place à la fin. Maintenant, on recommence sur ce qui reste de la liste. Et ainsi de suite.
 	\pause
 	
-	Au niveau du nombre de calculs, si $n$ est la longueur de la liste, on effectue au plus $n$ comparaisons pour trouver son plus grand élément. Pour le plus grand élément de ce qui reste, on fait au plus $n-1$ comparaisons. Puis $n-2$... ainsi de suite. Finalement, on fait au pire
-	\begin{equation*}
-	n + n-1 + n-2 + \cdots + 1 = 1 + 2 + \cdots + n = \frac{n(n-1)}{2}
-	\end{equation*}
-	comparaisons (formule démontrée en classe de Première S).	
+	Mais ce n'est pas un tri très efficace au niveau du nombre de calculs à effectuer. En fait, on peut montrer qu'étant donnée une liste $l$ de $N$ éléments, l'algorithme de tri par sélection fait $O(N^2)$ opérations (le nombre d'opérations est au plus $CN^2$ avec $C$ un nombre réel positif).
 \end{frame}
+
+\begin{frame}
+	\frametitle{Tri par sélection}
+	\framesubtitle{Implémentation}
+	
+	On va procéder par étapes.\pause
+	
+	D'abord, une fonction auxiliaire qui va nous servir pour calculer le maximum d'une liste passée en argument :\pause
+	
+	\begin{exo}[Maximum d'une liste]
+		Définir une fonction \lstinline|indice_max| qui prend en argument une liste \lstinline|l| et renvoie l'indice où trouver son plus grand élément, appelé \textit{maximum}.
+		
+		\textbf{Question bonus} Si $N$ est le nombre d'éléments de la liste \lstinline|l|, combien d'opérations (comparaisons, affectations de variables) effectue votre programme ?
+	\end{exo}
+\end{frame}
+
+\begin{frame}[fragile]{Tri par sélection}{Implémentation}
+	Maintenant, on écrit le code complet:\pause
+	
+	\begin{lstlisting}
+		def tri_selec(l):
+			N = len(l) %\pause%
+			for k in range(N): %\pause%
+				# On chope l'indice du maximum
+				# de la sous-liste allant
+				# des incides 0 à N-k-1
+				imax = indice_max(l) %\pause%
+				
+				# On échange avec le dernier
+				# élément de cette sous-liste
+				l[N-k-1], l[imax] = l[imax],l[N-k-1]
+	\end{lstlisting}
+	
+	\textbf{Question} On note $N$ la longueur de la liste \lstinline|l|. Combien d'opérations fait-on au total ? N'oubliez pas que l'appel à \lstinline|indice_max(l[N-k-1])| effectue $2(N-k)+1$ opérations ! 
+\end{frame}
+
+\begin{frame}[fragile]{Tri par sélection}{Performances}
+	Alors, on peut montrer mathématiquement que l'algorithme fonctionne parfaitement et triera n'importe quelle liste qu'on lui passe.\pause
+	
+	Dans l'exercice suivant, on évalue le temps pris pour effectuer un tri par sélection:\pause
+	
+	\begin{exo}
+		Importez les fonctions \lstinline|time| (détermine l'heure qu'il est) et \lstinline|randint| (génère des entiers au hasard) via \begin{lstlisting}
+			from time import time
+			from random import randint
+		\end{lstlisting}
+	\end{exo}	
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Exercice 2} (suite)}
+		Définissez la fonction suivante, qui évalue le temps pris par le tri par sélection en fonction du nombre d'éléments dans la liste:
+		\begin{lstlisting}
+			def chrono_selec(N):
+				# liste de N entiers pris
+				# au hasard entre 0 et 10
+				l = [randint(0,10) for i in range(N)]
+				debut = time()
+				l_triee = tri_selec(l)
+				temps = time() - debut
+				return temps
+		\end{lstlisting}
+		et testez-la pour plusieurs valeurs de $N$.
+	\end{block}
+\end{frame}
+
 
 \end{document}

@@ -24,9 +24,6 @@
 
 \usetheme{Frankfurt}
 
-\frenchspacing
-\setdefaultlanguage{french}
-
 \renewcommand\epsilon\varepsilon
 \renewcommand\phi\varphi
 \newcommand{\N}{\mathbb N}
@@ -39,10 +36,20 @@
 
 \newcounter{Exercice}
 \resetcounteronoverlays{Exercice}
-\newenvironment{exo}{
+\makeatletter
+\newenvironment{exo}[1][\@nil]{
+	\def\tmp{#1}
 	\refstepcounter{Exercice}
-	\begin{block}{\textbf{Exercice~\theExercice}}
+	\begin{block}{
+			\textbf{Exercice~\theExercice}
+			\ifx\tmp\@nnil
+			%
+			\else
+			(#1)
+			\fi
+		}
 	}{\end{block}}
+\makeatother
 
 \newcounter{Exemple}
 \resetcounteronoverlays{Exemple}
@@ -67,7 +74,7 @@ Dans ce chapitre, nous verrons une autre façon d'éviter de réécrire 9001 foi
 
 \section{Introduction}
 
-\begin{frame}[fragile]{Fonction ? Comme $f\,(x)$ ?}
+\begin{frame}[fragile]{Fonction ? Comme $f(x)$ ?}
 
 Dans un langage de programmation, les \textit{fonctions} sont des objets qui prennent en argument des variables et effectuent une série d'instructions.
 \pause
@@ -131,7 +138,7 @@ Que fait cette fonction ?
 \section{Exercices}
 
 \begin{frame}[fragile]{Exercices}
-\begin{block}{\textbf{Exercice 1}}
+\begin{exo}
 	Écrire une fonction \lstinline|f| qui correspond à la fonction réelle
     \[
     \begin{array}{rl}
@@ -141,11 +148,11 @@ Que fait cette fonction ?
     \]
     
     L'essayer sur quelques valeurs.
-\end{block}
+\end{exo}
 \end{frame}
 
 \begin{frame}[fragile]{Exercices}
-\begin{block}{\textbf{Exercice 2}}
+\begin{exo}
 	Écrire une fonction \lstinline|f| qui correspond à la fonction valeur absolue $|x|$ définie par
     \[|x| = 
     \begin{cases}
@@ -155,7 +162,7 @@ Que fait cette fonction ?
     \]
     
     L'essayer sur quelques valeurs.
-\end{block}
+\end{exo}
 \pause
 
 On verra plus tard comment représenter graphiquement des fonctions numériques, via le module \lstinline|matplotlib|.
@@ -163,27 +170,27 @@ On verra plus tard comment représenter graphiquement des fonctions numériques,
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{block}{\textbf{Exercice 3}}
+\begin{exo}
 Écrire une fonction \lstinline|divise| prenant en argument deux entiers \lstinline|n| et \lstinline|d| et renvoie un booléen qui vaut \lstinline|True| si $d$ divise $n$, et \lstinline|False| sinon.
 \pause
 \textbf{Indication} L'entier $d$ divise l'entier $n$ lorsque le reste de la division de $n$ par $d$ est nul.
-\end{block}
+\end{exo}
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{block}{\textbf{Exercice 4} Maximum d'une liste}
+\begin{exo}[Maximum d'une liste]
 Écrire une fonction \lstinline|maxListe| qui prend en argument une liste \lstinline|l| et renvoie son plus grand élément, et l'indice du premier endroit où il se situe.
 \pause
 
 \textbf{Indication} Utiliser deux variables \lstinline|valMax| et \lstinline|posMax|, initialement égales à \lstinline|l[0]| et \lstinline|0| respectivement, puis une boucle itérative \lstinline|for| parcourant la liste pour les mettre à jour.
-\end{block}
+\end{exo}
 \pause
 
 Trouver le maximum (ou le minimum) d'une liste donnée est un problème classique. On le rencontrera encore plus tard quand on s'intéressera aux problèmes de tri de listes.
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{block}{\textbf{Exercice 5} Suite}
+\begin{exo}[Suite]
 On définit la suite $(u_n)$ suivante: $u_0\in\mathbb{R}$, et pour tout $n\in\mathbb{N}$, \[u_{n+1} = \sin(u_n).\]
 \pause
 Écrire une fonction \lstinline|suite| qui prend en argument un entier \lstinline|N| et un réel \lstinline|u0| puis génère la liste des termes de $(u_n)$ de $0$ à $N$.
@@ -196,7 +203,7 @@ from numpy import sin
 
 \textbf{Indication} On initialisera la liste en donnant l'instruction \lstinline|termes = [u0]| au début de la fonction, avant de passer dans une boucle \lstinline|for i in range(N)|. À la  $i$-ème étape de la boucle, le dernier élément de la liste, \lstinline|termes[-1]|, est égal à $u_i$.
 
-\end{block}
+\end{exo}
 \end{frame}
 
 \begin{frame}
