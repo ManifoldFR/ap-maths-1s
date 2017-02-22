@@ -5,11 +5,15 @@
 \usepackage{fontspec}
 \usepackage{unicode-math}
 \usepackage{titling}
+\usepackage{tikz}
 \usepackage[shortlabels]{enumitem}
 
 \setdefaultlanguage{french}
 \frenchspacing
+\setmathfont{Latin Modern Math}
+\setmathfont[range={\mathbb,\mathcal,\mathsf}]{xits-math.otf}
 
+\let\oldepsilon\epsilon
 \renewcommand\epsilon\varepsilon
 \renewcommand\phi\varphi
 \newcommand{\N}{\mathbb N}
@@ -34,37 +38,37 @@
 \begin{document}
 
 \begin{center}
-	\textsc{\LARGE Ensembles, Logique}
+	\hrulefill\\
+    \vspace{6mm}
+	\textsc{\LARGE Logique \& Ensembles}\\
+    \vspace{3mm}
+    \hrulefill
 \end{center}
 \vspace{1cm}
 
 \begin{flushright}
-\textit{<< La logique est l'hygiène des mathématiques. >>} — André Weil\end{flushright}
+\textit{<< La logique est l'hygiène des mathématiques. >>} \hfill— André Weil\end{flushright}
 
-\begin{flushright}
 \begin{flushleft}
 \textit{<<
 	Plus il y a de fromage, plus il y a de trous.\\
 	Plus il y a de trous, moins il y a de fromage.\\
 	Donc plus il y a de fromage, moins il y a de fromage.
-	 >>}
+	 >>}\hfill — Paradoxe du Gruyère
 \end{flushleft}
-— Paradoxe du gruyère
-\end{flushright}
 
-\begin{flushright}
 \begin{flushleft}
 \textit{<< Tout ce qui est rare est super cher,\\
     Une Maserati à 20 euros, c'est rare,\\
-    Donc une Maserati à 20 euros, c'est super cher >>}
+    Donc une Maserati à 20 euros, c'est super cher >>.}\hfill — Bruce Benamran
 \end{flushleft}
-— Bruce Benamran
-\end{flushright}
 
-\begin{flushright}
-<<La mathématique est une science dangereuse : elle dévoile les supercheries et les erreurs de calculs.>> — Galilée
-\end{flushright}
+\begin{flushleft}
+\textit{<< La mathématique est une science dangereuse : elle dévoile les supercheries et les erreurs de calculs. >>} \hfill — Galilée
+\end{flushleft}
 
+\vspace{1em}
+Ce cours a pour objet de servir de fondement pour la compréhension de la logique formelle et du langage ensembliste et de leur utilisation en mathématiques au niveau lycée, permettant ainsi de poser les bases de la construction d'une démonstration mathématique.
 
 %\tableofcontents
 
@@ -449,12 +453,290 @@ où $H$ contient les hypothèses, $C$ les conclusions. Il faut donc déconstruir
 
 \section{Ensembles}
 
-\subsection{Définitions intuitives}
+\subsection{Généralités}
 
 \begin{defn}
-	Un ensemble $E$ est une \textit{collection} d'objets $x$, que l'on appelle \textit{éléments de $E$}. Si $x$ est un élément de $E$, on dit que << $x$ appartient à $E$ >> et on note $x\in E$.
+	Un ensemble $E$ est une \textit{collection} d'objets $x$, que l'on appelle \textit{éléments de $E$}. Si $x$ est un élément de $E$, on dit que << $x$ appartient à $E$ >> et on note \[x\in E.\]
+Si au contraire $x$ n'appartient pas à $E$, on notera
+    \[x\not\in E.\]
 \end{defn}
 
-\end{document}
+\begin{rem}
+La notation $\in$ est introduite en 1890 par le mathématicien italien \textsc{Péano}. C'est en fait une variante de la lettre grecque $\oldepsilon$ << epsilon >> (cinquième lettre, donc le << e >>, de l'alphabet grec), pour \textit{esti}, << est >> en italien.
+\end{rem}
 
+\begin{rem} Cette notion est insuffisante à cause du paradoxe de \textsc{Russel}. Il peut s'énoncer ainsi : on appelle barbier toute personne se rasant les personnes qui ne se rasent pas elles-mêmes. Alors, le barbier se rase-t-il lui même ? Si c'est le cas, alors le barbier rase une personne qui se rase elle-même. Sinon, le barbier fait partie de ces personnes qui ne se rasent pas par elles-mêmes, donc qui devraient être rasées par le barbier...
+\end{rem}
+
+Bien sûr, on peut argumenter avec la plausibilité d'une telle situation, construite de toute part pour qu'il y ait un problème... La version formelle du paradoxe de Russel, par contre, est indiscutable:
+
+\theoremstyle{plain}
+\newtheorem*{paradox}{Paradoxe}
+\begin{paradox}[de \textsc{Russel}]
+Soit $R$ l'ensemble de tous les ensembles $X$ qui n'appartiennent pas à eux mêmes. On peut le définir, puisqu'un ensemble est une collection d'objets... Ainsi, un ensemble $X$ appartient à $R$ si et seulement si $X\not\in X$.
+
+Alors, on est en droit de se poser la question: est-ce que $R\in R$ ?
+\end{paradox}
+
+Pour se sortir de ce bourbier, on impose de plus la condition suivante:
+\[\textbf{Un ensemble ne peut se contenir lui-même.}\]
+
+\begin{defn}[Ensemble vide]
+L'ensemble vide, noté $\emptyset$, est l'ensemble ne contenant aucun élément.
+\end{defn}
+
+\begin{defn}
+On dit que deux ensembles $E$ et $F$ sont \textit{égaux} si tous les éléments de l'un appartient à l'autre et réciproquement:
+\[
+x\in E\Longleftrightarrow x\in F.
+\]
+On note classiquement
+\[ E = F. \]
+\end{defn}
+
+\begin{defn}[Comment définir un ensemble]\leavevmode
+\begin{itemize}
+\item \textbf{Énumération} on donne tous les éléments de l'ensemble. Par exemple, on écrit
+\[
+E=\{x_1,x_2,\ldots,x_n\}
+\]
+Et il n'y a pas d'ordre d'énumération précis. De plus, un élément ne peut pas apparaître plusieurs fois.
+\item \textbf{Compréhension} on donne un prédicat $P(x)$ qui caractérise les éléments de l'ensemble $E$: un élément $x$ appartient à $E$ si et seulment si $P(x)$ est vrai. On écrit alors:
+\[ E = \{x\ |\ P(x)\} \]
+où la barre verticale << | >> signifie << tel que >>. On peut aussi écrire << tel que >> en toutes lettres: $E = \{x\ \text{tel que}\ P(x)\}$.
+\item \textbf{Induction structurelle} On \textit{induit} l'ensemble en donnant quelques éléments de base, des << briques >>, en quelque sorte, et des règles de construction pour former le reste des éléments. Comme construire un bâtiment!
+\end{itemize}
+\end{defn}
+
+\begin{exe}\leavevmode
+\begin{itemize}
+\item \textbf{Énumération} $E=\{0,3,28,4,-10\}$
+On aurait très bien pu écrire:
+\[ \{-10,28,0,3,4\} \]
+ou
+\[ \{28,0,-10,4,3\} \]
+ou
+\[ \{28,4,28,0,0,0,0,4,-10,-10,3\} \]
+et cela n'a n'aurait rien changé au sens. 
+
+\item \textbf{Compréhension} $E = \{x\in\R\ |\ \exists y\in\R\quad x^2=y \}$. Quel est cet ensemble ?
+
+Encore un autre exemple: $\{x\in\R\ |\ x^2-4x+1 \geq 0\}$.
+\item \textbf{Induction structurelle} Surtout intéressant en algèbre et en informatique. On retiendra l'exemple des \textit{arbres binaires}. On se donne un élément d'origine, qui s'appelle \textit{racine} de l'arbre. Tout élément de l'arbre s'appelle un \textit{noeud}. Chaque noeud $x$ a au plus deux \textit{fils}, qui sont des noeuds associés. Réciproquement, si $y$ est un fils de $x$, $x$ est appelé le \textit{père} de $y$.
+\begin{figure}
+\centering
+\begin{tikzpicture}[roundnode/.style={circle, draw=black!100, fill=black!40, very thick, minimum size=1mm}]
+\node[roundnode] (Racine) at (0,0) {Racine};
+\node[roundnode] (Fg) at (-3,-1) {1};
+\node[roundnode] (Fd) at (3,-1) {2};
+\node[roundnode] (Fdd) at (4,-2) {5};
+\node[roundnode] (Fdg) at (2,-2) {4};
+\node[roundnode] (Fgg) at (-4,-2) {3};
+\node[roundnode] (Fggg) at (-5,-3) {6};
+\node[roundnode] (Fgggg) at (-5.5,-4) {7};
+\node[roundnode] (Fgggd) at (-4.5,-4) {8};
+\draw (Racine) -- (Fg);
+\draw (Racine) -- (Fd);
+\draw (Fd) -- (Fdd);
+\draw (Fd) -- (Fdg);
+\draw (Fg) -- (Fgg);
+\draw (Fgg) -- (Fggg);
+\draw (Fggg) -- (Fgggg);
+\draw (Fggg) -- (Fgggd);
+\end{tikzpicture}
+\caption{Ceci est un arbre. Les fils sont numérotés de gauche à droite avec priorité sur la profondeur.}
+\end{figure}
+\end{itemize}
+\end{exe}
+
+\subsection{Sous-ensembles}
+
+\subsubsection{Définition}
+
+\begin{defn}[Sous-ensemble]
+Soit $E$ un ensemble, un \textit{sous-ensemble} de $E$ est un ensemble $F$ dont tous les éléments sont aussi des éléments de $E$:
+\[ 
+\forall x\quad x\in F\Longrightarrow x\in E.
+\]
+On dit que \textit{$F$ est inclus dans $E$} et on note
+\[ F\subset E. \]
+\end{defn}
+
+\begin{prop}[Principe de double inclusion]
+On a
+\[E=F\]
+si et seulement si
+\[E\subset F\ \text{et}\ F\subset E.\]
+\end{prop}
+
+\begin{proof}
+Provient du principe de double implication. En effet, quel que soit $x$, 
+\[x\in E\Longleftrightarrow x\in F \quad\text{est exactement} \quad (x\in E\Longrightarrow x\in F)\ \text{et}\ (x\in F\Longrightarrow x\in E)\]
+par principe de double implication. Ainsi, les conditions d'égalité de $E$ et $F$ et de double inclusion sont identiques. D'où l'équivalence.
+\end{proof}
+
+\begin{prop}
+Soit $E$ un ensemble. Alors, l'ensemble vide $\emptyset$ est un sous-ensemble de $E$. C'est même le seul sous-ensemble de l'ensemble vide...
+\end{prop}
+
+\begin{prop}
+Quel que soit $x$, l'implication
+\[ x\in\emptyset \Rightarrow x\in E \]
+est vraie, puisque $x\in\emptyset$ est toujours faux, et que Faux implique Vrai...
+\end{prop}
+
+\begin{defn}
+On appelle \textit{singleton} un ensemble constitué d'un seul élément, c'est-à-dire de la forme
+\[
+\{x \}.
+\]
+\end{defn}
+
+\begin{prop}
+Soit $E$ un ensemble. On a $x\in E$ si et seulement si le singleton $\{x\}\subset E$.
+\end{prop}
+
+\subsubsection{Parties}
+
+\begin{defn}
+On appelle \textit{partie} d'un ensemble $E$ tout sous-ensemble $F$ de $E$. C'est une autre terminologie pour parler de sous-ensemble.
+
+L'\textit{ensemble des parties de $E$} est noté $\mathcal P(E)$. On a alors l'équivalence suivante:
+\[ F\in\mathcal P(E) \Longleftrightarrow F\subset E.\]
+\end{defn}
+
+On a notamment $E\in\mathcal P(E)$ et $\emptyset\in\mathcal P(E)$.
+
+\subsection{Opérations sur les ensembles}
+
+\subsubsection{Intersection}
+
+\begin{defn}[Intersection]
+Soient $E$ et $F$ deux ensembles. L'\textit{intersection} de $E$ et de $F$, notée
+\[E\cap F\]
+est l'ensemble des éléments appartenant à $E$ et à $F$ :
+\[E\cap F = \{x\ |\ x\in E\land x\in F\}.\]
+\end{defn}
+
+On a les propriétés suivantes:
+
+\begin{prop}
+Soient $E$, $F$, $G$ trois ensembles. Alors:
+\begin{enumerate}
+\item $E\cap F=  F\cap E$
+\item $(E\cap F)\cap G = E\cap (F\cap G)$
+\item $E\cap F\subset E$ et $E\cap F\subset F$ et si $G$ vérifie aussi cette propriété, alors $G\subset E\cap F$ (propriété de maximalité).
+\item $E\cap\emptyset= \emptyset$ d'après ce qui précède directement, ou en regardant les $x\in E\cap\emptyset$.
+\item $F\subset E$, alors $E\cap F=F$.
+\end{enumerate}
+\end{prop}
+
+Ces résultats proviennent directement des résultats de logique sur l'opérateur << et >> ($\land$).
+
+\begin{defn}
+Deux ensembles $E$ et $F$ sont dit disjoints si ils n'ont aucun élément en commun:
+\[E\cap F =\emptyset. \]
+\end{defn}
+
+\subsubsection{Union}
+
+\begin{defn}[Union]
+Soient $E$ et $F$ deux ensembles. Leur \textit{union}, notée
+\[E\cup F,\]
+est l'ensemble de tous les éléments de $E$ ou de $F$ :
+\[E\cup F = \{x\ |\ x\in E\lor x\in F\}. \]
+\end{defn}
+
+\begin{exe}\leavevmode
+\begin{itemize}
+\item $\R_{-} \cup \R_{+} = \R$
+\end{itemize}
+\end{exe}
+
+on a les propriétés suivantes:
+
+\begin{prop}
+Soient $E$, $F$, $G$ trois ensembles.
+\begin{itemize}
+\item $E\cup F=F\cup E$.
+\item $(E\cup F)\cup G = E\cup(F\cup G)$.
+\item $E\subset E\cup F $ et $F\subset E\cup F$, et si $G$ vérifie aussi cette propriété, alors $E\cup F\subset G$ (propriété de minimalité).
+\item $E\cup\emptyset = E$ d'après ce qui précède, ou en regardant les éléments.
+\item Si $F\subset E$, alors $E\cup F= E$.
+\end{itemize}
+\end{prop}
+
+Encore une fois, elles découlent des résultats de logique, cette fois-ci sur l'opérateur de disjonction << ou >> ($\lor$).
+
+Le cours de logique amène également ces résultats, découlant des lois de De Morgan (distributivités entre le << et >> et le << ou >>).
+
+\begin{prop}[Distributivités, loi de De Morgan]
+Soient $E$, $F$ et $G$ trois ensembles. Alors:
+\begin{itemize}
+\item $E\cup(F\cap G) = (E\cup F)\cap(E\cup G)$.
+\item $E\cap(F\cup G) = (E\cap F)\cup(E\cap G)$.
+\end{itemize}
+\end{prop}
+
+\subsubsection{Complémentaire d'un ensemble dans un autre}
+
+\begin{defn}[Complémentaire d'un ensemble]
+Soit $E$ un ensemble, et $F$ un sous-ensemble de $E$. Le \textit{complémentaire} de $F$ dans $E$, noté
+\[\complement_E F, \]
+est l'ensemble des éléments de $E$ qui manquent à $F$, soit
+\[\complement_E F = \{x\in E\ |\ x\not\in F\}. \]
+\end{defn}
+
+On a donc les deux propriétés assez évidentes, qui caractérisent en fait le complémentaire (c'est le seul à les vérifier):
+
+\begin{prop}
+Soit $E$ un ensemble et $F$ un sous-ensemble. Alors:
+\begin{itemize}
+\item $F$ et son complémentaire sont disjoints:
+\[F\cap \complement_E F = \emptyset. \]
+\item L'union de $F$ et son complémentaire fait $E$ tout entier:
+\[ F\cup\complement_E F = E. \]
+\end{itemize}
+\end{prop}
+
+\begin{defn}[Différence ensembliste]
+Soient $E$ et $F$ deux ensembles quelconques. Alors, la différence de $E$ et $F$, notée
+\[ E\backslash F, \]
+est le complémentaire de $E\cap F$ dans $E$. C'est l'ensemble des éléments de $E$ qui ne sont pas aussi des éléments de $F$. Dans le cas où $F$ est un sous-ensemble de $E$, on retombe bien sur le complémentaire défini plus haut.
+\end{defn}
+
+\subsection{Cardinalité}
+
+La question se pose tout de suite: étant donné un ensemble, combien d'éléments a-t-il ? Intuitivement, si l'ensemble est fini, dans le sens où on peut énumérer tous ses éléments (en temps fini), il suffit de les compter. Et si il est infini ?
+
+\begin{defn}[Cardinal, notion intuitive]
+Le \textit{cardinal} d'un ensemble $E$, noté $\mathrm{Card}(E)$ ou $|E|$, et la << taille >> de l'ensemble. Si l'ensemble est fini dans le sens donné ci-dessus, il s'agit du nombre d'éléments qui lui appartiennent.
+\end{defn}
+
+\begin{exe}\leavevmode
+\begin{itemize}
+\item $\mathrm{Card}(\emptyset) = 0$
+\item $\mathrm{Card}(\{1\}) = 1$, $\mathrm{Card}(\emptyset\}) = 1$, et généralement le cardinal d'un singleton vaut $1$.
+\item $\mathrm{Card}(\{ 1,3,-1,36\}) = \ldots$
+\item $\mathrm{Card}(\{ n\in\N\ |\ \exists p\leq 5\,\text{entier naturel}\ n=p^2\}) = \ldots$
+\end{itemize}
+\end{exe}
+
+Pour les ensembles infinis, c'est un peu (beaucoup) plus compliqué de définir une notion de cardinal qui reste cohérente. On n'en parlera pas ici. On dira juste que les ensembles $\N$ des entiers naturels et $\Q$ des nombres rationnels ont le même cardinal...
+
+\begin{prop}[Cardinal d'une union]
+Soient $E$ et $F$ deux ensembles. Alors, le cardinal de leur union est:
+\[
+\mathrm{Card}(E\cup F) = \mathrm{Card}(E) + \mathrm{Card}(F) - \mathrm{Card}(E\cap F).
+\]
+
+Si $E$ et $F$ sont disjoints, on a alors $\mathrm{Card}(E\cup F)= \mathrm{Card}(E) + \mathrm{Card}(F).$
+\end{prop}
+
+En général, il faut utiliser des techniques de dénombrement pour déterminer le cardinal de $E\cap F$, que l'on verra plus tard.
+
+\pagebreak
+\tableofcontents
+
+\end{document}
 
