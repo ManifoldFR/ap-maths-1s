@@ -1,0 +1,74 @@
+\documentclass[10pt,xcolor={dvipsnames}]{beamer}
+\usepackage{polyglossia}
+\usepackage{mathtools, amsthm, amssymb, amsfonts}
+\usepackage{graphicx}
+\setdefaultlanguage{french}
+\usepackage{listings}
+\usepackage{lstautogobble}
+
+\usefonttheme{professionalfonts}
+\usepackage{unicode-math}
+
+\setmathfont{Latin Modern Math}
+%\setmathfont[range={it}]{Latin Modern Sans 10 Oblique}
+\setmathfont[range=up]{Latin Modern Sans}
+\setmathfont[range={\mathbb}]{xits-math.otf}
+%\setmathfont{xits-math.otf}
+\setmonofont[Mapping=tex-text,Scale=0.9]{Consolas}
+
+\lstset{language=Python,
+	escapechar=\%,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{OliveGreen}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{brown}\ttfamily,
+	morecomment=[l][\color{blue}]{\#},
+	columns=fixed,
+	tabsize=4,
+	autogobble=true
+	keepspaces=false
+}
+
+%\usetheme{Frankfurt}
+\usetheme{Hannover}
+\usecolortheme{dolphin}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
+
+\newcounter{Exercice}
+\resetcounteronoverlays{Exercice}
+\makeatletter
+\newenvironment{exo}[1][\@nil]{
+	\def\tmp{#1}
+	\refstepcounter{Exercice}
+	\begin{block}{\textbf{Exercice \theExercice}
+			\ifx\tmp\@nnil
+			%
+			\else
+			(#1)
+			\fi
+		}
+	}{\end{block}}
+\makeatother
+
+\newcounter{Exemple}
+\resetcounteronoverlays{Exemple}
+\makeatletter
+\newenvironment{exem}[1][\@nil]{
+	\def\tmp{#1}
+	\refstepcounter{Exemple}
+	\begin{block}{\textbf{Exemple \theExemple}
+			\ifx\tmp\@nnil
+			%
+			\else
+			(#1)
+			\fi
+		}
+	}{\end{block}}
+\makeatother

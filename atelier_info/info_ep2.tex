@@ -1,55 +1,4 @@
-\documentclass[10pt,xcolor={dvipsnames}]{beamer}
-\usepackage{geometry}
-\usepackage{polyglossia}
-\usepackage{mathtools}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{lstautogobble}
-
-\lstset{language=Python,
-	escapechar=\%,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{OliveGreen}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{brown}\ttfamily,
-	morecomment=[l][\color{blue}]{\#},
-	columns=fixed,
-	autogobble=true
-	keepspaces=true	
-}
-
-\usetheme{Frankfurt}
-
-\frenchspacing
-\setdefaultlanguage{french}
-
-\renewcommand\epsilon\varepsilon
-\renewcommand\phi\varphi
-\newcommand{\N}{\mathbb N}
-\newcommand{\Z}{\mathbb Z}
-\newcommand{\R}{\mathbb R}
-\newcommand{\Q}{\mathbb Q}
-\newcommand{\CC}{\mathbb C}
-\newcommand{\K}{\mathbb K}
-\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
-
-\newcounter{Exercice}
-\resetcounteronoverlays{Exercice}
-\newenvironment{exo}{
-	\refstepcounter{Exercice}
-	\begin{block}{\textbf{Exercice~\theExercice}}
-}{\end{block}}
-
-\newcounter{Exemple}
-\resetcounteronoverlays{Exemple}
-\newenvironment{exem}{
-	\refstepcounter{Exemple}
-	\begin{block}{\textbf{Exemple~\theExemple}}
-	}{\end{block}}
-
+\input{header.tex}
 \title{Atelier d'informatique}
 \subtitle{\textbf{Épisode II:} Structures de données}
 
@@ -81,9 +30,9 @@
 	On peut demander à un programme de traiter différemment ses données selon les valeurs des variables introduites. Pour cela, on utilise une structure conditionnelle, qui prend la forme :
 	\begin{lstlisting}
 	if (condition):
-	< traitement des données >
+		< instructions >
 	else:
-	< traitement des données >
+		< instructions >
 	\end{lstlisting}
 	le \lstinline|else| étant optionnel si on ne désire rien faire si la condition n'est pas vérifiée.
 	\pause
@@ -159,8 +108,9 @@
 	\pause
 	
 	Il n'est pas obligé d'entrer des valeurs du même type, même si cela n'est pas vraiment conseillé.
-	\pause
-	
+\end{frame}
+
+\begin{frame}[fragile]
 	\begin{exem}
 		Dans la console, entrez l'instruction \lstinline|l = [0,1,2,3,4,5]|. Affichez \lstinline|l|.
 		\pause
@@ -211,7 +161,7 @@
 	Il existe une parade, en faisant un \textit{slicing} : \lstinline|t = l[:]|. Mais ce n'est pas tout à fait idéal...
 \end{frame}
 
-\begin{frame}[fragile]{Listes Python}{Modifier une liste (suite)}
+\begin{frame}[fragile]
 	Enfin, on peut ajouter une valeur à une liste en utilisant la méthode \lstinline|append| : \lstinline|l.append(x)| ajoute la valeur \lstinline|x| à la fin de la liste \lstinline|l|.
 
 	\begin{exem}
@@ -303,8 +253,8 @@ Le plus souvent, pour parcourir l'ensemble $\intcc{0,N-1}$ des entiers de $0$ à
 	while (condition):
 	    < traitement >
 	\end{lstlisting}
-	où \lstinline|condition| est un booléen. La boucle s'exécute tant que le booléen est vrai.
-	Pour forcer la sortie de boucle, on peut utiliser l'instruction \lstinline|break| au sein du traitement.
+	où \lstinline|condition| est un booléen. La boucle s'exécute tant que le booléen est vrai.\pause
+	Pour forcer la sortie de boucle, on peut utiliser l'instruction \lstinline|break| au sein du traitement.\pause
 		
 	\begin{exo}
 		Écrire un programme qui demande un entier à l'utilisateur tant que celui-ci n'est pas égal à $42$.

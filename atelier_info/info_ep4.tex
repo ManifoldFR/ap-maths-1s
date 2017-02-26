@@ -1,60 +1,4 @@
-\documentclass[10pt,xcolor={dvipsnames}]{beamer}
-\usepackage{geometry}
-\usepackage{polyglossia}
-\usepackage{mathtools}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{graphicx}
-\setdefaultlanguage{french}
-\usepackage{listings}
-\usepackage{lstautogobble}
-
-\lstset{language=Python,
-	escapechar=\%,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{OliveGreen}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{brown}\ttfamily,
-	morecomment=[l][\color{blue}]{\#},
-	columns=fixed,
-	autogobble=true
-	keepspaces=false
-}
-
-\usetheme{Frankfurt}
-
-\newcommand{\N}{\mathbb N}
-\newcommand{\Z}{\mathbb Z}
-\newcommand{\R}{\mathbb R}
-\newcommand{\Q}{\mathbb Q}
-\newcommand{\CC}{\mathbb C}
-\newcommand{\K}{\mathbb K}
-\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
-
-\newcounter{Exercice}
-\resetcounteronoverlays{Exercice}
-\makeatletter
-\newenvironment{exo}[1][\@nil]{
-	\def\tmp{#1}
-	\refstepcounter{Exercice}
-	\begin{block}{
-			\textbf{Exercice~\theExercice}
-			\ifx\tmp\@nnil
-			%
-			\else
-			(#1)
-			\fi
-		}
-	}{\end{block}}
-\makeatother
-
-\newcounter{Exemple}
-\resetcounteronoverlays{Exemple}
-\newenvironment{exem}{
-	\refstepcounter{Exemple}
-	\begin{block}{\textbf{Exemple~\theExemple}}
-	}{\end{block}}
+\input{header.tex}
 
 \title{Atelier d'informatique}
 \subtitle{\textbf{Épisode IV:} Algorithmes de tri}
@@ -67,6 +11,7 @@
 
 \frame{\tableofcontents}
 
+\setlength\parskip{0.8em}
 \section{Introduction}
 
 \begin{frame}{Introduction}
@@ -85,7 +30,7 @@
 	On va commencer par l'algorithme de tri le plus évident de tous. Étant donnée une liste \lstinline|l|, on sélectionne son plus grand élément, que l'on place à la fin. Maintenant, on recommence sur ce qui reste de la liste. Et ainsi de suite.
 	\pause
 	
-	Mais ce n'est pas un tri très efficace au niveau du nombre de calculs à effectuer. En fait, on peut montrer qu'étant donnée une liste $l$ de $N$ éléments, l'algorithme de tri par sélection fait $O(N^2)$ opérations (le nombre d'opérations est au plus $CN^2$ avec $C$ un nombre réel positif).
+	Mais ce n'est pas un tri très efficace au niveau du nombre de calculs à effectuer. En fait, on peut montrer qu'étant donnée une liste $l$ de $N$ éléments, l'algorithme de tri par sélection fait $O(N^2)$ opérations (le nombre d'opérations est au plus $CN^2$ avec $C > 0$).
 \end{frame}
 
 \begin{frame}
@@ -152,6 +97,39 @@
 		et testez-la pour plusieurs valeurs de $N$.
 	\end{block}
 \end{frame}
+
+
+\section{Tri à bulle}
+
+\begin{frame}[fragile]{Tri par sélection}
+	On désire trier une liste \lstinline|l| passée en argument de la manière suivante : on part du début de la liste, et on remonte en échangeant chaque élément avec son successeur s'il est plus grand que lui, de sorte qu'à chaque passage, on ait placé les plus grands éléments à la fin de la liste dans l'ordre croissant.
+	
+	Dans le pire des cas, cet algorithme effectue $O(N^2)$ opérations, avec $N = \mathsf{len}(l)$.
+\end{frame}
+
+
+\begin{frame}[fragile]{Tri par sélection}{Implémentation}
+	En Python, cela donne le code suivant:
+	\begin{lstlisting}
+		def tri_bulle(l, debug=False):
+		N = len(l)
+			def remontee(i):
+				"""Remonte l'élément d'indice i
+				tant que c'est possible"""
+				if i < N-1:
+				if l[i+1] < l[i]:
+					l[i+1],l[i] = l[i], l[i+1]
+					remontee(i+1)
+				else:
+					remontee(i+1)
+		for i in range(N):
+			remontee(0)
+			if debug: print(l)
+	\end{lstlisting}
+\end{frame}
+
+\section{Tri pivot}
+
 
 
 \end{document}

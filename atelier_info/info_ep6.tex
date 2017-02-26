@@ -1,0 +1,238 @@
+\input{header.tex}
+
+\title{Atelier d'informatique}
+\subtitle{\textbf{Épisode VI:} Programmation orientée objet}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\frame{\tableofcontents}
+
+\setlength\parskip{0.8em}
+\section{Introduction}
+
+\begin{frame}[fragile]{Introduction}
+	Lors du premier chapitre de ce cours, nous avions vu la notion de \textit{type} d'une variable dans Python. Par exemple, l'utilisation de \lstinline|type(42)| renvoyait \lstinline|int| pour << integer >> (entier, en anglais). De même, \lstinline|type("coin")| renvoyait \lstinline|str| pour << string >> (chaîne de caractères).\pause
+	
+	Le type d'une variable renvoie au nom de sa \textit{classe}. En fait, on ne parle pas vraiment de variable, mais d'\textit{objet}. En Python, tout est un \textit{objet}, et sa \textit{classe} définit ses attributs et les fonctions qui lui sont propres permettant de le manipuler.
+\end{frame}
+
+\begin{frame}[fragile]{Introduction}
+	Par exemple, définissez l'objet \lstinline|x = 3|. Ensuite, écrivez \lstinline|x| suivi d'un point, et regardez le menu défilant qui s'affiche dans Pyzo (si vous n'utilisez pas Pyzo mais que vous avez iPython, appuyez sur Tab). Il s'agit de la liste des attributs et \textit{méthodes} (des fonctions attachées à l'objet) que possède l'objet (ou sa classe en soi).\pause
+	
+	Les attributs de la forme \lstinline|__truc__| sont des attributs spéciaux. Par exemple \lstinline|__add__| est la méthode définissant l'addition, et réservant l'opérateur << + >> à son utilisation. \pause
+	
+	\begin{exem}
+		Ainsi, \lstinline|x+2| et \lstinline|x.__add__(2)| veulent dirent strictement la même chose. La méthode \lstinline|__str__| permet de convertir l'objet en chaîne de caractère: entrez \lstinline|x.__str__()|.
+	\end{exem}
+\end{frame}
+
+\section{Définir une classe}
+
+\subsection{Mot-clé \texttt{class}}
+
+\begin{frame}[fragile]{Définir une classe}{Mot-clé \lstinline|class|}
+	Pour définir une classe d'objet, on utilise un mot-clé qui n'est pas \lstinline|def|, réservé pour définir des fonctions (qui sont elles aussi des objets), mais \lstinline|class|:\pause
+	\begin{lstlisting}
+		class MaClasse:
+			pass
+	\end{lstlisting}\pause
+	Pour l'instant, la classe \lstinline|MaClasse| ne fait pas grand chose, comme l'indique le mot-clé \lstinline|pass|, unique instruction dans sa définition (de même, pour faire une fonction qui ne sert à rien, on peut mettre \lstinline|pass| dans sa définition). Mais on peut quand même définir des objets de cette classe.
+\end{frame}
+
+\subsection{Créer un objet}
+
+\begin{frame}[fragile]{Définir une classe}{Créer un objet}
+	Pour cela, on \textit{instancie} l'objet (on le crée) en utilisant le constructeur \lstinline|MaClasse|, qui fonctionne un peu comme une fonction:
+	\begin{lstlisting}
+	x = MaClasse()
+	\end{lstlisting}
+	définit un objet de type \lstinline|MaClasse| et l'affecte à une variable \lstinline|x|.
+	
+	L'objet \lstinline|x| est ce qu'on appelle une \textit{instance} de la classe \lstinline|MaClasse|.
+\end{frame}
+
+\begin{frame}[fragile]{Définir une classe}{Créer un objet}
+	\begin{exem}
+		Vérifiez le type de \lstinline|x|. Que renvoie Python quand vous évaluez \lstinline|x| ? Et \lstinline|print(x)| ?
+	\end{exem}
+	\pause
+	
+	Évaluer un objet fait appel à sa méthode de \textit{représentation} \lstinline|__repr__|. Par défaut, les objets d'une classe n'ayant pas de telle méthode précisée renvoient une chaîne donnant le type de l'objet et son emplacement mémoire.\pause
+	
+	Lorsque \lstinline|print| est appelé sur un objet, il le convertit en chaîne via sa méthode \lstinline|__str__| et imprime la chaîne. Si elle n'est pas précisée, elle renvoie la même chose que \lstinline|__repr__| par défaut.
+\end{frame}
+
+\begin{frame}[fragile]{Définir une classe}{Créer un objet}
+	Maintenant, si vous écrivez \lstinline|x| suivi d'un point, vous verrez défiler quand même une liste d'attributs... Ce sont en fait les attributs de base communs à tous les objets en Python, qui assurent que les classes définies par l'utilisateur fonctionnent bien.\pause
+	
+	En particulier, la méthide \lstinline|__init__| correspond au constructeur utilisé pour définir \lstinline|x|. Quand vous écrivez \lstinline|MaClasse()| pour instancier un objet de type \lstinline|MaClasse|, il fait appel à cette méthode pour créer l'objet.
+\end{frame}
+
+\subsection{Définir des attributs}
+
+\begin{frame}[fragile]{Définir une classe}{Définir des attributs}
+	On distingue deux types d'attributs et méthode: les attributs et méthodes \textit{de classe}, définis sur la classe en soi et accessibles depuis la classe ou ses instances, et les attributs et méthodes \textit{d'objet}, définis et accessibles sur les objets.\pause
+	
+	Les attributs d'objet peuvent donc varier d'une instance à l'autre d'une même classe. Les attributs de classe, non.
+\end{frame}	
+
+\begin{frame}[fragile]
+	Pour définir des attributs d'objet, on peut le faire par affectation directe en écrivant quelque chose comme \lstinline|obj.attribut = valeur|, mais ce n'est pas forcément très utile.\pause
+	
+	Souvent, on définit des attributs au sein des méthodes. Les méthodes sont très importantes, car c'est là que réside tout l'intérêt des objets, sans lesquelles ce ne seraient alors que des tableaux de valeurs étiquetées.
+\end{frame}
+
+
+\begin{frame}[fragile]
+	Pour définir des attributs sur la classe en soi, hérités par toute instance de cette classe, on fait des affectations dans la définition de la classe:
+	\begin{lstlisting}
+	class MaClasse:
+		sujet = "Coin."
+	\end{lstlisting}\pause
+	
+	Maintenant, définir \lstinline|x = MaClasse()| et évaluer \lstinline|x.sujet| renvoie toujours la chaîne \lstinline|"Coin."|.
+	
+	Comme il s'agit d'un attribut de classe, on peut aussi y accéder en écrivant \lstinline|MaClasse.sujet|.
+\end{frame}
+
+\subsection{Définir des méthodes}
+
+\begin{frame}[fragile]{Définir une classe}{Définir des méthodes}
+	Pour définir une méthode, on définit une fonction au sein de la classe:\pause
+	\begin{lstlisting}
+		class MaClasse:
+			def methode(*args, **kwargs):
+				< instructions >
+	\end{lstlisting}
+	et on accède à la méthode via \lstinline|MaClasse.methode|. Sous cette forme, cela a un intérêt limité: elle n'interagit pas avec les objets et leurs attributs. On ne peut même pas l'utiliser sur une instance.\pause
+	
+	\begin{exem}
+		Définissez une méthode sur \lstinline|MaClasse| au sens ci-dessus.
+		Définissez une instance \lstinline|x| de \lstinline|MaClasse|. Essayez de faire appel à votre méthode. Qu'obtenez vous ?
+	\end{exem}
+\end{frame}
+
+\begin{frame}[fragile]
+	Pour faire que les méthodes interagissent avec les objets, on passe en argument à la méthode l'objet sur lequel elle est définie:\pause
+	\begin{lstlisting}
+	class MaClasse:
+		def methode(self, *args, **kwargs):
+			< instructions >
+	\end{lstlisting}\pause
+	
+	Une fois donné un objet \lstinline|obj|, on peut donc faire appel à la méthode en écrivant \lstinline|obj.methode(*args,**kwargs)|, qui est en fait \lstinline|MaClasse.methode(obj,*args,**kwargs)| puisque la méthode est rattachée à la classe.
+\end{frame}
+
+\begin{frame}[fragile]
+	Ainsi, pour donner des attributs à un objet au sein d'une méthode, on écrit \lstinline|self.attribut = valeur|:\pause
+	\begin{exem}
+	\begin{lstlisting}
+	class Foo:
+		def bar(self, x):
+			self.attribut = x
+			return x
+	\end{lstlisting}
+	Que fait \lstinline|obj = Foo()| suivi de \lstinline|obj.bar(42)| ?
+	\end{exem}
+\end{frame}
+
+
+\subsection{Constructeur}
+
+\begin{frame}[fragile]{Définir une classe}{Définir le constructeur}
+	Comme dit plus haut, écrire \lstinline|MaClasse()| définit un objet de type \lstinline|MaClasse|, et pour se faire fait appel à la méthode \lstinline|MaClasse.__init__|, appelée \textit{constructeur}.\pause
+	
+	Pour le modifier, notamment pour qu'il prenne des arguments, il faut définir cette méthode au sein de la classe:
+	\begin{lstlisting}
+		class MaClasse:
+			def __init__(self, *args, **kwargs):
+				< instructions >
+	\end{lstlisting} Parmi ces instructions, il y a notamment des définitions d'attributs.\pause
+	
+	\textbf{Attention} Le constructeur ne doit pas renvoyer de valeurs, donc il n'y a jamais de \lstinline|return|.
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{exem}
+	Que font les objets du type suivant ?
+	\begin{lstlisting}
+		class Grapheur:
+			def __init__(self,fonction):
+				self.func = fonction
+			
+			def dessiner(self,a,b,N=100):
+				X = np.linspace(a,b,N)
+				Y = self.func(X)
+				plt.figure(0)
+				plt.grid(True)
+				plt.plot(X,Y)
+				plt.show()
+	\end{lstlisting}
+	\end{exem}
+\end{frame}
+
+
+
+
+\section{Exercices}
+
+\begin{frame}[fragile]{Exercices}
+	\begin{exo}[Fractions]
+		On va créer une classe \lstinline|Fraction| pour représenter des fractions.\pause
+		\begin{itemize}
+			\item Définir une classe \lstinline|Fraction|. Son constructeur prendra en arguments deux entiers \lstinline|a| et \lstinline|b| qui seront respectivement son numérateur et son dénominateur. On définira les attributs \lstinline|num| et \lstinline|den| qui correspondront au numérateur et dénominateur.\pause
+			\item Définir la méthode \lstinline|__float__| qui convertit une fraction en nombre à virgule. On renverra donc la valeur \lstinline|a/b|.\pause
+			\item Définir la méthode \lstinline|__str__| suivante, qui convertit un objet de type \lstinline|Fraction| en chaîne de caractère:\pause
+			\begin{lstlisting}
+				def __str__(self):
+					return "{}/{}".format(self.num,self.den)
+			\end{lstlisting}\pause
+			Définir la fraction \lstinline|f = Fraction(1,3)|. Que fait \lstinline|print(f)| ?
+		\end{itemize}
+	\end{exo}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Exercice 1} (suite)}
+		\begin{itemize}
+			\item Définir une méthode d'addition \lstinline|__add__(self,other)|, où \lstinline|other| est un autre objet de type \lstinline|Fraction|, qui ajoute les deux fractions. On peut l'utiliser en écrivant \lstinline|frac1 + frac2| où \lstinline|frac1| et \lstinline|frac2| sont deux fractions, plutôt que \lstinline|frac1.__add__(frac2)|.\pause
+
+			\textbf{Indication} On rappelle que
+			\[
+			\frac a b + \frac c d = \frac{ad + bc}{bd}.
+			\]\pause
+			\item Définir de même une soustraction \lstinline|__sub__(self,other)|.\pause
+			\item Définir une multiplication \lstinline|__mul__(self,other)| et de division \lstinline|__truediv__(self,other)|.
+			\item Implémenter une méthode qui simplifie une fraction (au sens où le numérateur et le dénominateur n'ont pas de facteurs communs).
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+
+\section{Sous-classes}
+
+\begin{frame}[fragile]{Sous-classes}
+	Le principe des sous-classes est de << spécialiser >> une classe, en ajoutant des attributs et méthodes, mais en conservant la version initiale, par exemple pour définir une autre sous-classe.\pause
+	
+	Une sous-classe a la particularité d'\textit{hériter} les méthodes et attributs de sa classe mère.\pause
+\end{frame}
+
+\begin{frame}[fragile]
+	Étant une classe initiale \lstinline|Foo|, on crée la sous-classe \lstinline|Bar| de la façon suivante:
+	\begin{lstlisting}
+		class Foo(Bar):
+			< instructions >
+	\end{lstlisting}
+	
+	La nouvelle classe \lstinline|Bar| aura donc les attributs et méthodes définis par les instructions données, et ceux de la classe \lstinline|Bar|.\pause
+	
+	\textbf{Remarque} Si une méthode ou un attribut défini dans \lstinline|Foo| a le même nom qu'une méthode ou un attribut défini dans \lstinline|Bar|, ceux de la sous-classe remplacent ceux de la classe mère.\pause
+	
+	Faites attention au constructeur si vous le redéfinissez. Si c'est le cas et que vous voulez quand même effectuer les instructions de la classe mère, écrivez \lstinline|super().__init__(self,*args,**kwargs)|. \lstinline|super()| fait référence à la classe mère.
+\end{frame}
+
+\end{document}

@@ -1,62 +1,4 @@
-\documentclass[10pt,xcolor={dvipsnames}]{beamer}
-\usepackage{geometry}
-\usepackage{polyglossia}
-\usepackage{mathtools}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{graphicx}
-\setdefaultlanguage{french}
-\usepackage{listings}
-\usepackage{lstautogobble}
-
-\lstset{language=Python,
-	escapechar=\%,
-	basicstyle=\ttfamily,
-	keywordstyle=\color{OliveGreen}\ttfamily,
-	stringstyle=\color{red}\ttfamily,
-	commentstyle=\color{brown}\ttfamily,
-	morecomment=[l][\color{blue}]{\#},
-	columns=fixed,
-	autogobble=true
-	keepspaces=false
-}
-
-\usetheme{Frankfurt}
-
-\renewcommand\epsilon\varepsilon
-\renewcommand\phi\varphi
-\newcommand{\N}{\mathbb N}
-\newcommand{\Z}{\mathbb Z}
-\newcommand{\R}{\mathbb R}
-\newcommand{\Q}{\mathbb Q}
-\newcommand{\CC}{\mathbb C}
-\newcommand{\K}{\mathbb K}
-\DeclarePairedDelimiter{\intcc}{[\![}{]\!]}
-
-\newcounter{Exercice}
-\resetcounteronoverlays{Exercice}
-\makeatletter
-\newenvironment{exo}[1][\@nil]{
-	\def\tmp{#1}
-	\refstepcounter{Exercice}
-	\begin{block}{
-			\textbf{Exercice~\theExercice}
-			\ifx\tmp\@nnil
-			%
-			\else
-			(#1)
-			\fi
-		}
-	}{\end{block}}
-\makeatother
-
-\newcounter{Exemple}
-\resetcounteronoverlays{Exemple}
-\newenvironment{exem}{
-	\refstepcounter{Exemple}
-	\begin{block}{\textbf{Exemple~\theExemple}}
-	}{\end{block}}
+\input{header.tex}
 
 \title{Atelier d'informatique}
 \subtitle{\textbf{Épisode III:} Fonctions}
@@ -110,8 +52,8 @@ Par exemple, on définit la fonction \lstinline|f| suivante:\pause
 \begin{lstlisting}[escapechar=\%]
 def f(nombre, nom="eddy malou"): %\pause%
     if n == 42:
-        return "Je suis le 1er savant de la" + \
-		"République Démocratique du Congo" + \
+        return "Je suis le 1er savant de la"+\
+		"République Démocratique du Congo"+\
 		nom %\pause%
     else:
         print("Vous me décevez")
