@@ -1,4 +1,5 @@
 \documentclass[11pt]{article}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[a4paper]{geometry}
 \usepackage{mathtools,amssymb,amsthm}
 \usepackage{polyglossia}
@@ -8,27 +9,47 @@
 \usepackage{textcomp}
 \usepackage{tikz}
 \usepackage[shortlabels]{enumitem}
+\usepackage{mdframed}
 
 \setdefaultlanguage{french}
 \frenchspacing
 \setmathfont{Latin Modern Math}
 \setmathfont[range={\mathbb,\mathcal,\mathsf}]{xits-math.otf}
 
-\let\oldepsilon\epsilon
-\renewcommand\epsilon\varepsilon
-\renewcommand\phi\varphi
 \newcommand{\N}{\mathbb N}
 \newcommand{\Z}{\mathbb Z}
 \newcommand{\R}{\mathbb R}
 \newcommand{\Q}{\mathbb Q}
 \newcommand{\CC}{\mathbb C}
 \newcommand{\K}{\mathbb K}
+\DeclareMathOperator{\Card}{\mathrm{Card}}
 \DeclarePairedDelimiter{\zint}{[\![}{]\!]}
 
 %% Theorem environments
 \theoremstyle{definition}
-\newtheorem{defn}{Définition}[section]
-\newtheorem{prop}[defn]{Proposition}
+%\newtheorem{defn}{Définition}[section]
+
+\newmdtheoremenv[
+	backgroundcolor=lightgray!50,
+	linecolor=blue!80!black!60,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	bottomline=false
+]{defn}{Définition}[section]
+
+%\newtheorem{prop}[defn]{Proposition}
+
+\newmdtheoremenv[
+	backgroundcolor=BrickRed!15,
+	linecolor=red!80!black!80,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	leftline=true,
+	bottomline=false
+]{prop}[defn]{Proposition}
+
 \newtheorem{axio}[defn]{Axiome}
 \newtheorem{exe}{Exemple}
 \newtheorem{exo}{Exercice}
@@ -48,14 +69,18 @@
 \end{center}
 \vspace{1cm}
 
-\begin{flushright}
-<< \textit{...combinatorics, a sort of glorified dice-throwing.} >> \hfill— Robert \textsc{Kanigel}
-\end{flushright}
+\begin{flushleft}
+<< \textit{...combinatorics, a sort of glorified dice-throwing.} >> \hfill— Robert Kanigel
+\end{flushleft}
 
-\begin{flushright}
+\begin{flushleft}
+	<< \textit{L'arithmétique, c'est être capable de compter jusqu'à vingt sans enlever ses chaussures.} >> \hfill — Walt Disney
+\end{flushleft}
+
+\begin{flushleft}
 << \textit{Tout ce dénombrement, madame, est inutile\\
-Cent Hectors pourraient-ils me payer un Achille ?} >> \hfill — Pradon, Troade
-\end{flushright}
+Cent Hectors pourraient-ils me payer un Achille ?} >> \hfill — Jacques Pradon, \textit{La Troade}
+\end{flushleft}
 
 
 \tableofcontents
@@ -88,23 +113,135 @@ De combien de façons peut-on ranger ces livres ?
 
 \paragraph{Problème 2} On considère maintenant un sac de 10 billes différentes. De combien de façons peut-on constituer un paquet de 4 billes parmi les 10 ?
 
-\section{Applications}
+\section{Produit cartésien}
 
-\subsection{Produit cartésien}
+\begin{defn}[Couple de deux éléments]
+	Soient $x$ et $y$ deux objets mathématiques. Le couple $(x,y)$ est la donnée de $x$ comme \textit{première composante} et de $y$ comme \textit{deuxième composante}.
+	
+	Il faut retenir la propriété caractéristique:
+	Deux couples $(a,b)$ et $(x,y)$ sont égaux si et seulement si leurs composantes sont égales deux à deux:
+	
+	\[
+	(a,b) = (x,y) \Longleftrightarrow (a=x\land b=y).
+	\]
+\end{defn}
 
 \begin{defn}[Produit cartésien]
 Soient $E$ et $F$ deux ensembles. On appelle \textit{produit cartésien de $E$ et de $F$}, et on note $E\times F$ (lu << $E$ croix $F$ >>) l'ensemble des couples $(x,y)$ où $x\in E$ et $y\in F$.
 \end{defn}
 
 \begin{rem}
-En général, $E\times F\neq F\times E$ !
+En général, $E\times F\neq F\times E$ ! Pour avoir l'égalité, les deux ensembles doivent être égaux ou l'un des deux doit être vide.
 \end{rem}
 
 \begin{exe}\leavevmode
 \begin{itemize}
-
+\item $\R\times\R = \{(x,y)\ \mid\ x\in\R\,\text{et}\,y\in\R \}$
 \item $(0,\pi)\in\R\times\R^*$ mais $(0,\pi)\not\in \R^*\times\R$.
 \end{itemize}
 \end{exe}
+
+\begin{prop}
+	Soient $E$ et $F$ des ensembles. Alors:
+	\begin{itemize}
+		\item $E\times\varnothing=\varnothing\times E=\varnothing$
+		\item Si $E$ et $F$ sont \textbf{finis}, alors
+		\[
+		\Card(E\times F) = \Card(E)\Card(F). 
+		\]
+	\end{itemize}
+\end{prop}
+
+\begin{defn}[Généralisation]\leavevmode
+	\begin{enumerate}
+		\item Soient $a_1,\ldots,a_n$ des objets mathématiques. On définit le $n$-uplet $(a_1,\ldots,a_n)$ comme étant le couple ayant comme première composante le $n-1$-uplet $(a_1,\ldots,a_{n-1})$ et comme deuxième composante $a_n$. Les $n-1$-uplets ayant été définis de la même manière à partir des $n-2$-uplets.
+		\item Soient $E_1,\ldots,E_n$ des ensembles, avec $n\in\N^*$. Le \textit{produit cartésien} des ensembles $(E_i)_{1\leq i\leq n}$ est l'ensemble des \textit{$n$-uplets}
+		\[ (x_1,\ldots,x_n)
+		\]
+		où pour tout $i$ entre $1$ et $n$, $x_i\in E_i$.
+	\end{enumerate}
+\end{defn}
+
+Lorsque tous les $E_i$ sont égaux à un même ensemble $E$, on notera
+\[
+\underbrace{E\times\ldots \times E}_{n\; \text{fois}} = E^n.
+\]
+
+\begin{exe}
+	Ainsi, $\R\times\R = \R^2$.
+\end{exe}
+
+\begin{prop}
+	Soient $E$, $F$ et $G$ trois ensembles. Par définition des $n$-uplets, on a 
+	\[(E\times F)\times G = E\times(F\times G) = E\times F\times G. \]
+\end{prop}
+
+
+\section{Applications}
+
+Dans cette section, on définira de manière générale la notion d'\textit{application} entre deux ensembles, une généralisation des fonctions que vous connaissez. $E$ et $F$ sont dans la suite deux ensembles.
+
+\subsection{Généralités}
+
+\begin{defn}
+	Une application $f$ de $E$ vers $F$, notée $f:E\longrightarrow F$ est la donnée d'une partie $G$ de $E\times F$, appelée \textit{graphe de $f$}. Si $(x,y)\in G$, $y$ est appelé \textit{image de $x$ par $f$}, $x$ est appelé \textit{antécédent de $y$ par $f$}. De plus, $G$ doit vérifier la propriété suivante:
+	pour tout $(x,y)\in G$, et pour tout $y'$ de $F$,
+	\[
+	(x,y')\in G \Rightarrow y=y'
+	\]
+	c'est-à-dire qu'un élément $x\in E$ admet au plus une image. On adopte la notation des fonctions: si $(x,y)\in G$, alors
+	\[y=f(x).\]
+	
+	L'ensemble des applications de $E$ vers $F$ est noté $F^E$ ou encore \(\mathcal{F}(E,F)\).
+\end{defn}
+
+
+Bien sûr, la définition donnée ne garantit pas qu'une application $f:E\longrightarrow F$ est définie sur $E$ tout entier. On définit alors la notion d'\textit{ensemble de définition}:
+
+\begin{defn}[Ensemble de définition]
+	Soit $f$ une application de $E$ vers $F$. L'\textit{ensemble de définition} de $f$ est l'ensemble des $x\in E$ qui admettent une image par $f$, c'est-à-dire tels qu'il existe un $y\in F$ tel que $(x,y)\in G$.
+\end{defn}
+
+Des fois, il faut considérer non pas l'application $f$ mais une application définie sur une partie de $E$ prenant les mêmes valeurs que $f$.
+
+\begin{prop}[Nombre d'applications]
+	On suppose que $E$ et $F$ sont \textbf{finis}. Le nombre d'applications de $E$ vers $F$ est le cardinal de $\mathcal F(E,F)$, qui vaut
+	\[
+	\Card(\mathcal{F}(E,F)) = \Card(F)^{\Card(E)}.
+	\]
+\end{prop}
+
+\subsection{Injection, surjection, bijection}
+
+\begin{defn}
+	Soit $f$ une application de $E$ vers $F$, que l'on suppose définie sur $E$ tout entier. Elle est dite:
+	\begin{itemize}
+		\item \textit{injective} si $f(x)=f(x')$ entraîne $x= x'$. Autrement dit, les éléments de $F$ n'admettent au plus qu'un antécédent.
+		\item \textit{surjective} si tout $y\in F$ admet au moins un antécédent $x$ par $f$.
+		\item \textit{bijective} si elle est à la fois injective \textbf{et} surjective. Autrement dit, tout élément $y$ de $F$ admet un \textit{et un seul} antécédent par $f$.
+	\end{itemize}
+\end{defn}
+
+Si $f$ est bijective, alors pour tout $y\in F$ il existe un seul $x\in E$, que l'on peut noter $g(y)$ sans ambiguïté, tel que $y=f(x)$. L'application $g$ ainsi définie est appelée \textit{réciproque de $f$} et notée $f^{-1}$.
+
+
+\subsection{Lien avec le cardinal}
+
+\begin{defn}[Cardinal, version propre]
+	L'ensemble $E$ est fini et est de cardinal $n\in\N^*$ s'il existe une bijection $\varphi:\zint{1,n}\longrightarrow E$, c'est-à-dire que l'on peut écrire
+	$E=\{\varphi(1),\ldots,\varphi(n) \}.$
+\end{defn}
+
+\begin{prop}
+	On suppose que $E$ et $F$ sont finis. Soit $f$ une application de $E$ vers $F$. Alors:
+	\begin{itemize}
+		\item Si $f$ est injective alors $\Card E\leq \Card F$.
+		\item Si $f$ est surjective alors $\Card E \geq \Card F$.
+		\item Si $f$ est bijective alors $\Card E = \Card F$: les ensembles ont le même nombre d'éléments.
+	\end{itemize}
+\end{prop}
+
+Le dernier point est particulièrement utile dans le cadre du dénombrement: en effet, si on peut mettre en bijection l'ensemble $E$ dont on cherche le nombre d'éléments avec un ensemble $F$ dont on connaît bien le cardinal, alors on en déduit que $E$ a même cardinal de $F$.
+
 
 \end{document}
