@@ -53,9 +53,13 @@
 	définit un objet de type \lstinline|MaClasse| et l'affecte à une variable \lstinline|x|.
 	
 	L'objet \lstinline|x| est ce qu'on appelle une \textit{instance} de la classe \lstinline|MaClasse|.
+
+	Maintenant, si vous écrivez \lstinline|x| suivi d'un point, vous verrez défiler quand même une liste d'attributs... Ce sont en fait les attributs de base communs à tous les objets en Python, qui assurent que les classes définies par l'utilisateur fonctionnent bien.\pause
+
+	En particulier, la méthide \lstinline|__init__| correspond au constructeur utilisé pour définir \lstinline|x|. Quand vous écrivez \lstinline|MaClasse()| pour instancier un objet de type \lstinline|MaClasse|, il fait appel à cette méthode pour créer l'objet.
 \end{frame}
 
-\begin{frame}[fragile]{Définir une classe}{Créer un objet}
+\begin{frame}[fragile]
 	\begin{exem}
 		Vérifiez le type de \lstinline|x|. Que renvoie Python quand vous évaluez \lstinline|x| ? Et \lstinline|print(x)| ?
 	\end{exem}
@@ -66,11 +70,6 @@
 	Lorsque \lstinline|print| est appelé sur un objet, il le convertit en chaîne via sa méthode \lstinline|__str__| et imprime la chaîne. Si elle n'est pas précisée, elle renvoie la même chose que \lstinline|__repr__| par défaut.
 \end{frame}
 
-\begin{frame}[fragile]{Définir une classe}{Créer un objet}
-	Maintenant, si vous écrivez \lstinline|x| suivi d'un point, vous verrez défiler quand même une liste d'attributs... Ce sont en fait les attributs de base communs à tous les objets en Python, qui assurent que les classes définies par l'utilisateur fonctionnent bien.\pause
-	
-	En particulier, la méthide \lstinline|__init__| correspond au constructeur utilisé pour définir \lstinline|x|. Quand vous écrivez \lstinline|MaClasse()| pour instancier un objet de type \lstinline|MaClasse|, il fait appel à cette méthode pour créer l'objet.
-\end{frame}
 
 \subsection{Définir des attributs}
 
@@ -176,7 +175,27 @@
 \end{frame}
 
 
+\section{Sous-classes}
 
+\begin{frame}[fragile]{Sous-classes}
+	Le principe des sous-classes est de << spécialiser >> une classe, en ajoutant des attributs et méthodes, mais en conservant la version initiale, par exemple pour définir une autre sous-classe.\pause
+	
+	Une sous-classe a la particularité d'\textit{hériter} les méthodes et attributs de sa classe mère.\pause
+\end{frame}
+
+\begin{frame}[fragile]
+	Étant une classe initiale \lstinline|Foo|, on crée la sous-classe \lstinline|Bar| de la façon suivante:
+	\begin{lstlisting}
+	class Foo(Bar):
+	< instructions >
+	\end{lstlisting}
+	
+	La nouvelle classe \lstinline|Bar| aura donc les attributs et méthodes définis par les instructions données, et ceux de la classe \lstinline|Bar|.\pause
+	
+	\textbf{Remarque} Si une méthode ou un attribut défini dans \lstinline|Foo| a le même nom qu'une méthode ou un attribut défini dans \lstinline|Bar|, ceux de la sous-classe remplacent ceux de la classe mère.\pause
+	
+	Faites attention au constructeur si vous le redéfinissez. Si c'est le cas et que vous voulez quand même effectuer les instructions de la classe mère, écrivez \lstinline|super().__init__(self,*args,**kwargs)|. \lstinline|super()| fait référence à la classe mère.
+\end{frame}
 
 \section{Exercices}
 
@@ -186,9 +205,9 @@
 		\begin{itemize}
 			\item Définir une classe \lstinline|Fraction|. Son constructeur prendra en arguments deux entiers \lstinline|a| et \lstinline|b| qui seront respectivement son numérateur et son dénominateur. On définira les attributs \lstinline|num| et \lstinline|den| qui correspondront au numérateur et dénominateur.\pause
 			\item Définir la méthode \lstinline|__float__| qui convertit une fraction en nombre à virgule. On renverra donc la valeur \lstinline|a/b|.\pause
-			\item Définir la méthode \lstinline|__str__| suivante, qui convertit un objet de type \lstinline|Fraction| en chaîne de caractère:\pause
+			\item Définir la méthode \lstinline|__repr__| suivante, qui convertit un objet de type \lstinline|Fraction| en chaîne de caractère:\pause
 			\begin{lstlisting}
-				def __str__(self):
+				def __repr__(self):
 					return "{}/{}".format(self.num,self.den)
 			\end{lstlisting}\pause
 			Définir la fraction \lstinline|f = Fraction(1,3)|. Que fait \lstinline|print(f)| ?
@@ -212,27 +231,214 @@
 	\end{block}
 \end{frame}
 
+\begin{frame}[fragile]
+	\begin{exo}[Vecteurs]
+		On va maintenant créer une classe \lstinline|Vecteur| qui servira à représenter les vecteurs. On commencera par des vecteurs du plan dans un repère $\mathfrak{R}=(O,\vec{\imath},\vec{\jmath})$ fixé.
+		
+		\begin{itemize}
+			\item Définir la classe \lstinline|Vecteur|. Son constructeur (méthode \lstinline|__init__|) prendra en arguments deux nombres réels \lstinline|x| et \lstinline|y| et les stockera dans l'attribut \lstinline|coord| qui sera un \lstinline|tuple|.\pause
+			\item Définir une addition \lstinline|__add__|. On rappelle que la somme $\vec u + \vec v$ a pour coordonnées les sommes de celles de $\vec u$ et $\vec v$.\pause
+			\item Définir un produit par un réel \lstinline|mult|, tel que \lstinline|u.mult(k)| renvoie le vecteur $k\vec{u}$.\pause
+			\item Définir une méthode de représentation \lstinline|__repr__|. Elle renverra la chaîne constituée du mot << \lstinline|Vecteur| >> suivie des coordonnées.\\\pause
+			\textbf{Indication} On peut concaténer deux chaînes en utilisant l'addition << + >>, et convertir un \lstinline|tuple| en chaîne via \lstinline|str|.
+		\end{itemize}
+	\end{exo}
+\end{frame}
 
-\section{Sous-classes}
 
-\begin{frame}[fragile]{Sous-classes}
-	Le principe des sous-classes est de << spécialiser >> une classe, en ajoutant des attributs et méthodes, mais en conservant la version initiale, par exemple pour définir une autre sous-classe.\pause
-	
-	Une sous-classe a la particularité d'\textit{hériter} les méthodes et attributs de sa classe mère.\pause
+\begin{frame}[fragile]
+	\begin{exo}[Vecteurs, bis]
+		On va ajouter plus de méthodes à notre classe \lstinline|Vecteur|, permettant de faire de la géométrie plus avancée.
+		\begin{itemize}
+			\item Définir une méthode \lstinline|colineaire| testant la colinéarité de deux vecteurs. \lstinline|u.colineaire(v)| renverra \lstinline|True| si $\vec{u}$ et $\vec{v}$ sont colinéaires, et \lstinline|False| sinon.\pause
+			\item (\textbf{Première S}) Définir une méthode \lstinline|dot(self,other)| qui calcule le produit scalaire $\vec u\cdot\vec v$.\\
+			\textbf{Rappel} Si $\vec u = \begin{psmallmatrix}
+			x \\ y
+			\end{psmallmatrix}$ et $\vec v = \begin{psmallmatrix}
+			x' \\ y'
+			\end{psmallmatrix}$ sont des vecteurs, leur produit scalaire (canonique) est défini par
+			$$\vec u \cdot\vec v = xx' + yy'.$$
+			\item Définir une méthode \lstinline|orthogonal|: \lstinline|u.orthogonal(v)| teste si les vecteurs $\vec u$ et $\vec v$ sont orthogonaux. On rappelle que c'est le cas si et seulement si $\vec u\cdot\vec v = 0$. On utilisera la méthode \lstinline|dot|.
+			\item Définir une méthode \lstinline|norm| qui calcule la norme d'un vecteur. On rappelle qu'elle est définie par $\|\vec u\| = \sqrt{x^2+y^2}$. 
+		\end{itemize}
+	\end{exo}
 \end{frame}
 
 \begin{frame}[fragile]
-	Étant une classe initiale \lstinline|Foo|, on crée la sous-classe \lstinline|Bar| de la façon suivante:
+	\begin{exo}[Vecteurs en dimension supérieure]
+		En général, un vecteur peut avoir $n$ coordonnées, où $n$ est un entier $\geq 2$ appelé \textit{dimension} (un vecteur de dimension $1$ n'est qu'un nombre réel).
+		
+		Modifiez la classe \lstinline|Vecteur| de l'exercice 2 pour qu'elle représente des vecteurs à $n$ coordonnées. Le constructeur définira un attribut \lstinline|dim| correspondant à la dimension du vecteur.
+	\end{exo}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{exo}[Polynômes]
+		Un \textit{polynôme} est une fonction $P:\R\longrightarrow\R$ de la forme
+		\[
+		P(x)  = a_nx^n + \cdots + a_1x + a_0.
+		\]
+		où les $a_i,0\leq i\leq n$ sont des réels appelés \textit{coefficients} de $f$, et lorsque $a_n\neq 0$, l'entier naturel $n$ est appelé \textit{degré} de $f$.\pause
+		
+		On peut les représenter par un vecteur des \textit{coefficients} des termes $x^n$,
+		\[
+		(a_0,\ldots,a_n)
+		\]
+		L'ensemble des polynômes est noté $\R[x]$.\pause
+		
+		Définissez une classe \lstinline|Polynome|, qui sera une sous-classe de la classe \lstinline|Vecteur|. On définira la méthode \lstinline|func(self,x)|, telle que \lstinline|P.func(x)| calcule $P(x)$. \pause
+		
+		On définira aussi une méthode \lstinline|graphe(self,a,b)| qui dessine la courbe représentative $\mathcal{C}_f$ du polynôme sur l'intervalle $[a,b]$.
+	\end{exo}
+\end{frame}
+
+
+\subsection{Corrections}
+
+\begin{frame}[fragile]{Exerices}{Corrections}
+	\begin{block}{\textbf{Correction de l'exercice 1}}
+		\begin{lstlisting}
+		class Fraction:
+			def __init__(self,a,b):
+				# Teste si c'est bien une fraction
+				if type(a) != int or type(b) != int:
+					raise TypeError("Numérateur" +\ 
+						"et dénominateur doivent être entiers")
+				if b==0:
+					mess = "Division par zéro !"
+					raise ZeroDivisionError(mess)
+				self.num = a
+				self.den = b
+			%\pause%
+			def __float__(self):
+				return self.num/self.den
+			%\pause%
+			def __repr__(self):
+				return "{}/{}".format(self.num,self.den)
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Correction de l'exercice 1 (suite)}}
+		\begin{lstlisting}
+		def __add__(self,other):
+			a,b = self.num,self.den
+			c,d = other.num,other.den
+			return Fraction(a*d+b*c,b*d)
+		%\pause%
+		def __mul__(self,other):
+			a,b = self.num,self.den
+			c,d = other.num,other.den
+			return Fraction(a*c,b*d)
+		%\pause%
+		def __sub__(self,other):
+			# astuce consistant en multiplier la
+			# 2eme fraction par -1 et ajouter
+			f = Fraction(-1,1)*other
+			return self + other
+		%\pause%
+		def __truediv__(self,other):
+			a,b = self.num,self.den
+			c,d = other.num,other.den
+			return Fraction(a*d,b*c)
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Correction de l'exercice 2}}
+		\begin{lstlisting}
+		class Vecteur:
+			def __init__(self, x,y):
+				self.coord = (x,y)
+			%\pause%
+			def __add__(self,other):
+				x , y = self.coord
+				x1,y1 = other.coord
+				return Vecteur(x+x1,y+y1)
+			%\pause%
+			def mult(self,k):
+				x, y = self.coord
+				return Vecteur(k*x,k*y)
+			%\pause%
+			def __repr__(self):
+				return "Vecteur"+str(self.coord)
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Correction de l'exercice 3}}
+		\begin{lstlisting}
+			def colineaire(self,other):
+				x, y = self.coord
+				x1,y1 = other.coord
+				return x*y1 - y*x1 == 0
+			%\pause%
+			def dot(self,other):
+				x, y = self.coord
+				x1,y1 = other.coord
+				return x*x1 + y*y1
+			%\pause%
+			def orthogonal(self,other):
+				return self.dot(other) == 0
+			%\pause%
+			def norm(self):
+				from math import sqrt
+				return sqrt(self.dot(self))
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Correction de l'exercice 4}}
+		Voici ce qui est modifié:
+		\begin{lstlisting}
+				def __init__(self,*args):
+					self.dim = len(args)
+					self.coord = tuple(args)
+				%\pause%
+				def __add__(self,other):
+					# couples (x,y) où x est une coordonnée de 
+					# self et y la coordonnée correspondante de other
+					coords = zip(self.coord,other.coord)
+					# arguments à passer au constructeur,
+					# somme des coordonnées des vecteurs
+					args = (x+y for x,y in coords)
+					return Vecteur(*args)
+				%\pause%
+				def mult(self,k):
+					# arguments à passer au constructeur
+					args = (k*x for x in self.coord)
+					return Vecteur(args)
+		\end{lstlisting}
+	\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\begin{block}{\textbf{Correction de l'exercice 5}}
+	On sous-classe \lstinline|Vecteur| et on garde le constructeur standard, qui permet de représenter le polynôme par un vecteur.
 	\begin{lstlisting}
-		class Foo(Bar):
-			< instructions >
+		class Polynome(Vecteur):
+			def func(self,x):
+				coeffs = self.coords
+				n = self.dim
+				return sum(coeffs[i]*x**i for i in range(n))
+			
+			def graphe(self,a,b):
+				from numpy import linspace
+				import matplotlib.pyplot as plt
+				Xar = linspace(a,b,100)
+				valeurs = self.func(Xar)
+				fig = plt.figure(0)
+				plt.grid(True)
+				plt.plot(Xar, valeurs)
+				plt.show()
+				return fig
 	\end{lstlisting}
-	
-	La nouvelle classe \lstinline|Bar| aura donc les attributs et méthodes définis par les instructions données, et ceux de la classe \lstinline|Bar|.\pause
-	
-	\textbf{Remarque} Si une méthode ou un attribut défini dans \lstinline|Foo| a le même nom qu'une méthode ou un attribut défini dans \lstinline|Bar|, ceux de la sous-classe remplacent ceux de la classe mère.\pause
-	
-	Faites attention au constructeur si vous le redéfinissez. Si c'est le cas et que vous voulez quand même effectuer les instructions de la classe mère, écrivez \lstinline|super().__init__(self,*args,**kwargs)|. \lstinline|super()| fait référence à la classe mère.
+	\end{block}
 \end{frame}
 
 \end{document}
