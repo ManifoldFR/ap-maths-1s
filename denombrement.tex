@@ -7,6 +7,7 @@
 \usepackage{unicode-math}
 \usepackage{titling}
 \usepackage{textcomp}
+\usepackage[hidelinks]{hyperref}
 \usepackage{tikz}
 \usepackage[shortlabels]{enumitem}
 \usepackage{mdframed}
@@ -40,6 +41,21 @@
 
 %\newtheorem{prop}[defn]{Proposition}
 
+\newtheorem{axio}[defn]{Axiome}
+\newtheorem{exe}{Exemple}
+\newtheorem{exo}{Exercice}
+
+\theoremstyle{remark}
+\newmdtheoremenv[
+	backgroundcolor=green!10,
+	linecolor=OliveGreen!80!black!60,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	bottomline=false
+]{rem}[defn]{Remarque}
+
+\theoremstyle{theorem}
 \newmdtheoremenv[
 	backgroundcolor=BrickRed!15,
 	linecolor=red!80!black!80,
@@ -49,14 +65,6 @@
 	leftline=true,
 	bottomline=false
 ]{prop}[defn]{Proposition}
-
-\newtheorem{axio}[defn]{Axiome}
-\newtheorem{exe}{Exemple}
-\newtheorem{exo}{Exercice}
-
-\theoremstyle{remark}
-\newtheorem{rem}{Remarque}
-
 
 \begin{document}
 
@@ -154,17 +162,21 @@ En général, $E\times F\neq F\times E$ ! Pour avoir l'égalité, les deux ensem
 
 \begin{defn}[Généralisation]\leavevmode
 	\begin{enumerate}
-		\item Soient $a_1,\ldots,a_n$ des objets mathématiques. On définit le $n$-uplet $(a_1,\ldots,a_n)$ comme étant le couple ayant comme première composante le $n-1$-uplet $(a_1,\ldots,a_{n-1})$ et comme deuxième composante $a_n$. Les $n-1$-uplets ayant été définis de la même manière à partir des $n-2$-uplets.
-		\item Soient $E_1,\ldots,E_n$ des ensembles, avec $n\in\N^*$. Le \textit{produit cartésien} des ensembles $(E_i)_{1\leq i\leq n}$ est l'ensemble des \textit{$n$-uplets}
-		\[ (x_1,\ldots,x_n)
+		\item Soient $a_1,\ldots,a_p$ des objets mathématiques. On définit le $p$-uplet $(a_1,\ldots,a_p)$ comme étant le couple ayant comme première composante le $p-1$-uplet $(a_1,\ldots,a_{p-1})$ et comme deuxième composante $a_p$:
+		\[
+		(a_1,\ldots,a_p) := \left((a_1,\ldots,a_{p-1}),a_p\right)
 		\]
-		où pour tout $i$ entre $1$ et $n$, $x_i\in E_i$.
+		 Les $p-1$-uplets ayant été définis de la même manière à partir des $p-2$-uplets.
+		\item Soient $E_1,\ldots,E_p$ des ensembles, avec $p\in\N^*$. Le \textit{produit cartésien} des ensembles $(E_i)_{1\leq i\leq p}$ est l'ensemble des \textit{$p$-uplets}
+		\[ (x_1,\ldots,x_p)
+		\]
+		où pour tout $i$ entre $1$ et $p$, $x_i\in E_i$.
 	\end{enumerate}
 \end{defn}
 
 Lorsque tous les $E_i$ sont égaux à un même ensemble $E$, on notera
 \[
-\underbrace{E\times\ldots \times E}_{n\; \text{fois}} = E^n.
+\underbrace{E\times\ldots \times E}_{p\; \text{fois}} = E^p.
 \]
 
 \begin{exe}
@@ -181,7 +193,6 @@ Lorsque tous les $E_i$ sont égaux à un même ensemble $E$, on notera
 
 Dans cette section, on définira de manière générale la notion d'\textit{application} entre deux ensembles, une généralisation des fonctions que vous connaissez. $E$ et $F$ sont dans la suite deux ensembles.
 
-\subsection{Généralités}
 
 \begin{defn}
 	Une application $f$ de $E$ vers $F$, notée $f:E\longrightarrow F$ est la donnée d'une partie $G$ de $E\times F$, appelée \textit{graphe de $f$}. Si $(x,y)\in G$, $y$ est appelé \textit{image de $x$ par $f$}, $x$ est appelé \textit{antécédent de $y$ par $f$}. De plus, $G$ doit vérifier la propriété suivante:
@@ -202,49 +213,178 @@ Bien sûr, la définition donnée ne garantit pas qu'une application $f:E\longri
 	Soit $f$ une application de $E$ vers $F$. L'\textit{ensemble de définition} de $f$ est l'ensemble des $x\in E$ qui admettent une image par $f$, c'est-à-dire tels qu'il existe un $y\in F$ tel que $(x,y)\in G$.
 \end{defn}
 
-Des fois, il faut considérer non pas l'application $f$ mais une application définie sur une partie de $E$ prenant les mêmes valeurs que $f$.
+Des fois, il faut considérer non pas l'application $f$ mais une application définie sur une partie $E'$ de $E$ prenant les même valeurs, que l'on appelle la \textit{restriction de $f$ à $E'$}.
 
-\begin{prop}[Nombre d'applications]
+Pour dénombrer un ensemble, on essaiera souvent de faire correspondre chacun de ses éléments aux éléments d'un autre ensemble que l'on connaît mieux. Souvent cette correspondance est représentée par un type d'application particulière.
+\begin{defn}[Injection, surjection, bijection]
+	Soit $f:E\longrightarrow F$ une application. On dit que $f$ est:
+	\begin{itemize}
+	\item une \textit{injection} si tout $y\in F$ a au plus un antécédent. Autrement dit, si $x\in E$ et $x'\in E$ sont tels que $f(x)=f(x')$, alors $x=x'$ (sinon $y=f(x)$ a deux antécédents différents).
+	\item une \textit{surjection} si tout $y\in F$ admet un antécédent par $f$. Autrement dit, pour tout $y\in F$ il existe $x\in E$ tel que $y=f(x)$.
+	\item une \textit{bijection} si elle est injective et surjective en même temps. Autrement dit, tout $y\in F$ admet un \textbf{et un seul} élément antécédent $x$ par $f$.
+	\end{itemize}
+	
+	Si $f$ est bijective, alors on peut définir une unique application $g$ telle que si $y\in F$, l'antécédent de $x$ par $f$ est $g(y)$. L'application $g$ est notée $f^{-1}$ et est appelée \textit{réciproque de $f$}.
+	
+	Réciproquement, si une telle application $g$ existe, alors $f$ est bijective et $g$ est sa réciproque.
+\end{defn}
+
+Il suffit donc souvent d'exhiber une réciproque à $f$ pour montrer qu'elle est bijective.
+
+\begin{prop}[Lien avec le cardinal]
+	Soit $f:E\rightarrow F$ où $E$ et $F$ sont \textbf{finis}. Alors, si $f$ est:
+	\begin{itemize}
+		\item \textbf{injective} alors $\Card(E)\leq \Card(F)$.
+		\item \textbf{surjective} alors $\Card(E)\geq \Card(F)$.
+		\item \textbf{bijective} alors $\Card(E) = \Card(F)$.
+	\end{itemize}
+\end{prop}
+
+Donc pour déterminer le cardinal d'un ensemble, il suffit d'exhiber une bijection entre lui et un autre ensemble de référence que l'on connaît.
+
+Les réciproques de la proposition précédente sont vraies. Si $\Card(E)\leq\Card(F)$ alors il existe une injection $E\rightarrow F$. Si $\Card(E)\geq\Card(F)$ alors il existe une surjection $E\rightarrow F$. Si $\Card(E)=\Card(F)$ alors il existe une bijection entre $E$ et $F$.
+
+\section{Dénombrements classiques}
+
+Dans cette section, on donne des résultats classiques de dénombrement d'ensembles. Dans toute la suite, on aura besoin de la notation suivante: si $n\in\N^*$, on appelle \textit{factorielle de $n$} (ou << $n$ factorielle >>), et on note $n!$ la quantité
+\[
+n! := 1\times2\times \cdots \times (n-1)\times n.
+\]
+
+On mélangera les arguments intuitifs, en parlant de << choix >> d'éléments (pour construire des arrangements d'éléments par exemple), et les arguments formels qui font intervenir des bijections (souvent un peu difficiles à comprendre).
+
+\subsection{Ensemble des applications, $p$-uplets}
+
+\begin{prop}[Nombre total d'applications]
 	On suppose que $E$ et $F$ sont \textbf{finis}. Le nombre d'applications de $E$ vers $F$ est le cardinal de $\mathcal F(E,F)$, qui vaut
 	\[
 	\Card(\mathcal{F}(E,F)) = \Card(F)^{\Card(E)}.
 	\]
 \end{prop}
 
-\subsection{Injection, surjection, bijection}
-
-\begin{defn}
-	Soit $f$ une application de $E$ vers $F$, que l'on suppose définie sur $E$ tout entier. Elle est dite:
-	\begin{itemize}
-		\item \textit{injective} si $f(x)=f(x')$ entraîne $x= x'$. Autrement dit, les éléments de $F$ n'admettent au plus qu'un antécédent.
-		\item \textit{surjective} si tout $y\in F$ admet au moins un antécédent $x$ par $f$.
-		\item \textit{bijective} si elle est à la fois injective \textbf{et} surjective. Autrement dit, tout élément $y$ de $F$ admet un \textit{et un seul} antécédent par $f$.
-	\end{itemize}
-\end{defn}
-
-Si $f$ est bijective, alors pour tout $y\in F$ il existe un seul $x\in E$, que l'on peut noter $g(y)$ sans ambiguïté, tel que $y=f(x)$. L'application $g$ ainsi définie est appelée \textit{réciproque de $f$} et notée $f^{-1}$.
-
-
-\subsection{Lien avec le cardinal}
-
-\begin{defn}[Cardinal, version propre]
-	L'ensemble $E$ est fini et est de cardinal $n\in\N^*$ s'il existe une bijection $\varphi:\zint{1,n}\longrightarrow E$, c'est-à-dire que l'on peut écrire
-	$E=\{\varphi(1),\ldots,\varphi(n) \}.$
-\end{defn}
-
-\begin{prop}
-	On suppose que $E$ et $F$ sont finis. Soit $f$ une application de $E$ vers $F$. Alors:
-	\begin{itemize}
-		\item Si $f$ est injective alors $\Card E\leq \Card F$.
-		\item Si $f$ est surjective alors $\Card E \geq \Card F$.
-		\item Si $f$ est bijective alors $\Card E = \Card F$: les ensembles ont le même nombre d'éléments.
-	\end{itemize}
+\begin{prop}[Nombre de $p$-uplets]
+	Soit $E$ un ensemble fini, et $p\in\N^*$. Alors, le nombre de $p$-uplets
+	\[ (x_1,\ldots,x_p) \]
+	de l'ensemble $E^p$ est $\Card(E)^p$.
 \end{prop}
 
-Le dernier point est particulièrement utile dans le cadre du dénombrement: en effet, si on peut mettre en bijection l'ensemble $E$ dont on cherche le nombre d'éléments avec un ensemble $F$ dont on connaît bien le cardinal, alors on en déduit que $E$ a même cardinal de $F$.
+\subsection{Nombre de parties}
+
+\begin{prop}[Ensemble des parties d'un ensemble]
+	Soit $E$ un ensemble fini. Alors le cardinal de l'ensemble $\mathcal{P}(E)$ des parties de $E$ est
+	\[ \Card\left(\mathcal P(E)\right) = 2^{\Card(E)}. \]
+\end{prop}
+
+\begin{proof}
+	Pour chaque partie $A$ de $E$, on note $\mathbb{1}_A$ l'application de $E$ vers $\{0,1\}$ telle que pour tout $x$ de $E$, $\mathbb{1}_A(x)= 1$ si $x\in A$, et $0$ si $x\not\in A$.
+	
+	L'application $A\longmapsto\mathbb{1}_A$ va de $\mathcal{P}(E)$ vers $\{0,1\}^E$ (ensemble des applications de $E$ vers $\{0,1\}$), et est bijective. 
+	
+	En effet, elle est injective: si $A$ et $B$ sont des parties de $E$ telles que pour tout $x\in E$, $\mathbb 1_A(x) = \mathbb 1_B(x)$, on a que $\mathbb 1_A(x) = 1$ (c'est-à-dire $x\in A$) si et seulement si $\mathbb 1_B(x) = 1$ (c'est-à-dire $x\in B$). Donc $A=B$.
+	
+	D'autre part, elle est surjective: si $u:E\rightarrow\{0,1\}$, on peut poser $C$ l'ensemble des $x\in E$ tels que $u(x) = 1$: alors $u(x) = 1$ si $x\in C$ et $0$ sinon, donc $u = \mathbb 1_C$ tout le temps.
+\end{proof}
+
+\subsection{Nombre d'injections}
+
+Soit $E$ un ensemble de cardinal $p$, et $F$ un ensemble de cardinal $n\geq p$. On cherche le nombre d'injections $E\rightarrow F$. Comme il s'agit d'applications entre les deux ensembles, on sait déjà qu'il y en a moins que $\Card(F^E) = p^n$.
+
+On trouve la solution en regardant comment sont construites les injections. Pour construire une injection $E\rightarrow F$, on procède comme suit: pour chacun des $p$ éléments de $E$, on a une case, que l'on doit remplir avec un élément de $F$. Pour la première case, on a $n$ choix pour prendre un élément de $F$. Pour la seconde, on a $n-1$ choix. Pour la troisième, $n-2$ choix. Et ainsi de suite, jusqu'à arriver à la $p$-ème case: on a rempli $p-1$ cases auparavant, donc on ne peut plus choisir que $n-(p-1)=n-p+1$.
+
+Ainsi, on a en tout
+\[
+n\times (n-1)\times \cdots (n-p+1) = \frac{n!}{(n-p)!}
+\]
+choix possibles pour construire notre injection.
+
+\begin{rem}
+Le résultat peut être formulé de la façon suivante: Soit $F$ un ensemble de cardinal $n$. On appelle \textit{arrangement de $p$ éléments de $F$} la donnée d'une liste $x_1,\ldots,x_p$ de $p$ éléments \textbf{distincts} de $F$. Alors, il y a en tout
+\[
+\frac{n!}{(n-p)!}
+\]
+arrangements de $p$ éléments.
+\end{rem}
+
+
+\subsection{Dérangements de $\zint{1,n}$}
+
+Soit $n$ un entier naturel non nul. On appelle \textit{dérangement} ou \textit{permutation} de $\zint{1,n}$ toute bijection de $\zint{1,n}$ dans lui-même. Le nom a un sens: une telle application \textit{dérange} ou \textit{permute} les éléments.
+
+L'ensemble des dérangements de $\zint{1,n}$ est noté $S_n$ (ou $\mathfrak{S}_n$). On cherche le nombre total de dérangements, c'est-à-dire le cardinal de $S_n$.
+
+L'idée vient de la manière dont on peut construire une permutation: on se donne $n$ cases différentes, que l'on remplit une par une avec les éléments de $\zint{1,n}$. On commence par la première: on a d'abord $n$ choix parmi les éléments à placer. Puis la seconde: il ne restait plus que $n-1$ éléments, donc on a $n-1$ choix. Pour la troisième case, il reste $n-2$ choix. Et ainsi de suite jusqu'à la dernière, $n$-ème case, pour laquelle il ne reste que $1$ choix. Ainsi, on trouve qu'on a en tout
+\[ n\times (n-1)\times (n-2)\times\cdots\times 1\ \text{choix}. \]
 
 
 
+\subsection{Nombre de parties de taille fixée}
 
+\begin{defn}[Coefficient binomial]
+	Soit $n\in\N^*$, et $k$ un entier $0\leq k\leq n$. Le \textit{coefficient binomial}
+	\[
+	\binom{n}{k}
+	\]
+	est le nombre de parties de $\zint{1,n}$ qui ont $k$ éléments.
+\end{defn}
+
+C'est donc également le nombre de parties à $k$ éléments d'un ensemble $E$ qui en a $n$.
+
+Ainsi, on a $\binom{n}{0} = \binom{n}{n} = 1$ puisqu'il n'y a qu'une partie avec 0 éléments, l'ensemble vide, et il n'y a qu'une seule partie de $E$ avec autant d'éléments que lui: $E$ lui-même.
+
+Bien sûr, on cherche ici à exprimer les coefficients binomiaux explicitement (certainement avec des factorielles).
+
+\begin{prop}[Expression des coefficients binomiaux]
+	Soit $n\in\N^*$ et $k$ un entier entre 0 et $n$. Alors:
+	\[
+	\binom{n}{k} = \frac{n!}{k!(n-k)!}.
+	\]
+\end{prop}
+
+\begin{proof}
+On va utiliser la même astuce que dans le \textbf{Problème 2} introductif. On va considérer le nombre de façons de déranger $k$ éléments parmi les $n$ éléments de $\zint{1,n}$, c'est-à-dire le nombre d'éléments de $S_n$ qui ne dérangent que $k$ éléments entre eux et laissent les autres éléments comme ils sont. On notera $F$ cet ensemble.
+
+Les éléments de $F$ sont la donnée d'une partie $A\subset \zint{1,n}$ à $k$ éléments et d'une permutation $\sigma$ des éléments de $A$. Il y a $\binom{n}{k}$ choix possibles pour la partie. Étant donnée la partie, il y a $k!$ choix possible pour la permutation. Ainsi,
+\begin{equation}\label{nbParties1}
+\Card(F) = k!\binom{n}{k}.
+\end{equation}
+
+Exprimons $\Card(F)$ d'une deuxième façon. Choisir un élément de $F$, revient à choisir une application injective de $\{1,\ldots,k\}$ dans $\zint{1,n}$ qui sélectionne les éléments de notre partie (on se donne $k$ cases pour constituer la partie, et on remplit chacune d'entre elle par un élément de $\zint{1,n}$...). 
+
+Combien y a-t-il de telles injections ? D'après la section 4.3, il y en a exactement $\frac{n!}{(n-k)!}$. Ainsi,
+\begin{equation}\label{nbParties2}
+\Card(F) = \frac{n!}{(n-k)!}.
+\end{equation}
+
+Regrouper les résultats de \eqref{nbParties1} et \eqref{nbParties2} donne
+\[
+k!\binom{n}{k} = \frac{n!}{(n-k)!}\quad \text{soit}\quad \boxed{\binom{n}{k} = \frac{n!}{k!(n-k)!}.}
+\]
+\end{proof}
+
+Le coefficient binomial permet de représenter plusieurs choses: $\displaystyle \binom{n}{p}$ est le nombre de mots avec $p$ lettres << a >> et $n-p$ lettres << b >> sur un alphabet où il n'y a que ces deux lettres. Il représente aussi le nombre de chemins avec $p$ déplacements à droite et $n-p$ déplacement vers le haut permettant de traverser une grille $n\times n$.
+
+\section{Exercices}
+
+\begin{exo}
+	On dispose d'une urne où se trouvent $n$ boules numérotées de 1 à $n$. On tire successivement $p<n$ boules de l'urne, en les remettant à chaque fois. Combien de résultats différents peut-on obtenir ? Et sans remise ?
+\end{exo}
+
+\begin{exo}
+	On tire $p<n$ boules \textbf{en même temps} de notre urne de $n$ boules. Combien de résultats différents peut-on obtenir ?
+\end{exo}
+
+\begin{exo}
+	On dispose de $k$ urnes différentes contenant chacune $n$ boules numérotées de 1 à $n$.
+\end{exo}
+
+\begin{exo}
+	Soient $n\in\N^*$ et $p\in\N^*$. Déterminer le nombre d'entiers strictement positifs $k_1,\ldots,k_p$ tels que $k_1+\cdots+k_p = n$.
+\end{exo}
+
+\begin{exo}[Olympiades balkaniques, 1997]
+	Soit $E$ un ensemble de cardinal $n>1$, et $m>1$ un entier naturel. On suppose qu'il existe $m$ parties $A_1,\ldots,A_m$ de $E$ telles que si $x\neq y$ sont dans $E$, alors il y a au moins un des $A_i$ tel que $x\in A_i$ et $y\not\in A_i$ ou l'inverse. Montrer que $n\leq 2^m$.
+	
+	\textbf{Indication} Dire que $n\leq 2^m$ revient à dire que $S$ s'injecte dans un ensemble qui a $2^m$ éléments. Construire une injection de $S$ dans $\{0,1\}^m$.
+\end{exo}
 
 \end{document}
