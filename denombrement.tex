@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[twoside,11pt]{article}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[a4paper]{geometry}
 \usepackage{mathtools,amssymb,amsthm}
@@ -9,8 +9,11 @@
 \usepackage{textcomp}
 \usepackage[hidelinks]{hyperref}
 \usepackage{tikz}
+\usepackage{subcaption}
 \usepackage[shortlabels]{enumitem}
 \usepackage{mdframed}
+
+\usetikzlibrary{shapes,decorations,arrows,fadings}
 
 \setdefaultlanguage{french}
 \frenchspacing
@@ -68,6 +71,7 @@
 
 \begin{document}
 
+\begin{titlepage}
 \begin{center}
 	\hrulefill\\
     \vspace{6mm}
@@ -76,6 +80,8 @@
     \hrulefill
 \end{center}
 \vspace{1cm}
+
+\vfill
 
 \begin{flushleft}
 << \textit{...combinatorics, a sort of glorified dice-throwing.} >> \hfill— Robert Kanigel
@@ -90,8 +96,12 @@
 Cent Hectors pourraient-ils me payer un Achille ?} >> \hfill — Jacques Pradon, \textit{La Troade}
 \end{flushleft}
 
+\vfill
 
 \tableofcontents
+
+\vfill
+\end{titlepage}
 
 \section{Introduction}
 
@@ -193,6 +203,16 @@ Lorsque tous les $E_i$ sont égaux à un même ensemble $E$, on notera
 
 Dans cette section, on définira de manière générale la notion d'\textit{application} entre deux ensembles, une généralisation des fonctions que vous connaissez. $E$ et $F$ sont dans la suite deux ensembles.
 
+\begin{figure}
+	\centering
+\begin{tikzpicture}
+\draw[thick,red] (-1.5,0) ellipse (1cm and 1.5cm) node[] {$E$};
+\draw[thick,blue] (1.5,0) ellipse (1cm and 1.5cm) node[] {$F$};
+\draw[line width=1pt,->] (-1.2,0) to [bend left](1.3,0) node[midway,anchor=north] {$f$};
+\end{tikzpicture}
+\caption{Une application $f\colon E\longrightarrow F$.}
+\end{figure}
+
 
 \begin{defn}
 	Une application $f$ de $E$ vers $F$, notée $f:E\longrightarrow F$ est la donnée d'une partie $G$ de $E\times F$, appelée \textit{graphe de $f$}. Si $(x,y)\in G$, $y$ est appelé \textit{image de $x$ par $f$}, $x$ est appelé \textit{antécédent de $y$ par $f$}. De plus, $G$ doit vérifier la propriété suivante:
@@ -207,13 +227,43 @@ Dans cette section, on définira de manière générale la notion d'\textit{appl
 \end{defn}
 
 
-Bien sûr, la définition donnée ne garantit pas qu'une application $f:E\longrightarrow F$ est définie sur $E$ tout entier. On définit alors la notion d'\textit{ensemble de définition}:
+Bien sûr, la définition donnée ne garantit pas qu'une application $f\colon E\longrightarrow F$ est définie sur $E$ tout entier. On définit alors la notion d'\textit{ensemble de définition}:
 
 \begin{defn}[Ensemble de définition]
 	Soit $f$ une application de $E$ vers $F$. L'\textit{ensemble de définition} de $f$ est l'ensemble des $x\in E$ qui admettent une image par $f$, c'est-à-dire tels qu'il existe un $y\in F$ tel que $(x,y)\in G$.
 \end{defn}
 
 Des fois, il faut considérer non pas l'application $f$ mais une application définie sur une partie $E'$ de $E$ prenant les même valeurs, que l'on appelle la \textit{restriction de $f$ à $E'$}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzset{cross/.style={cross out, draw, 
+		minimum size=2*(#1-\pgflinewidth), 
+		inner sep=0pt, outer sep=0pt}}
+
+
+\draw[thick,red] (-1.5,0) ellipse (1.1cm and 2cm);
+\node[red] at (-1.5,1.6) {$E$};
+
+\draw[thick,OliveGreen] (-1.4,-0.2) ellipse (0.5cm and 1.1cm);
+\node[OliveGreen] at (-1.4,0.5) {$E'$};
+
+
+\draw[thick,blue] (1.5,0) ellipse (1.1cm and 2cm);
+\node[blue] at (1.5,1.6) {$F$};
+
+\node[cross=3pt,red,label={[red]below:$x$}] at (-1.2,1.35) {};
+\draw[line width=1pt,->,black,>=stealth] (-1.2,1.35) to [bend left](1.3,0.7) node[pos=0.1,label={[label distance=12mm]above:$f$}] {};
+\node[cross=3pt,blue,label={[blue]above right:$y$}] at (1.3,0.7) {};
+
+\node[cross=3pt,OliveGreen,label={[OliveGreen]below:$x'$}] at (-1.2,0) {};
+\draw[line width=1pt,->,OliveGreen,>=stealth] (-1.2,0) to [bend left](1.3,0) node[midway,label={[label distance=1mm,OliveGreen]above:$f_{|E'}$}] {};
+\draw[line width=1pt,->,black,>=stealth] (-1.2,0) to [bend right](1.3,0) node[midway,label={[label distance=3mm,black]below:$f$}] {};
+\node[cross=3pt,OliveGreen,label={[OliveGreen]below:$y'$}] at (1.3,0) {};
+\end{tikzpicture}
+\caption{Une application $f\colon E\longrightarrow F$ et sa restriction $f_{|E'}$ à $E'\subset E$.}
+\end{figure}
 
 Pour dénombrer un ensemble, on essaiera souvent de faire correspondre chacun de ses éléments aux éléments d'un autre ensemble que l'on connaît mieux. Souvent cette correspondance est représentée par un type d'application particulière.
 \begin{defn}[Injection, surjection, bijection]
@@ -239,6 +289,84 @@ Il suffit donc souvent d'exhiber une réciproque à $f$ pour montrer qu'elle est
 		\item \textbf{bijective} alors $\Card(E) = \Card(F)$.
 	\end{itemize}
 \end{prop}
+
+\begin{figure}[h!]
+\begin{subfigure}[b]{\textwidth}
+	\centering
+\begin{tikzpicture}
+\tikzset{cross/.style={cross out, draw, 
+		minimum size=2*(#1-\pgflinewidth), 
+		inner sep=0pt, outer sep=0pt}}
+
+\draw[thick,red] (-1.5,0) ellipse (1cm and 1.5cm);
+\node[red] at (-1.5,0.9) {$E$};
+\node[cross=3pt,red,label={[red]below:$x$}] at (-1.2,0.) {};
+
+
+\draw[thick,blue] (1.5,0) ellipse (1cm and 1.5cm);
+\node[blue] at (1.5,0.9) {$F$};
+\node[cross=3pt,blue,label={[blue]below:$y$}] at (1.3,0) {};
+
+
+\draw[line width=1pt,->,>=stealth] (-1.2,0) to [bend left](1.3,0) node[midway,label={[label distance=2mm]above:$f$}] {};
+\draw[line width=1pt,->,>=stealth] (1.3,0) to [bend left](-1.2,0) node[midway,label={[label distance=2mm]below:$f^{-1}$}] {};
+\end{tikzpicture}
+\subcaption{Une bijection $f\colon E\longrightarrow F$ et sa réciproque $f^{-1}\colon F\longrightarrow E$.}	
+\end{subfigure}
+\begin{subfigure}[b]{0.49\textwidth}
+	\centering
+	\begin{tikzpicture}
+	\tikzset{cross/.style={cross out, draw, 
+			minimum size=2*(#1-\pgflinewidth), 
+			inner sep=0pt, outer sep=0pt}}
+	
+	\draw[thick,red] (-1.5,0) ellipse (1cm and 1.5cm);
+	\node[red] at (-1.5,0.9) {$E$};
+	\node[cross=3pt,red,label={[red]above:$x$}] at (-1.2,0.) {};
+	\node[cross=3pt,red,label={[red]below:$x'$}] at (-1.4,-0.4) {};
+	
+	\draw[thick,blue] (1.5,0) ellipse (1cm and 1.5cm);
+	\node[blue] at (1.5,0.9) {$F$};
+	\node[cross=3pt,blue,label={[blue]below:$y$}] at (1.3,0) {};
+	\node[cross=3pt,blue,label={[blue]below right:$y'$}] at (1.1,-0.6) {};
+	\node[cross=3pt,blue,label={[blue]below:$y''$}] at (2.,0.9) {};
+	
+	\draw[line width=1pt,->,>=stealth] (-1.2,0) to [bend left](1.3,0) node[midway,label={[label distance=2mm]above:$f$}] {};
+	
+	\draw[line width=1pt,->,>=stealth] (-1.4,-.4) -- (1.1,-.6) node[midway] {};
+	
+	\end{tikzpicture}
+	\caption{Une injection $f\colon E\longrightarrow F$. Remarquez que l'élément $y''$ \textbf{n'admet pas} d'antécédent par $f$.}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\textwidth}
+	\centering
+	\begin{tikzpicture}
+	\tikzset{cross/.style={cross out, draw, 
+			minimum size=2*(#1-\pgflinewidth), 
+			inner sep=0pt, outer sep=0pt}}
+	
+	\draw[thick,red] (-1.5,0) ellipse (1cm and 1.5cm);
+	\node[red] at (-1.5,0.9) {$E$};
+	\node[cross=3pt,red,label={[red]above:$x$}] at (-1.2,0.2) {};
+	\node[cross=3pt,red,label={[red]left:$x'$}] at (-1.6,-0.4) {};
+	\node[cross=3pt,red,label={[red]below right:$x''$}] at (-1.9,-0.9) {};
+	
+	\draw[thick,blue] (1.5,0) ellipse (1cm and 1.5cm);
+	\node[blue] at (1.5,0.9) {$F$};
+	\node[cross=3pt,blue,label={[blue]below:$y$}] at (1.3,0) {};
+	\node[cross=3pt,blue,label={[blue]below right:$y'$}] at (1.1,-0.6) {};
+	
+	\draw[line width=1pt,->,>=stealth] (-1.2,0.2) to [bend left](1.3,0) node[midway,label={[label distance=2mm]above:$f$}] {};
+	
+	\draw[line width=1pt,->,>=stealth] (-1.6,-.4) -- (1.1,-.6) node[midway] {};
+	
+	\draw[line width=1pt,->,>=stealth] (-1.9,-.9) -- (1.1,-.6) node[midway] {};
+	
+	\end{tikzpicture}
+	\subcaption{Une surjection $f\colon E\longrightarrow F$. Remarquez que l'élément $y'$ admet \textbf{deux} antécédents par $f$.}
+\end{subfigure}
+\end{figure}
+
 
 Donc pour déterminer le cardinal d'un ensemble, il suffit d'exhiber une bijection entre lui et un autre ensemble de référence que l'on connaît.
 
