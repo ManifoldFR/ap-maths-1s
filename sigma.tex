@@ -1,0 +1,200 @@
+\documentclass[twoside,12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[a4paper]{geometry}
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{titling}
+\usepackage{textcomp}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mdframed}
+
+\usetikzlibrary{shapes,decorations,arrows,fadings}
+
+\setdefaultlanguage{french}
+\frenchspacing
+\setmathfont{Latin Modern Math}
+\setmathfont[range={\mathbb,\mathcal,\mathsf}]{xits-math.otf}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\K}{\mathbb K}
+\DeclareMathOperator{\Card}{\mathrm{Card}}
+\DeclarePairedDelimiter{\zint}{[\![}{]\!]}
+
+%% Theorem environments
+\theoremstyle{definition}
+%\newtheorem{defn}{Définition}[section]
+
+\newmdtheoremenv[
+	backgroundcolor=lightgray!50,
+	linecolor=blue!80!black!60,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	bottomline=false
+]{defn}{Définition}[section]
+
+%\newtheorem{prop}[defn]{Proposition}
+
+\newtheorem{axio}[defn]{Axiome}
+\newtheorem{exe}{Exemple}
+\newtheorem{exo}{Exercice}
+
+\theoremstyle{remark}
+\newmdtheoremenv[
+	backgroundcolor=green!10,
+	linecolor=OliveGreen!80!black!60,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	bottomline=false
+]{rem}[defn]{Remarque}
+
+\theoremstyle{plain}
+\newmdtheoremenv[
+	backgroundcolor=BrickRed!15,
+	linecolor=red!80!black!80,
+	linewidth=2pt,
+	topline=false,
+	rightline=false,
+	leftline=true,
+	bottomline=false
+]{prop}[defn]{Proposition}
+
+\newcommand\myeq{\overset{\mathrm{def}}{=}}
+
+\begin{document}
+
+\begin{center}
+	\hrulefill\\
+    \vspace{6mm}
+	\textsc{\LARGE Le symbole somme $\displaystyle\sum$}\\
+    \vspace{3mm}
+    \hrulefill
+\end{center}
+\vspace{1cm}
+
+\begin{flushright}
+<< $\displaystyle 1 + \frac{1}{2^2} + \frac{1}{3^2} + \frac{1}{4^2 } + \cdots = \dfrac{\pi^2}{6}. $ >> — Leonhard \textsc{Euler}
+\end{flushright}
+
+\begin{abstract}
+Il s'agit ici de définir et donner quelques propriétés du symbole $\sum$ (lettre grecque sigma majuscule), utilisée pour noter synthétiquement les sommes. Il peut être intéressant de savoir manipuler habilement cette notation afin de faire des démonstrations, par exemple sur des suites, et son absence du programme explicite de lycée est dommage, étant donnée son omniprésence dans le supérieur.
+\end{abstract}
+
+\section{Généralités}
+
+\begin{defn}[Sommation]\leavevmode
+Soient $p\leq n$ des nombres entiers, et \[(a_k)_{p\leq k\leq n}\] une famille de nombres réels (ou complexes, cf. programme de Terminale, ou de vecteurs), indexés de $p$ à $n$.
+
+On appelle \textit{sommation des $a_k$ de $p$ à $n$}, et la somme $a_p+\cdots+a_n$ des termes $a_k$, notée
+\[ \sum_{k=p}^n a_k = a_p + \cdots + a_n. \]
+\end{defn}
+
+\begin{rem}
+Bien évidemment, la famille $(a_k)$ peut en fait être définie pour d'autres indices encore que les $\{p,p+1,\ldots,n-1,n \}$.
+\end{rem}
+
+\begin{exe}\leavevmode
+\begin{enumerate}
+\item \[ \sum_{k=1}^3 1 = 1 + 1 + 1 = 3. \]
+\item \[ \sum_{k=1}^5 k = 1 + 2 + 3 + 4 + 5 = 15. \]
+\item Pour $n$ un entier naturel non nul, \[ \sum_{k=1}^{n} \frac 1 k = 1 + \frac 1 2 + \cdots + \frac 1 n. \]
+\item Pour $n\geq 1$,
+\[ \sum_{k=1}^n \frac 1 {k^2} = 1 + \frac 1 {2^2} + \frac 1 {3^2} + \cdots + \frac 1 {n^2}. \]
+\begin{rem}
+La suite ainsi définie s'appelle \textit{série de \textsc{Riemann}r de paramètre $2$}, et quand $n$ devient très grand sa valeur s'approche de
+\[ \frac {\pi^2} 6. \]
+\end{rem}
+\item Si $x$ et les $a_k$, $1\leq k\leq n$, sont des réels,
+\[ \sum_{k=1}^n a_k\sin(kx) = a_1\sin(x) + a_2\sin(2x) + \cdots + a_n\sin(nx). \]
+\begin{rem}
+La suite $\left(S_n(x)\right)_{n\geq 1}$ (dépendant de $x$) ainsi définie s'appelle une \textit{série de \textsc{Fourier}}. Très utilisé en physique du son, en électricité, en mécanique quantique...
+\end{rem}
+\end{enumerate}
+\end{exe}
+
+\section{Propriétés}
+
+\begin{prop}[Linéarité de la somme]
+Soient $(a_k), (b_k)_{p\leq k\leq n}$ deux familles de nombres (ou de vecteurs), et $\lambda$ un réel. Alors:
+\begin{enumerate}
+\item \[ 
+\sum_{k=p}^n (a_k + b_k) = \sum_{k=p}^n a_k + \sum_{k=p}^n b_k.
+\]
+\item \[
+\sum_{k=p}^n \lambda a_k = \lambda\sum_{k=p}^n a_k.
+\]
+\end{enumerate}
+\end{prop}
+
+\begin{proof}
+\begin{enumerate}
+\item On a, en regroupant ensemble des $a_k$ et les $b_k$,
+\begin{align*}
+\sum_{k=p}^n (a_k+b_k) \myeq (a_p+b_p) + \cdots (a_n+b_n) &= a_p + \cdots + a_n + b_p + \cdots + b_n\\ &= \sum_{k=p}^n a_k + \sum_{k=p}^n b_k. 
+\end{align*}
+\end{enumerate}
+\end{proof}
+
+Maintenant, voyons une propriété sur comment réécrire une somme:
+
+\begin{prop}[Réindexation]
+Soit $(a_k)_{p\leq k\leq n}$ une famille de nombre (ou de vecteurs), et $m$ un nombre entier. Alors, leur sommation de $p$ à $n$ se réécrit:
+\[
+\sum_{k=p}^n a_k = \sum_{k=p-m}^{n-m} a_{k+m}.
+\]
+\end{prop}
+
+\begin{proof}
+Il suffit d'écrire la somme de droite, et remarquer qu'on exactement les mêmes termes que celle de gauche:
+\begin{align*}
+\sum_{k=p-m}^{n-m} a_{k+m} &\myeq a_{(p-m)+m} + a_{(p-m+1) + m} + \cdots + a_{(n-m)+m}\\ &= a_p + a_{p+1} + \cdots + a_n \myeq \sum_{k=p}^n a_k.
+\end{align*}
+\end{proof}
+
+\begin{exe}
+\[
+\sum_{k=1}^n \frac 1 k = \sum_{k=0}^{n-1} \frac 1 {k+1}.
+\]
+\end{exe}
+
+Une autre propriété, qui n'est pas sans rappeler une propriété analogue sur les vecteurs (ou, pour les Terminales, sur les intégrales):
+
+\begin{prop}[Relation de \textsc{Chasles}]
+Soit $(a_k)_{p\leq k\leq n}$ une famille de nombres (ou de vecteurs), et $\ell$ entre $p$ et $n$. Alors:
+\[
+\sum_{k=p}^\ell a_k + \sum_{k=\ell+1}^n a_k = \sum_{k=p}^n a_k.
+\]
+\end{prop}
+
+\begin{proof}
+C'est trivial\footnote{En mathématiques, on qualifie de trivial un énoncé dont on juge la vérité évidente à la lecture, ou encore un objet mathématique dont on estime que l'existence va de soi et que son étude n'a pas d'intérêt ; il s'agit donc avant tout d'une notion subjective. [Wikipédia]}.
+\end{proof}
+
+\begin{prop}[Téléscopage]
+Soit $(a_k)_{p\leq k\leq n+1}$ une famille de nombres (ou de vecteurs). Alors:
+\[
+\sum_{k=p}^n (a_{k+1} - a_k) = a_{n+1} - a_p.
+\]
+\end{prop}
+
+\begin{proof}
+On utilise la linéarité pour séparer la somme en deux sommes, et on réindexe la seconde pour reconnaître des termes de la première, que l'on simplifie.
+\end{proof}
+
+\begin{exe} On peut calculer d'une deuxième façon la somme suivante:
+\[
+\sum_{k=0}^n (k+1)-k = (n+1) - 0 = n+1.
+\]
+\end{exe}
+
+\end{document}
